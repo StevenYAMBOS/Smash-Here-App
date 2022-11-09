@@ -1,0 +1,3196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_dark"
+    tools:context=".FightersActivity">
+
+
+    <!--    conteneur principal-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!--    Top App Bar-->
+<!--        Por le moment l'icône, la SearView et la ListView ne sont pas intégrées -->
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/FightersScreen_Toolbar"
+                android:layout_width="match_parent"
+                app:menu="@menu/custom_appbar_fighters"
+                app:actionViewClass="android.support.v7.widget.SearchView"
+                android:layout_height="?actionBarSize"
+                app:title="Fighters"
+                app:titleCentered="true"
+                app:titleTextColor="@color/white"
+                app:theme="@style/ToolbarColoredBackArrow"
+                android:background="@color/red"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+<!--        Conteneur des persos-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+        <!--    ALPH-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Alph"
+                    android:contentDescription="Alph"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/alph"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Alph"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1" />
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--    BANJO-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Banjo"
+                    android:background="@drawable/banjo"
+                    android:contentDescription="Banjo"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Banjo and Kazooie"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--BAYONETTA-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Bayonetta"
+                    android:background="@drawable/bayonetta"
+                    android:contentDescription="Bayonetta"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Bayonetta"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--BOWSER-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Bowser"
+                    android:background="@drawable/bowser"
+                    android:contentDescription="Bowser"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Bowser"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        BOWSER JR-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Bowser_Jr"
+                    android:background="@drawable/bowser_jr"
+                    android:contentDescription="Bowser"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Bowser Junior"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--BYLETH-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Byleth"
+                    android:background="@drawable/byleth"
+                    android:contentDescription="Byleth"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Byleth"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        CAPTAIN FALCON-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Captain_Falcon"
+                    android:background="@drawable/captain_falcon"
+                    android:contentDescription="Bowser"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Captain Falcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        CHARIZARD-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Charizard"
+                    android:background="@drawable/charizard"
+                    android:contentDescription="Charizard"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Charizard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        CHROM-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Chrom"
+                    android:background="@drawable/chrom"
+                    android:contentDescription="Chrom"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Chrom"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <!--    CLOUD-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Cloud"
+                    android:background="@drawable/cloud"
+                    android:contentDescription="Cloud"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Cloud"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--    CORRIN-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Corrin"
+                    android:background="@drawable/corrin"
+                    android:contentDescription="Corrin"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Corrin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- DAISY-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Daisy"
+                    android:background="@drawable/daisy"
+                    android:contentDescription="Daisy"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Daisy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        DARK PIT-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Dark_Pit"
+                    android:background="@drawable/dark_pit"
+                    android:contentDescription="Dark Pit"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Dark Pit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        DARK SAMUS-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Dark_Samus"
+                    android:background="@drawable/dark_samus"
+                    android:contentDescription="Dark Samus"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Dark Samus"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        DIDDY KONG-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Diddy_Kong"
+                    android:background="@drawable/diddy_kong"
+                    android:contentDescription="Diddy Kong"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Diddy Kong"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        DONKEY KONG-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Donkey_Kong"
+                    android:background="@drawable/donkey_kong"
+                    android:contentDescription="Donkey Kong"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Donkey Kong"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        DR.MARIO-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Dr_Mario"
+                    android:background="@drawable/dr_mario"
+                    android:contentDescription="Dr.Mario"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Dr.Mario"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        FALCO-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Falco"
+                    android:background="@drawable/falco"
+                    android:contentDescription="Falco"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Falco"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        FOX-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Fox"
+                    android:background="@drawable/fox"
+                    android:contentDescription="Fox"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Fox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        GANONDORF-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Ganondorf"
+                    android:background="@drawable/ganondorf"
+                    android:contentDescription="Ganondorf"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Ganondorf"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        G&W-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/mr_game_watch"
+                    android:background="@drawable/mr__game__watch"
+                    android:contentDescription="Mr.GameAndWatch"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Mr.Game and Watch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        GRENINJA-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Greninja"
+                    android:background="@drawable/greninja"
+                    android:contentDescription="greninja"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Greninja"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        HERO-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Hero"
+                    android:background="@drawable/hero"
+                    android:contentDescription="Hero"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Hero"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        ICE CLIMBERS-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Ice_Climbers"
+                    android:background="@drawable/ice_climbers"
+                    android:contentDescription="Ice Climbers"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Ice Climbers"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        IKE-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Ike"
+                    android:background="@drawable/ike"
+                    android:contentDescription="Ike"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Ike"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        INCINEROAR-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Incineroar"
+                    android:background="@drawable/incineroar"
+                    android:contentDescription="Incineroar"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Incineroar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        INKLING-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Inkling"
+                    android:background="@drawable/inkling"
+                    android:contentDescription="Inkling"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Inkling"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        ISABELLE-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Isabelle"
+                    android:background="@drawable/isabelle"
+                    android:contentDescription="Isabelle"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Isabelle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        IVYSAUR-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Ivysaur"
+                    android:background="@drawable/ivysaur"
+                    android:contentDescription="Ivysaur"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Ivysaur"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        JIGGLYPUFF-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Jigglypuff"
+                    android:background="@drawable/jigglypuff"
+                    android:contentDescription="Jigglypuff"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Jigglypuff"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        JOKER-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Joker"
+                    android:background="@drawable/joker"
+                    android:contentDescription="Joker"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Joker"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        KAZUYA-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Kazuya"
+                    android:background="@drawable/kazuya"
+                    android:contentDescription="Kazuya"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Kazuya"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        KEN-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Ken"
+                    android:background="@drawable/ken"
+                    android:contentDescription="Ken"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Ken"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        KING DEDEDE-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/King_Dedede"
+                    android:background="@drawable/king_dedede"
+                    android:contentDescription="King Dedede"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="King Dedede"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        KING K.ROOL-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/King_K_Rool"
+                    android:background="@drawable/king_krool"
+                    android:contentDescription="King K.Rool"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="King K.Rool"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        KIRBY-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Kirby"
+                    android:background="@drawable/kirby"
+                    android:contentDescription="Kirby"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Kirby"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        LINK-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Link"
+                    android:background="@drawable/link"
+                    android:contentDescription="Link"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Link"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        LITTLE MAC-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Little_Mac"
+                    android:background="@drawable/little_mac"
+                    android:contentDescription="Little Mac"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Little Mac"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        LUCARIO-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Lucario"
+                    android:background="@drawable/lucario"
+                    android:contentDescription="Lucario"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Lucario"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        LUCAS-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Lucas"
+                    android:background="@drawable/lucas"
+                    android:contentDescription="Lucas"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Lucas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        LUCINA-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Lucina"
+                    android:background="@drawable/lucina"
+                    android:contentDescription="Lucina"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Lucina"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        LUIGI-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Luigi"
+                    android:background="@drawable/luigi"
+                    android:contentDescription="Luigi"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Luigi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        MARIO-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Mario"
+                    android:background="@drawable/mario"
+                    android:contentDescription="Mario"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Mario"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        MARTH-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Marth"
+                    android:background="@drawable/marth"
+                    android:contentDescription="Marth"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Marth"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        MEGAMAN-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Mega_Man"
+                    android:background="@drawable/mega_man"
+                    android:contentDescription="Megaman"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Megaman"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        META KNIGHT-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Meta_Knight"
+                    android:background="@drawable/meta_knight"
+                    android:contentDescription="Meta Knight"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Meta Knight"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        MEWTWO-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Mewtwo"
+                    android:background="@drawable/mewtwo"
+                    android:contentDescription="Mewtwo"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Mewtwo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        MII BRAWLER-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Mii_Brawler"
+                    android:background="@drawable/mii_brawler"
+                    android:contentDescription="Mii Brawler"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Mii Brawler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        MII GUNNER-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Mii_Gunner"
+                    android:background="@drawable/mii_gunner"
+                    android:contentDescription="Mii Gunner"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Mii Gunner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        MII SWORDFIGHTER-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Mii_Swordfighter"
+                    android:background="@drawable/mii_swordfighter"
+                    android:contentDescription="Mii Swordfighter"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Mii Swordfighter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        MINMIN-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Min_Min"
+                    android:background="@drawable/min_min"
+                    android:contentDescription="Minmin"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Minmin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        MYTHRA-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Mythra"
+                    android:background="@drawable/mythra"
+                    android:contentDescription="Mythra"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Mythra"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        NESS-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Ness"
+                    android:background="@drawable/ness"
+                    android:contentDescription="Ness"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Ness"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        OLIMAR-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Olimar"
+                    android:background="@drawable/olimar"
+                    android:contentDescription="Olimar"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Olimar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        PACMAN-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Pac_Man"
+                    android:background="@drawable/pacman"
+                    android:contentDescription="Pac-Man"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Pac-Man"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        PALUTENA-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Palutena"
+                    android:background="@drawable/palutena"
+                    android:contentDescription="Palutena"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Palutena"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        PEACH-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Peach"
+                    android:background="@drawable/peach"
+                    android:contentDescription="Peach"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Peach"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        PICHU-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Pichu"
+                    android:background="@drawable/pichu"
+                    android:contentDescription=""
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Pichu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        PIKACHU-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Pikachu"
+                    android:background="@drawable/pikachu"
+                    android:contentDescription="Pikachu"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Pikachu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        PIRANHA PLANT-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Piranha_Plant"
+                    android:background="@drawable/piranha_plant"
+                    android:contentDescription="Piranha Plant"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Piranha Plant"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        PIT-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Pit"
+                    android:background="@drawable/pit"
+                    android:contentDescription="Pit"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Pit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        PYRA-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Pyra"
+                    android:background="@drawable/pyra"
+                    android:contentDescription="Pyra"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Pyra"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        RICHTER-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Richter"
+                    android:background="@drawable/richter"
+                    android:contentDescription="Richter"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Richter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        RIDLEY-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Ridley"
+                    android:background="@drawable/ridley"
+                    android:contentDescription="Ridley"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Ridley"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        ROB-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/R.O.B"
+                    android:background="@drawable/rob"
+                    android:contentDescription="ROB"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="R.O.B"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        ROBIN-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Robin"
+                    android:background="@drawable/robin"
+                    android:contentDescription="Robin"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Robin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        ROSALINA-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Rosalina"
+                    android:background="@drawable/rosalina"
+                    android:contentDescription="Rosalina"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Rosalina"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        ROY-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Roy"
+                    android:background="@drawable/roy"
+                    android:contentDescription="Roy"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Roy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        RYU-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Ryu"
+                    android:background="@drawable/ryu"
+                    android:contentDescription="Ryu"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Ryu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        SAMUS-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Samus"
+                    android:background="@drawable/samus"
+                    android:contentDescription="Samus"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Samus"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        SEPHIROTH-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Sephiroth"
+                    android:background="@drawable/sephiroth"
+                    android:contentDescription="Sephiroth"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Sephiroth"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        SHEIK-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Sheik"
+                    android:background="@drawable/sheik"
+                    android:contentDescription="Sheik"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Sheik"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        SHULK-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Shulk"
+                    android:background="@drawable/shulk"
+                    android:contentDescription="Shulk"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Shulk"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        SIMON-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Simon"
+                    android:background="@drawable/simon"
+                    android:contentDescription="Simon"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Simon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        SNAKE-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Snake"
+                    android:background="@drawable/snake"
+                    android:contentDescription="Snake"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Snake"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        SONIC-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Sonic"
+                    android:background="@drawable/sonic"
+                    android:contentDescription="Sonic"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Sonic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        SORA-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Sora"
+                    android:background="@drawable/sora"
+                    android:contentDescription="Sora"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Sora"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        SQUIRTLE-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Squirtle"
+                    android:background="@drawable/squirtle"
+                    android:contentDescription="Squirtle"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Squirtle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        STEVE-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Steve"
+                    android:background="@drawable/steve"
+                    android:contentDescription="Steve"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Steve"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        TERRY-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Terry"
+                    android:background="@drawable/terry"
+                    android:contentDescription="Terry"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Terry"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        TOON LINK-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Toon_Link"
+                    android:background="@drawable/toon_link"
+                    android:contentDescription="Toon Link"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Toon Link"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        VILLAGER-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Villager"
+                    android:background="@drawable/villager"
+                    android:contentDescription="Villager"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Villager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        WARIO-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Wario"
+                    android:background="@drawable/wario"
+                    android:contentDescription="Wario"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Wario"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        WII FIT TRAINER-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Wii_Fit_Trainer"
+                    android:background="@drawable/wii_fit_trainer"
+                    android:contentDescription="Wii Fit Trainer"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Wii Fit Trainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        WOLF-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Wolf"
+                    android:background="@drawable/wolf"
+                    android:contentDescription="Wolf"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Wolf"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        YOSHI-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Yoshi"
+                    android:background="@drawable/yoshi"
+                    android:contentDescription="Yoshi"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Yoshi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        YOUNG LINK-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Young_Link"
+                    android:background="@drawable/young_link"
+                    android:contentDescription="Young Link"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Young Link"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        ZELDA-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Zelda"
+                    android:background="@drawable/zelda"
+                    android:contentDescription="Zelda"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Zelda"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        ZERO SUIT SAMUS-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:outlineSpotShadowColor="@color/white">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <ImageButton
+                    android:id="@+id/Zero_Suit_Samus"
+                    android:background="@drawable/zero_suit_samus"
+                    android:contentDescription="Zero Suit Samus"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="Zero Suit Samus"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+
+<!--            <androidx.appcompat.widget.SearchView-->
+<!--                android:id="@+id/searchView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:iconifiedByDefault="true"-->
+<!--                app:queryHint="Enter a name"-->
+<!--                app:queryBackground="@android:color/transparent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"/>-->
+
+<!--            <ListView-->
+<!--                android:id="@+id/listView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                tools:listitem="@layout/characters_list_item">-->
+<!--            </ListView>-->
+
+
+
+
+
+        </LinearLayout>
+
+
+
+</ScrollView>

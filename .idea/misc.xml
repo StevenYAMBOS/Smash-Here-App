@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/drawable/home_icon.xml" value="0.1425" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/drawable/ic_home.xml" value="0.1" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/drawable/shadow_background.xml" value="0.1" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout-v28/activity_advanced_techniques.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/activity_advanced_techniques.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/activity_fighters.xml" value="0.1" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/activity_home.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/activity_home_screen.xml" value="0.15364583333333334" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/activity_main.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/activity_settings.xml" value="0.1411764705882353" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/advanced_techniques_screen.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/characters_list_item.xml" value="0.1" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/fighters_screen.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/fragment_a_ts.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/fragment_fighters.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/fragment_home.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/fragment_settings.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/home_screen.xml" value="0.10555555555555556" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/layout/settings_screen.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/menu-v26/customAppbarHomescreen.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/menu-v26/custom_appbar_homescreen.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/menu/bottom_navigation_bar.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/menu/bottom_navigation_bar_icons.xml" value="0.1" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/menu/customAppbarHomescreen.xml" value="0.1" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/menu/custom_appbar_advanced_techniques_screen.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/menu/custom_appbar_fighters.xml" value="0.15625" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/menu/custom_appbar_homescreen.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/menu/custom_appbar_settings.xml" value="0.1578125" />
+        <entry key="..\:/Users/Steven/AndroidStudioProjects/SmashHereApp/app/src/main/res/menu/top_app_bar.xml" value="0.15364583333333334" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

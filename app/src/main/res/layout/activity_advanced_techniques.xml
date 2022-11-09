@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_dark"
+    android:orientation="vertical"
+    tools:context=".AdvancedTechniquesActivity">
+
+    <!--    Top App Bar-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/AdvancedTechniquesScreen_Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                app:title="Advanced Techniques"
+                app:titleTextColor="@color/white"
+                app:titleCentered="true"
+                app:theme="@style/ToolbarColoredBackArrow"
+                android:background="@color/red"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+            </com.google.android.material.appbar.MaterialToolbar>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+<!--Conteneur de la Card View 1-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="100dp"
+        android:orientation="vertical"
+        android:gravity="center">
+<!--        Card View-->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:layout_margin="100dp"
+            android:outlineSpotShadowColor="@color/white">
+<!--            Conteneur dans la Card View-->
+            <RelativeLayout
+                android:id="@+id/Card_RelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+<!--Smash Ball icône-->
+                <ImageView
+                    android:id="@+id/Smash_icon"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_advancedtechniques" />
+<!--Texte-->
+                <TextView
+                    android:id="@+id/text_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/Smash_icon"
+                    android:gravity="center"
+                    android:text="Advanced Techniques"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        Card View 2 -->
+        <androidx.cardview.widget.CardView
+            android:layout_height="120dp"
+            android:layout_width="350dp"
+            app:cardBackgroundColor="@color/grey_light"
+            app:cardElevation="10dp"
+            android:outlineSpotShadowColor="@color/white">
+
+<!--            Conteneur dans la Card View 2 -->
+            <RelativeLayout
+                android:id="@+id/Card_RelativeLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+<!--Smash Ball icône-->
+                <ImageView
+                    android:id="@+id/Book_icon"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_book" />
+<!--Texte-->
+                <TextView
+                    android:id="@+id/text_icon2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/Book_icon"
+                    android:gravity="center"
+                    android:text="Glossary"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

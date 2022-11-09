@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--    Icône HOME-->
+    <item
+        android:title="Home"
+        android:id="@+id/home"
+        android:contentDescription="Home"
+        android:icon="@drawable/ic_home" />
+
+<!--    Icône FIGHTERS-->
+    <item
+        android:title="Fighters"
+        android:id="@+id/fighters"
+        android:contentDescription="Fighters"
+        android:icon="@drawable/ic_person" />
+
+<!--    Icône ATs-->
+    <item
+        android:title="ATs"
+        android:id="@+id/ATs"
+        android:contentDescription="Advanced Techniques"
+        android:icon="@drawable/ic_advancedtechniques" />
+
+<!--    Icône SETTINGS-->
+    <item
+        android:title="Settings"
+        android:id="@+id/settings"
+        android:contentDescription="Settings"
+        android:icon="@drawable/ic_settings" />
+</menu>
