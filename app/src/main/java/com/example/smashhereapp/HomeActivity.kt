@@ -5,9 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.viewpager2.widget.ViewPager2
+import com.example.smashhereapp.adapters.ViewPagerAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,6 +21,31 @@ class HomeActivity : AppCompatActivity() {
 //        Déclarer la toolbar
         val toolbar: Toolbar =findViewById(R.id.HomeScreen_Toolbar)
         setSupportActionBar(toolbar)
+
+
+//        TabLayout & ViewPager
+        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+        val viewPager2 = findViewById<ViewPager2>(R.id.viewPager2)
+
+        val adapter = ViewPagerAdapter(supportFragmentManager,lifecycle)
+        viewPager2.adapter = adapter
+
+        TabLayoutMediator(tabLayout,viewPager2){tab,position->
+            when(position){
+                0->{
+                    tab.text="Tips"
+                }
+                1->{
+                    tab.text="Stages"
+                }
+                2->{
+                    tab.text="Ruleset"
+                }
+                3->{
+                    tab.text="Frame Data"
+                }
+            }
+        }.attach()
 
     //        On appelle la Bottom Navigation
     val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
@@ -61,5 +91,7 @@ class HomeActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 
 }

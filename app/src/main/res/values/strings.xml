@@ -1,23 +1,25 @@
 <resources>
     <string name="app_name">Smash Here App</string>
 
-<!--    Menus-->
+    <!--    Menus-->
     <string name="home_menu">Home</string>
     <string name="fighters_menu">Fighters</string>
     <string name="ATs_menu">Advanced Techniques</string>
     <string name="settings_menu">Settings</string>
 
-<!--    Icônes-->
+    <!--    Icônes-->
     <string name="Notifications">Notifications</string>
 
-<!--    TextViews-->
+    <!--    TextViews-->
 
-<!--    SETTINGS-->
-<!--    Boutons-->
+    <!--    SETTINGS-->
+    <!--    Boutons-->
     <string name="general_boutton">General</string>
     <string name="languages_boutton">Language</string>
     <string name="theme_boutton">Themes</string>
     <string name="feedback_boutton">Feedbacks</string>
     <string name="rate_us_boutton">Rate Us</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
