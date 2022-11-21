@@ -1,14 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/Tips_GridLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:columnCount="2"
+    android:rowCount="2"
+    android:layout_gravity="center"
+    android:background="@color/grey_dark"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".tabsFragments.TipsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+<!--    BOUTTON GENERAL-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/General_CardView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardBackgroundColor="@color/red"
+        app:cardElevation="10dp"
+        android:outlineSpotShadowColor="@color/white"
+        android:layout_margin="15dp">
+        <FrameLayout
+            android:id="@+id/General_FrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/General_ImageView"
+            android:src="@drawable/ic_advancedtechniques"
+            android:alpha="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/general"/>
+        <TextView
+            android:id="@+id/General_TextView"
+            android:text="@string/general"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"/>
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
 
-</FrameLayout>
+<!--    BOUTTON STAGES-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/Stages_CardView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardBackgroundColor="@color/blue"
+        app:cardElevation="10dp"
+        android:outlineSpotShadowColor="@color/white"
+        android:layout_margin="15dp">
+        <FrameLayout
+            android:id="@+id/Stages_FrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/Stages_ImageView"
+                android:src="@drawable/ic_customstagessymbol"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/stages"/>
+            <TextView
+                android:id="@+id/Stages_TextView"
+                android:text="@string/stages"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"/>
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+
+<!--    BOUTTONS CHARACTERS-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/Characters_CardView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardBackgroundColor="@color/green"
+        app:cardElevation="10dp"
+        android:outlineSpotShadowColor="@color/white"
+        android:layout_margin="15dp">
+        <FrameLayout
+            android:id="@+id/Characters_FrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/Characters_ImageView"
+                android:src="@drawable/ic_person"
+                android:alpha="0.5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/characters"/>
+            <TextView
+                android:id="@+id/Characters_TextView"
+                android:text="@string/characters"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"/>
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+<!--    BOUTTONS STAGES-->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/Controllers_CardView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:cardBackgroundColor="@color/purple"
+            app:cardElevation="10dp"
+            android:outlineSpotShadowColor="@color/white"
+            android:layout_margin="15dp">
+            <FrameLayout
+                android:id="@+id/Controllers_FrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/Controllers_ImageView"
+                    android:src="@drawable/ic_controllers"
+                    android:alpha="0.5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/controllers"/>
+                <TextView
+                    android:id="@+id/Controllers_TextView"
+                    android:text="@string/controllers"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+</GridLayout>

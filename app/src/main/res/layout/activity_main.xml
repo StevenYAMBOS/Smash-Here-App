@@ -6,45 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<!--    NavigationHostFragment qui va permettre de naviguer entre les fragments-->
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/navHostFragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/navigation_graph" />
 
-    <FrameLayout
-        android:id="@+id/framelayout_bottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navigation"
-        />
-
-    <!--    Top App Bar-->
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/Toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                app:title="Smash Here !"
-                app:titleTextColor="@color/white"
-                android:background="@color/red"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-            </androidx.appcompat.widget.Toolbar>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.appbar.AppBarLayout>
 
 
 

@@ -12,6 +12,27 @@
 
     <!--    TextViews-->
 
+    <!--    TIPS-->
+    <!--    Bouttons-->
+    <string name="general">General</string>
+    <string name="stages">Stages</string>
+    <string name="characters">Characters</string>
+    <string name="controllers">Controllers</string>
+
+    <!--    STAGES-->
+    <!--    Bouttons-->
+    <string name="Battlefield_stage">Battlefield</string>
+    <string name="FinalDestination_stage">Final Destination</string>
+    <string name="HollowBastion_stage">Hollow Bastion</string>
+    <string name="Kalos_stage">Kalos</string>
+    <string name="NorthernCave_stage">Northern Cave</string>
+    <string name="PokemonStadium2_stage">Pokemon Stadium 2</string>
+    <string name="SmashVille_stage">Smashville</string>
+    <string name="SmallBattlefield_stage">Small Battlefield</string>
+    <string name="TownAndCity_stage">Town and City</string>
+    <string name="YoshiStory_stage">Yoshi\'s Story</string>
+
+
     <!--    SETTINGS-->
     <!--    Boutons-->
     <string name="general_boutton">General</string>
@@ -19,6 +40,8 @@
     <string name="theme_boutton">Themes</string>
     <string name="feedback_boutton">Feedbacks</string>
     <string name="rate_us_boutton">Rate Us</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

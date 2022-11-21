@@ -22,24 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        Toolbar principale
-//        Pour le moment je crée une toolbar principale que je vais réutiliser
-//        dans mes fragments. Chaque toolbar dans les fragments aura
-//        son propre menu.
-        setSupportActionBar(findViewById(R.id.Toolbar))
 
-//        Fragments de la bottom navigation
-//        val homeFragment = HomeFragment()
-//        val fightersFragment = FightersFragment()
-//        val atsFragment = ATsFragment()
-//        val settingsFragment = SettingsFragment()
-
-//        Fragment principal
-//        currentFragment(HomeFragment())
-
-//        val navHostFragment = supportFragmentManager
-//            .findFragmentById(R.id.navHostFragment) as NavHostFragment
-//        navController = navHostFragment.navController
 
 //        On appelle la Bottom Navigation
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
@@ -74,16 +57,5 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
-
-//    Va gérer les changements de fragments de la  bottom navigation
-//    On met la fonction en privée mais je sais plus pourquoi
-//        private fun currentFragment(fragment : Fragment){
-//            supportFragmentManager.beginTransaction().apply {
-//                replace(R.id.framelayout_bottomNav, fragment)
-//  "addToBackStock(null)" permet le retour en arrière grâce au bouton Android
-//                    .addToBackStack(null)
-//                commit()
-//            }
-//        }
     }
 

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_dark"
+    android:layout_gravity="center"
     tools:context=".HomeActivity">
 
     <!--    Top App Bar-->
@@ -13,11 +14,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:toolbarId="@id/HomeScreen_Toolbar">
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/HomeScreen_Toolbar"
                 android:layout_width="match_parent"
@@ -29,24 +28,26 @@
                 android:background="@color/red">
             </androidx.appcompat.widget.Toolbar>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
-                app:tabBackground="@color/grey_dark"
-                app:tabTextColor="@color/white"
-                app:tabSelectedTextColor="@color/red"
-                app:tabIndicatorColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </com.google.android.material.tabs.TabLayout>
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPager2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </androidx.viewpager2.widget.ViewPager2>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            app:tabBackground="@color/grey_dark"
+            app:tabTextColor="@color/white"
+            app:tabSelectedTextColor="@color/red"
+            app:tabIndicatorColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        </com.google.android.material.tabs.TabLayout>
     </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </androidx.viewpager2.widget.ViewPager2>
+
+
 
     <!--    Bottom Navigation Bar-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
