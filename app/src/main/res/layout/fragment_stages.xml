@@ -1,276 +1,358 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!--Je fous tout dans un NestedScollView car
+il sopporte plusieurs enfants contrairement au ScrollView-->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/grey_dark"
-    android:fitsSystemWindows="true"
     tools:context=".tabsFragments.StagesFragment">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/stages_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-        android:textColor="@color/white"
-        android:layout_gravity="center" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/Stages_ConstraintLayout"
-        android:layout_width="350dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center">
-        <TextView
-            android:id="@+id/Battlefield_TextView"
-            android:layout_width="wrap_content"
+        <!--        Conteneur des éléments
+        Je le déplace de 100dp vers le haut à cause du TabLayout + ViewPager -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Battlefield_stage"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="@+id/Stages_ConstraintLayout"
-            app:layout_constraintTop_toTopOf="@id/Stages_ConstraintLayout"
-            app:layout_constraintBottom_toBottomOf="@id/Stages_ConstraintLayout"/>
-        <ImageView
-            android:id="@+id/Battlefield_ImageView"
-            android:background="@drawable/battlefield"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
             android:layout_gravity="center"
-            app:layout_constraintEnd_toEndOf="@id/Stages_ConstraintLayout"
-            app:layout_constraintTop_toTopOf="@id/Stages_ConstraintLayout"
-            app:layout_constraintBottom_toBottomOf="@id/Stages_ConstraintLayout"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginTop="120dp"
+            android:layout_marginBottom="100dp"
+            android:orientation="vertical">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="350dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center">
-        <TextView
-            android:id="@+id/FinalDestination_TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/FinalDestination_stage"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-        <ImageView
-            android:id="@+id/FinalDestination_ImageView"
-            android:background="@drawable/finale_destination"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="350dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center">
-    <TextView
-        android:id="@+id/HollowBastion_TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/HollowBastion_stage"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-    <ImageView
-        android:id="@+id/HollowBastion_ImageView"
-        android:background="@drawable/hollow_bastion"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="350dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center">
-        <TextView
-            android:id="@+id/Kalos_TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Kalos_stage"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-        <ImageView
-            android:id="@+id/Kalos_ImageView"
-            android:background="@drawable/kalos"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="350dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center">
-        <TextView
-            android:id="@+id/NorthernCave_TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/NorthernCave_stage"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-        <ImageView
-            android:id="@+id/NorthernCave_ImageView"
-            android:background="@drawable/northern_cave"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="350dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center">
             <TextView
-                android:id="@+id/PokemonStadium2_TextView"
+                android:id="@+id/starterStage_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PokemonStadium2_stage"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-            <ImageView
-                android:id="@+id/PokemonStadium2_ImageView"
-                android:background="@drawable/pokemon_stadium2"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
                 android:layout_gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:text="@string/Starter_stages"
+                android:textSize="12pt"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:layout_marginBottom="50dp"/>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="350dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center">
+            <!--        Battlefield Stage-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/Stages_ConstraintLayout"
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/Battlefield_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Battlefield_stage"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/Stages_ConstraintLayout"
+                    app:layout_constraintStart_toStartOf="@+id/Stages_ConstraintLayout"
+                    app:layout_constraintTop_toTopOf="@id/Stages_ConstraintLayout" />
+
+                <ImageView
+                    android:id="@+id/Battlefield_ImageView"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/battlefield"
+                    app:layout_constraintBottom_toBottomOf="@id/Stages_ConstraintLayout"
+                    app:layout_constraintEnd_toEndOf="@id/Stages_ConstraintLayout"
+                    app:layout_constraintTop_toTopOf="@id/Stages_ConstraintLayout" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <!--        Final Destination stage-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/FinalDestination_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/FinalDestination_stage"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/FinalDestination_ImageView"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/finale_destination"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <!--        Pokemon Stadium stage-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/PokemonStadium2_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/PokemonStadium2_stage"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/PokemonStadium2_ImageView"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/pokemon_stadium2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <!--        Smashville stage-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/Smashville_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/SmashVille_stage"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/Smashville_ImageView"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/smashville"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--        Town and City stage-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/TownAndCity_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/TownAndCity_stage"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/TownAndCity_ImageView"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/town_and_city"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             <TextView
-                android:id="@+id/Smashville_TextView"
+                android:id="@+id/counterpickStage_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/SmashVille_stage"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-            <ImageView
-                android:id="@+id/Smashville_ImageView"
-                android:background="@drawable/smashville"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
                 android:layout_gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:text="@string/Counterpick_stages"
+                android:textSize="12pt"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="50dp"/>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="350dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center">
-            <TextView
-                android:id="@+id/SmallBattlefield_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/SmallBattlefield_stage"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-            <ImageView
-                android:id="@+id/SmallBattlefield_ImageView"
-                android:background="@drawable/small_battlefield"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--        Hollow Bastion stage-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center">
 
+                <TextView
+                    android:id="@+id/HollowBastion_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/HollowBastion_stage"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="350dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center">
-            <TextView
-                android:id="@+id/TownAndCity_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/TownAndCity_stage"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-            <ImageView
-                android:id="@+id/TownAndCity_ImageView"
-                android:background="@drawable/town_and_city"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/HollowBastion_ImageView"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/hollow_bastion"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!--        Kalos stage-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="350dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center">
-            <TextView
-                android:id="@+id/YoshiStory_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/YoshiStory_stage"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-            <ImageView
-                android:id="@+id/YoshiStory_ImageView"
-                android:background="@drawable/yoshi_story"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/Kalos_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Kalos_stage"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
-</ScrollView>
+                <ImageView
+                    android:id="@+id/Kalos_ImageView"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/kalos"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--        Kalos stage-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/Lylat_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Lylat_stage"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/Lylat_ImageView"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/lylat_cruise"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--        Northern Cave stage-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/NorthernCave_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/NorthernCave_stage"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/NorthernCave_ImageView"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/northern_cave"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--        Small Battlefield stage-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/SmallBattlefield_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/SmallBattlefield_stage"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/SmallBattlefield_ImageView"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/small_battlefield"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--        Yoshi's Story stage-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/YoshiStory_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/YoshiStory_stage"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/YoshiStory_ImageView"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/yoshi_story"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>

@@ -21,10 +21,13 @@
 
     <!--    STAGES-->
     <!--    Bouttons-->
+    <string name="Starter_stages">Starters</string>
+    <string name="Counterpick_stages">Counterpicks</string>
     <string name="Battlefield_stage">Battlefield</string>
     <string name="FinalDestination_stage">Final Destination</string>
     <string name="HollowBastion_stage">Hollow Bastion</string>
     <string name="Kalos_stage">Kalos</string>
+    <string name="Lylat_stage">Lylat</string>
     <string name="NorthernCave_stage">Northern Cave</string>
     <string name="PokemonStadium2_stage">Pokemon Stadium 2</string>
     <string name="SmashVille_stage">Smashville</string>
@@ -32,6 +35,27 @@
     <string name="TownAndCity_stage">Town and City</string>
     <string name="YoshiStory_stage">Yoshi\'s Story</string>
 
+    <!--    RULESET-->
+    <style name="title_ruleset" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#9E1919</item>
+    </style>
+    <string name="stringTitle">/!\\ While the ruling may change from local to local, most prominent Super Smash Bros. Ultimate tournaments have the same rules to keep the scene consistent. /!\</string>
+    <string name="time_out">When a <u>Time Out</u> occured, the winner is first determined by how many stocks remain, and then by the percentage.If both stock and percentage are the same, or a game ends in both players losing their last stock simultaneously, then a <u>tiebreaker</u> is played, which consists of a 1 stock and 3 minutes match with the same characters on the same stage. If pausing is turned on, rulesets will have clauses on how to proceed when a pause occurs.
+    </string>
+    <string name="miis">MII\'s regulation</string>
+    <string name="miis_text">All Mii Fighters and their respective custom moves are allowed. Movesets will be shown in their name with each individual special move numbered from 1 to 3, based on the order shown on the move selection screen (ex. 1111, 2223, 3121).</string>
+    <string name="starters"><u>Starter Stages :</u></string>
+    <string name="starterStagesText">After game one, the losing player pick a counterpick stage. These are stages that can be selected as a counterpick in most tournaments on top of the starter stages above.</string>
+    <string name="counterpicks"><u>Counterpick Stages :</u></string>
+    <string name="counterpickStagesText">Battlefield and Omega variations of the stages are allowed when a player counterpicks either Battlefield or Final Destination respectively. You may also see other stages used in certain tournaments every tournament, whether it’s a local or a major, will have its own list of legal stages so always check beforehand !</string>
+    <string name="stageBanning">After each game of the set, before counterpicking, the player who won the previous game may ban 2 or 3 stages from the full stage list. These bans do not persist throughout the set. The loser of the previous game then chooses from the remaining stages, barring any other stage that the player has won in the most recent game. If Final Destination or Battlefield is chosen as a counterpick, a variant may be chosen by the loser of the previous game.</string>
+    <string name="glitchText">If anything occurs within any game that results in unforeseen consequences (e.g. characters become invisible, sudden teleportation occurs, characters become affixed to other bodies, etc), gameplay should continue uninterrupted unless the change renders the game unplayable for one or more players. In this situation, players should inform their pool captain or tournament staff for resolution.</string>
+    <string name="tournamentSpecificities"><i>Each tournament has specificities, to avoiding any problems please refer to the ruleset of the tournament you’re participating to !</i></string>
+
+    <!--    FRAMEDATA-->
+    <string name="redirection">Consult FRAME DATA down below !</string>
+    <string name="ufd_app">UFD APP</string>
 
     <!--    SETTINGS-->
     <!--    Boutons-->
