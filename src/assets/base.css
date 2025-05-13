@@ -1,0 +1,70 @@
+/* Global CSS Variables */
+
+:root {
+  /* Colors */
+  --color-cream: #fef9e7;
+  --color-gold: #ffd700;
+  --color-dark-gray: #202020;
+  --color-medium-gray: #666666;
+  --color-light-gray: #999999;
+  --color-black: #000000;
+  --color-charcoal: #252525;
+  --color-darker-charcoal: #1a1a1a;
+  --color-white: #ffffff;
+  --color-orange: #ffa600;
+  --color-light-yellow: #f7dc6f;
+  --color-off-white: #e8eaed;
+
+  /* Fonts */
+  --font-primary: 'Rajdhani', sans-serif;
+  --font-secondary: 'Roboto', sans-serif;
+
+  /* Font Sizes */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem; /* 36px */
+  --font-size-5xl: 3.25rem; /* ?px */
+  --font-size-6xl: 4.25rem; /* ?px */
+
+  /* Spacing */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
+
+  /* Border Radius */
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 1rem; /* 16px */
+  --radius-full: 9999px; /* Fully rounded */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: 1.6;
+  font-family: var(--font-secondary);
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

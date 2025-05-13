@@ -1,0 +1,61 @@
+@import './base.css';
+
+/* main.css - Apply global styles */
+
+body {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+  color: var(--color-dark-gray);
+  background-color: var(--color-white);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-primary);
+  margin-top: 0;
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+}
+
+a {
+  color: var(--color-orange);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-gold);
+}
+
+/* Additional utility classes */
+.text-primary {
+  color: var(--color-gold);
+}
+
+.bg-dark {
+  background-color: var(--color-dark-gray);
+  color: var(--color-white);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
