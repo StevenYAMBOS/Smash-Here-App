@@ -39,7 +39,7 @@ const inputValue = ref('')
   background: transparent;
   border: none;
   outline: none;
-  color: var(--color-medium-gray);
+  color: var(--color-cream);
   font-family: var(--font-secondary);
   font-size: var(--font-size-base);
 }

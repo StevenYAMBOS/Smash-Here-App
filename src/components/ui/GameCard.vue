@@ -2,17 +2,17 @@
 
 <template>
   <div class="game-card">
-    <img :src="imageSrc" :alt="title" class="game-image" />
+    <img :src="cover" :alt="title" class="game-image" />
     <h2 class="game-title">{{ title }}</h2>
-    <p class="game-subtitle">{{ subtitle }}</p>
+    <p class="game-subTitle">{{ subTitle }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
 defineProps<{
-  imageSrc: string
+  cover: string
   title: string
-  subtitle: string
+  subTitle: string
 }>()
 </script>
 
@@ -44,7 +44,7 @@ defineProps<{
   text-align: center;
 }
 
-.game-subtitle {
+.game-subTitle {
   color: var(--color-light-gray);
   font-family: var(--font-secondary);
   font-size: var(--font-size-base);

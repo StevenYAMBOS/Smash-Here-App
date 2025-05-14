@@ -8,9 +8,9 @@
 
       <!-- Desktop Navigation Menu -->
       <div class="navbar-menu" :class="{ active: isMenuOpen }">
-        <router-link to="/jeux" class="navbar-link">Games</router-link>
+        <router-link to="/games" class="navbar-link">Games</router-link>
         <router-link to="/roadmaps" class="navbar-link">Roadmaps</router-link>
-        <router-link to="/classements" class="navbar-link">Ranking</router-link>
+        <router-link to="/ranking" class="navbar-link">Ranking</router-link>
       </div>
 
       <!-- Inscription Button -->
@@ -105,7 +105,7 @@ const toggleMenu = () => {
 
 .navbar-burger {
   display: none;
-  color: var(--color-white);
+  color: var(--color-cream);
   font-size: var(--font-size-xl);
   cursor: pointer;
 }

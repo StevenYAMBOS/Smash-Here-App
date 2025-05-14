@@ -7,6 +7,7 @@ import NotFoundView from '@/views/NotFound/NotFoundView.vue'
 import AuthLayout from '@/layouts/AuthLayout.vue'
 import LoginView from '@/views/Auth/LoginView.vue'
 import RegisterView from '@/views/Auth/RegisterView.vue'
+import GamesListView from '@/views/Game/GamesListView.vue'
 
 const routes = [
   {
@@ -14,12 +15,17 @@ const routes = [
     component: DefaultLayout,
     children: [
       { path: '', name: 'home', component: HomeView },
+      {
+        path: '/games',
+        name: 'games',
+        component: GamesListView,
+      },
       // {
-      //   path: 'roadmaps',
+      //   path: '/roadmaps',
       //   name: 'roadmaps',
-      //   component: () => import('@/views/Roadmaps/RoadmapsListView.vue'),
+      //   component: RoadmapsListView,
       // },
-      // { path: 'jeu/:id', name: 'game', component: () => import('@/views/Game/GameView.vue') },
+      // { path: '/game/:id', name: 'game', component: () => import('@/views/Game/GameView.vue') },
     ],
   },
   {

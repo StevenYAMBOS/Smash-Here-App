@@ -2,7 +2,7 @@
   <header class="header-menu">
     <div class="header-content">
       <h1 class="header-title">{{ title }}</h1>
-      <p class="header-subtitle">{{ subtitle }}</p>
+      <p class="header-subTitle">{{ subTitle }}</p>
       <button v-if="buttonText && buttonLink" class="header-button" @click="navigateTo">
         {{ buttonText }}
       </button>
@@ -16,7 +16,7 @@ import { defineProps } from 'vue'
 
 const props = defineProps<{
   title: string
-  subtitle: string
+  subTitle: string
   buttonText?: string
   buttonLink?: string
 }>()
@@ -54,7 +54,7 @@ const navigateTo = () => {
   font-weight: bold;
 }
 
-.header-subtitle {
+.header-subTitle {
   color: var(--color-light-gray);
   font-size: var(--font-size-lg);
   font-family: var(--font-secondary);
