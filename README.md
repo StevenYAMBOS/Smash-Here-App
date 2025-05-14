@@ -50,7 +50,7 @@ npm run dev
 
 - [Dépôt Back-End](https://github.com/StevenYAMBOS/Smash-Here-API)
 - [Documentation](https://github.com/StevenYAMBOS/Smash-Here-App/wiki)
-- [Smash Here Website]() à venir
+- [Smash Here Website]() (à venir)
 
 ## Autheur
 
