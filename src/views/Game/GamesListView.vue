@@ -1,18 +1,11 @@
 <!-- src/views/Game/GamesListView.vue -->
 
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, computed } from 'vue'
 import HeaderMenu from '@/components/layout/HeaderMenu.vue'
 import SearchBar from '@/components/ui/SearchBar.vue'
 import GameCard from '@/components/ui/GameCard.vue'
-
-// Structure d’un jeu attendu depuis le back-end
-type Game = {
-  _id: string
-  title: string
-  subTitle: string
-  cover: string
-}
+import type { Game } from '@/types/collections'
 
 const state = reactive({
   games: [] as Game[],
@@ -20,12 +13,12 @@ const state = reactive({
   error: '',
 })
 
-// Appel de l’API dès que le composant est monté
 onMounted(async () => {
+  const apiUrl = `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/games`
+
   try {
-    const response = await fetch('http://localhost:3000/games')
+    const response = await fetch(apiUrl)
     const data = await response.json()
-    console.log(data)
     state.games = data
   } catch (error) {
     state.error = 'Erreur lors du chargement des jeux.'
@@ -34,6 +27,15 @@ onMounted(async () => {
     state.loading = false
   }
 })
+
+const searchText = reactive({ value: '' })
+
+const filteredGames = computed(() => {
+  if (!searchText.value.trim()) return state.games
+  return state.games.filter((game) =>
+    game.title.toLowerCase().includes(searchText.value.toLowerCase()),
+  )
+})
 </script>
 
 <template>
@@ -41,16 +43,17 @@ onMounted(async () => {
     <HeaderMenu title="Choose your game" subTitle="Select a game to access dedicated roadmaps" />
 
     <div class="searchbar-container">
-      <SearchBar placeholder="Search for a game by name" />
+      <SearchBar placeholder="Search for a game by name" v-model="searchText.value" />
     </div>
 
     <div class="games-grid">
       <GameCard
-        v-for="game in state.games"
-        :key="game._id"
+        v-for="game in filteredGames"
+        :key="game.id"
         :title="game.title"
         :subTitle="game.subTitle"
         :cover="game.cover"
+        :id="game.id"
       />
     </div>
 

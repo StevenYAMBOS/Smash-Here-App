@@ -2,19 +2,25 @@
 
 <template>
   <div class="search-bar">
-    <i class="pi pi-search search-icon"></i>
-    <input type="text" :placeholder="placeholder" class="search-input" v-model="inputValue" />
+    <i
+      :class="modelValue ? 'pi pi-times' : 'pi pi-search'"
+      class="search-icon"
+      @click="modelValue && clearInput"
+    />
+    <input type="text" :placeholder="placeholder" class="search-input" v-model="modelValue" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
 defineProps<{
   placeholder: string
 }>()
 
-const inputValue = ref('')
+const modelValue = defineModel<string>({ default: '' })
+
+const clearInput = () => {
+  modelValue.value = ''
+}
 </script>
 
 <style scoped>

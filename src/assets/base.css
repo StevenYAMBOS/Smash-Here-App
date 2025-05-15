@@ -1,4 +1,9 @@
 /* Global CSS Variables */
+@import 'https://cdn.jsdelivr.net/npm/@vue-flow/core@1.43.1/dist/style.css';
+@import 'https://cdn.jsdelivr.net/npm/@vue-flow/core@1.43.1/dist/theme-default.css';
+@import 'https://cdn.jsdelivr.net/npm/@vue-flow/controls@latest/dist/style.css';
+@import 'https://cdn.jsdelivr.net/npm/@vue-flow/minimap@latest/dist/style.css';
+@import 'https://cdn.jsdelivr.net/npm/@vue-flow/node-resizer@latest/dist/style.css';
 
 :root {
   /* Colors */
@@ -67,4 +72,11 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.vueflow-theme {
+  width: 1000px;
+  height: 800px;
+  background-color: var(--color-gold);
+  border: none;
 }

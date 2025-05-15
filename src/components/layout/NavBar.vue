@@ -8,13 +8,13 @@
 
       <!-- Desktop Navigation Menu -->
       <div class="navbar-menu" :class="{ active: isMenuOpen }">
+        <router-link to="/" class="navbar-link">Home</router-link>
         <router-link to="/games" class="navbar-link">Games</router-link>
-        <router-link to="/roadmaps" class="navbar-link">Roadmaps</router-link>
         <router-link to="/ranking" class="navbar-link">Ranking</router-link>
       </div>
 
       <!-- Inscription Button -->
-      <router-link to="/auth/login" class="navbar-button">Login</router-link>
+      <NavButton :to="`/auth/login`">Login</NavButton>
 
       <!-- Mobile Burger Menu -->
       <div class="navbar-burger" @click="toggleMenu">
@@ -26,6 +26,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import NavButton from '../ui/NavButton.vue'
 
 // State for mobile menu
 const isMenuOpen = ref(false)
@@ -85,22 +86,6 @@ const toggleMenu = () => {
 
 .navbar-link:hover {
   color: var(--color-gold);
-}
-
-.navbar-button {
-  display: inline-block;
-  background-color: var(--color-gold);
-  color: var(--color-black);
-  font-weight: 800;
-  padding: var(--spacing-sm) var(--spacing-xl);
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  font-size: var(--font-size-sm);
-  transition: background-color 0.3s ease-in-out;
-}
-
-.navbar-button:hover {
-  background-color: var(--color-light-yellow);
 }
 
 .navbar-burger {

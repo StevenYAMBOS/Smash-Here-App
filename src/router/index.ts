@@ -8,6 +8,8 @@ import AuthLayout from '@/layouts/AuthLayout.vue'
 import LoginView from '@/views/Auth/LoginView.vue'
 import RegisterView from '@/views/Auth/RegisterView.vue'
 import GamesListView from '@/views/Game/GamesListView.vue'
+import RoadmapsListView from '@/views/Roadmaps/RoadmapsListView.vue'
+import RoadmapView from '@/views/Roadmap/RoadmapView.vue'
 
 const routes = [
   {
@@ -20,12 +22,8 @@ const routes = [
         name: 'games',
         component: GamesListView,
       },
-      // {
-      //   path: '/roadmaps',
-      //   name: 'roadmaps',
-      //   component: RoadmapsListView,
-      // },
-      // { path: '/game/:id', name: 'game', component: () => import('@/views/Game/GameView.vue') },
+      { path: '/game/:slug', name: 'game', component: RoadmapsListView },
+      { path: '/roadmap/:id', name: 'roadmap', component: RoadmapView },
     ],
   },
   {
