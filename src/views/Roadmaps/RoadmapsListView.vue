@@ -1,4 +1,8 @@
-<!-- src/views/Roadmaps/RoadmapsListView.vue -->
+<!--
+src/views/Roadmaps/RoadmapsListView.vue
+
+Composant qui affiche la liste des roadmaps d'un jeu
+-->
 
 <script setup lang="ts">
 import { onMounted, reactive, computed } from 'vue'
@@ -20,7 +24,6 @@ const state = reactive({
 
 const fetchGameAndRoadmaps = async () => {
   try {
-    // Appel à l’API pour tous les jeux
     const res = await fetch(
       `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/games`,
     )

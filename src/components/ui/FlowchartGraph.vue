@@ -12,7 +12,7 @@ const nodeWidth = 300 // largeur fixe du .node-card en px
 const nodeHeight = 100 // hauteur fixe du .node-card en px
 const spacingX = 250 // écart horizontal entre cartes sur le même niveau
 const spacingY = 200 // écart vertical entre niveaux
-const branchY = spacingY / 2 // hauteur de la “branche” intermédiaire (depuis le bas du parent)
+// const branchY = spacingY / 2 // hauteur de la “branche” intermédiaire (depuis le bas du parent)
 
 /**
  * positions : computed qui calcule pour chaque étape

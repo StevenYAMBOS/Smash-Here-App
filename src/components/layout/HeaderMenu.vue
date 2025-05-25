@@ -62,20 +62,20 @@ const navigateTo = () => {
 
 .header-button {
   display: inline-block;
-  background-color: var(--color-gold);
+  background: linear-gradient(to right, var(--color-cream), var(--color-gold));
   color: var(--color-black);
   font-weight: 800;
-  padding: var(--spacing-sm) var(--spacing-xl);
+  padding: var(--spacing-md) var(--spacing-xl);
   border: none;
   border-radius: var(--radius-md);
   text-decoration: none;
   font-size: var(--font-size-sm);
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+  transition: background 0.3s ease-in-out;
 }
 
 .header-button:hover {
-  background-color: var(--color-light-yellow);
+  background: linear-gradient(to right, var(--color-gold), var(--color-cream));
 }
 
 .header-button:hover {
