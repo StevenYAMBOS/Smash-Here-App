@@ -1,28 +1,71 @@
+<!-- src/views/Auth/LoginView.vue -->
+
 <template>
   <div class="auth-box">
     <h1 class="auth-title">Login</h1>
     <p class="auth-subtitle">Welcome back to Smash Here</p>
 
     <form @submit.prevent="handleLogin" class="auth-form">
-      <input type="email" v-model="email" placeholder="Email adress" required />
+      <input type="email" v-model="email" placeholder="Email address" required />
       <input type="password" v-model="password" placeholder="Password" required />
 
-      <button type="submit">Login</button>
+      <button type="submit" :disabled="loading">
+        {{ loading ? 'Logging in…' : 'Login' }}
+      </button>
 
       <p class="auth-link">
-        No account yet ?
+        No account yet?
         <router-link to="/auth/register">Register</router-link>
       </p>
+      <p v-if="error" class="status error">{{ error }}</p>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-const email = ''
-const password = ''
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toast-notification'
+import { useUserStore } from '@/stores/user'
 
-const handleLogin = () => {
-  console.log('Connexion avec', email, password)
+const router = useRouter()
+const toast = useToast()
+const email = ref('')
+const password = ref('')
+const loading = ref(false)
+const error = ref('')
+const userStore = useUserStore()
+
+async function handleLogin() {
+  loading.value = true
+  error.value = ''
+
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/auth/login`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.value, password: password.value }),
+      },
+    )
+    if (!res.ok) {
+      const msg = await res.text()
+      throw new Error(msg || `HTTP ${res.status}`)
+    }
+    const { token } = await res.json()
+    localStorage.setItem('token', token)
+    userStore.setToken(token)
+    await userStore.fetchProfile()
+    toast.success('Login successful!')
+    // redirige vers la liste des jeux
+    router.push('/')
+  } catch (err: any) {
+    toast.error(err.message || 'Login failed.')
+    error.value = err.message || 'Login failed.'
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 

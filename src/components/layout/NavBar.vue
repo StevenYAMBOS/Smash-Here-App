@@ -1,3 +1,5 @@
+<!-- src/components/layout/NavBar.vue -->
+
 <template>
   <nav class="navbar">
     <div class="navbar-container">
@@ -14,7 +16,14 @@
       </div>
 
       <!-- Inscription Button -->
-      <NavButton :to="`/auth/login`">Login</NavButton>
+      <div class="navbar-user">
+        <router-link v-if="!userStore.profile" to="/auth/login">
+          <NavButton :to="`/auth/login`">Login</NavButton>
+        </router-link>
+        <div v-else class="profile-wrapper" @click="goToProfile">
+          <img :src="userStore.profile.profilePicture" alt="Profile" class="profile-pic" />
+        </div>
+      </div>
 
       <!-- Mobile Burger Menu -->
       <div class="navbar-burger" @click="toggleMenu">
@@ -27,13 +36,22 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import NavButton from '../ui/NavButton.vue'
+import { useUserStore } from '@/stores/user'
+import { useRouter } from 'vue-router'
 
 // State for mobile menu
 const isMenuOpen = ref(false)
+const userStore = useUserStore()
+const router = useRouter()
 
 // Toggle mobile menu
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
+}
+
+// Redirige vers la page de profil (à créer)
+function goToProfile() {
+  router.push('/profile')
 }
 </script>
 
@@ -86,6 +104,26 @@ const toggleMenu = () => {
 
 .navbar-link:hover {
   color: var(--color-gold);
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+}
+
+/* Photo de profil */
+.profile-wrapper {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid var(--color-gold);
+}
+.profile-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .navbar-burger {

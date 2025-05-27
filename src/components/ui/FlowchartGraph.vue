@@ -1,11 +1,12 @@
 <!-- src/components/ui/FlowchartGraph.vue -->
 
 <script setup lang="ts">
-import { computed, defineProps } from 'vue'
+import { computed, defineProps, defineEmits } from 'vue'
 import type { Step } from '@/types/collections'
 
 // Définition de la prop reçue : un tableau d'étapes
 const props = defineProps<{ steps: Step[] }>()
+const emit = defineEmits<{ (e: 'select', stepId: string): void }>()
 
 // Dimensions des cartes et espacement entre niveaux
 const nodeWidth = 300 // largeur fixe du .node-card en px
@@ -69,6 +70,15 @@ const positions = computed(() => {
     })
   }
 
+  // Trouver la plus petite abscisse existante
+  const allX = Object.values(pos).map((p) => p.x)
+  const minX = Math.min(...allX)
+  if (minX < 0) {
+    // On décale tout vers la droite de |-minX|
+    Object.keys(pos).forEach((id) => {
+      pos[id].x = pos[id].x - minX
+    })
+  }
   return pos
 })
 
@@ -96,9 +106,11 @@ const edges = computed(() => {
  * la taille d'une node pour englober toutes les cartes.
  */
 const graphWidth = computed(() => {
-  const maxX = Math.max(...Object.values(positions.value).map((p) => p.x))
+  const xs = Object.values(positions.value).map((p) => p.x)
+  const maxX = Math.max(...xs)
   return maxX + nodeWidth
 })
+
 const graphHeight = computed(() => {
   const maxY = Math.max(...Object.values(positions.value).map((p) => p.y))
   return maxY + nodeHeight
@@ -106,47 +118,46 @@ const graphHeight = computed(() => {
 </script>
 
 <template>
-  <div class="graph-wrapper" :style="{ width: graphWidth + 'px', height: graphHeight + 'px' }">
-    <!-- Couche SVG pour tracer les lignes -->
-    <svg class="edges-layer" :width="graphWidth" :height="graphHeight">
-      <!-- Pour chaque arête valide, on dessine un <line> -->
-      <!-- `:x1="positions[edge.from].x + nodeWidth / 2"` : milieu bas du parent -->
-      <!-- `:x2="positions[edge.to].x + nodeWidth / 2"` : milieu haut de l'enfant -->
-      <path
-        v-for="edge in edges"
-        :key="edge.from + '->' + edge.to"
-        :d="`
-          M ${positions[edge.from].x + nodeWidth / 2} ${positions[edge.from].y + nodeHeight}
-          V ${positions[edge.to].y + nodeHeight / 2}
-          H ${positions[edge.to].x + nodeWidth / 2}
-          V ${positions[edge.to].y}
-        `"
-        stroke="#666"
-        fill="none"
-        stroke-width="1"
-      />
-    </svg>
+  <!-- Wrapper en pleine largeur qui centre son contenu -->
+  <div class="graph-wrapper">
+    <!-- Conteneur de taille fixe (graphWidth × graphHeight) centré -->
+    <div class="graph-content" :style="{ width: graphWidth + 'px', height: graphHeight + 'px' }">
+      <!-- Couche SVG pour tracer les lignes -->
+      <svg class="edges-layer" :width="graphWidth" :height="graphHeight">
+        <path
+          v-for="edge in edges"
+          :key="edge.from + '->' + edge.to"
+          :d="`
+            M ${positions[edge.from].x + nodeWidth / 2} ${positions[edge.from].y + nodeHeight}
+            V ${positions[edge.to].y + nodeHeight / 2}
+            H ${positions[edge.to].x + nodeWidth / 2}
+            V ${positions[edge.to].y}
+          `"
+          stroke="#666"
+          fill="none"
+          stroke-width="1"
+        />
+      </svg>
 
-    <!-- Couche HTML pour afficher les cartes -->
-    <div class="nodes-layer">
-      <div
-        v-for="step in steps"
-        :key="step.id"
-        class="node-card"
-        :style="{
-          left: positions[step.id].x + 'px',
-          top: positions[step.id].y + 'px',
-        }"
-      >
-        <!-- Titre et sous-titre de l'étape -->
-        <h4>{{ step.title }}</h4>
-        <p>{{ step.subTitle }}</p>
-
-        <!-- Compteur de contenus, protégé contre un step.Contents null -->
-        <span class="content-count">
-          {{ (step.Contents ?? []).length }} contenu
-          <span v-if="(step.Contents ?? []).length > 1">s</span>
-        </span>
+      <!-- Nœuds -->
+      <div class="nodes-layer">
+        <div
+          v-for="step in steps"
+          :key="step.id"
+          class="node-card"
+          :style="{
+            left: positions[step.id].x + 'px',
+            top: positions[step.id].y + 'px',
+          }"
+          @click="emit('select', step.id)"
+        >
+          <h4>{{ step.title }}</h4>
+          <p>{{ step.subTitle }}</p>
+          <span class="content-count">
+            {{ (step.Contents ?? []).length }} contenu
+            <span v-if="(step.Contents ?? []).length > 1">s</span>
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -155,11 +166,17 @@ const graphHeight = computed(() => {
 <style scoped>
 /* Conteneur principal centré, dimensions dynamiques */
 .graph-wrapper {
-  position: relative;
-  margin: var(--spacing-2xl) auto;
-  background-color: var(--color-darker-charcoal);
+  width: 100%;
   display: flex;
   justify-content: center;
+  margin: var(--spacing-2xl) 0;
+  background-color: var(--color-darker-charcoal);
+  position: relative;
+}
+
+/* box qui reçoit la taille du graphe */
+.graph-content {
+  position: relative;
 }
 
 /* SVG positionné absolu pour recouvrir tout le graphe */
@@ -221,5 +238,54 @@ const graphHeight = computed(() => {
     transform 0.2s ease-in-out,
     border-color 0.2s ease-in-out;
   box-shadow: 0 6px 12px rgba(255, 255, 255, 0.15);
+}
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+/* panel qui glisse depuis la droite */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 100%;
+  background: var(--color-darker-charcoal);
+  padding: var(--spacing-lg);
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.3);
+  z-index: 101;
+  overflow-y: auto;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: var(--color-light-gray);
+  font-size: 1.5rem;
+  float: right;
+  cursor: pointer;
+}
+
+/* style de la liste de contenus */
+.drawer h3 {
+  color: var(--color-cream);
+  margin-bottom: var(--spacing-md);
+}
+.drawer ul {
+  list-style: none;
+  padding: 0;
+}
+.drawer li + li {
+  margin-top: var(--spacing-sm);
+}
+.drawer a {
+  color: var(--color-gold);
+  text-decoration: none;
 }
 </style>
