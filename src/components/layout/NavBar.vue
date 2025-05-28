@@ -20,8 +20,9 @@
         <router-link v-if="!userStore.profile" to="/auth/login">
           <NavButton :to="`/auth/login`">Login</NavButton>
         </router-link>
-        <div v-else class="profile-wrapper" @click="goToProfile">
+        <div v-else class="profile-wrapper" @click="toggleUserMenu">
           <img :src="userStore.profile.profilePicture" alt="Profile" class="profile-pic" />
+          <UserMenu v-if="isMenuOpen" @close="isMenuOpen = false" />
         </div>
       </div>
 
@@ -38,6 +39,7 @@ import { ref } from 'vue'
 import NavButton from '../ui/NavButton.vue'
 import { useUserStore } from '@/stores/user'
 import { useRouter } from 'vue-router'
+import UserMenu from '@/components/ui/UserMenu.vue'
 
 // State for mobile menu
 const isMenuOpen = ref(false)
@@ -46,6 +48,10 @@ const router = useRouter()
 
 // Toggle mobile menu
 const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
+const toggleUserMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
 }
 

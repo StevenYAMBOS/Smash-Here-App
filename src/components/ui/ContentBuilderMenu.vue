@@ -1,0 +1,89 @@
+<!-- src/components/ui/ContentBuilderMenu.vue -->
+
+<template>
+  <nav class="builder-menu">
+    <ul>
+      <li>
+        <div class="menu-header" @click="toggle('roadmaps')">
+          Roadmaps
+          <i :class="openSection === 'roadmaps' ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+        </div>
+        <ul v-if="openSection === 'roadmaps'" class="submenu">
+          <li @click="select('create-roadmap')">Create a new roadmap</li>
+          <li @click="select('list-roadmaps')">Your roadmaps</li>
+        </ul>
+      </li>
+      <li>
+        <div class="menu-header" @click="toggle('steps')">
+          Steps
+          <i :class="openSection === 'steps' ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+        </div>
+        <ul v-if="openSection === 'steps'" class="submenu">
+          <li @click="select('create-step')">Create a new step</li>
+          <li @click="select('list-steps')">Your steps</li>
+        </ul>
+      </li>
+      <li>
+        <div class="menu-header" @click="toggle('contents')">
+          Contents
+          <i :class="openSection === 'contents' ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+        </div>
+        <ul v-if="openSection === 'contents'" class="submenu">
+          <li @click="select('create-content')">Create a new content</li>
+          <li @click="select('list-contents')">Your contents</li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</template>
+
+<script setup lang="ts">
+import { ref, defineEmits, defineProps } from 'vue'
+
+const props = defineProps<{ selected: string }>()
+// const emit = defineEmits(['update:selected', 'navigate'] as const)
+const emit = defineEmits<{
+  (e: 'update:selected', tab: string): void
+  (e: 'navigate', tab: string): void
+}>()
+
+const openSection = ref<string | null>(null)
+
+function toggle(section: string) {
+  openSection.value = openSection.value === section ? null : section
+}
+
+function select(tab: string) {
+  emit('update:selected', tab)
+  emit('navigate', tab)
+}
+</script>
+
+<style scoped>
+.builder-menu {
+  width: 220px;
+  background: var(--color-charcoal);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm);
+}
+.builder-menu .menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  color: var(--color-cream);
+}
+.submenu {
+  list-style: none;
+  padding-left: var(--spacing-md);
+}
+.submenu li {
+  padding: var(--spacing-xs) 0;
+  cursor: pointer;
+  color: var(--color-light-gray);
+}
+.submenu li:hover {
+  color: var(--color-cream);
+}
+</style>

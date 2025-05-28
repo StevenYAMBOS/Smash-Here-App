@@ -10,6 +10,8 @@ import RegisterView from '@/views/Auth/RegisterView.vue'
 import GamesListView from '@/views/Game/GamesListView.vue'
 import RoadmapsListView from '@/views/Roadmaps/RoadmapsListView.vue'
 import RoadmapView from '@/views/Roadmap/RoadmapView.vue'
+import UserAccount from '@/views/User/UserAccount.vue'
+import ContentBuilderView from '@/views/User/ContentBuilderView.vue'
 
 const routes = [
   {
@@ -17,6 +19,8 @@ const routes = [
     component: DefaultLayout,
     children: [
       { path: '', name: 'home', component: HomeView },
+      { path: '/profile', name: 'profile', component: UserAccount },
+      { path: '/dashboard', name: 'dashboard', component: ContentBuilderView },
       {
         path: '/games',
         name: 'games',
