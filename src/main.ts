@@ -9,15 +9,20 @@ import PrimeVue from 'primevue/config'
 import 'primeicons/primeicons.css'
 import ToastPlugin from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
+import 'vue-multiselect/dist/vue-multiselect.css'
+import Aura from '@primeuix/themes/aura'
 
 const app = createApp(App)
 const pinia = createPinia()
 app.use(pinia)
-app.use(PrimeVue)
+app.use(PrimeVue, {
+  theme: {
+    preset: Aura,
+  },
+})
 app.use(router)
 app.use(ToastPlugin, { position: 'top-right' })
 
-// → Hydratation du userStore avant le montage
 import { useUserStore } from '@/stores/user'
 const userStore = useUserStore()
 if (userStore.token) {

@@ -2,6 +2,7 @@
 
 <template>
   <nav class="builder-menu">
+    <h2>Content Builder</h2>
     <ul>
       <li>
         <div class="menu-header" @click="toggle('roadmaps')">
@@ -62,9 +63,15 @@ function select(tab: string) {
 <style scoped>
 .builder-menu {
   width: 220px;
-  background: var(--color-charcoal);
+  background: var(--color-dark-gray);
   border-radius: var(--radius-md);
   padding: var(--spacing-sm);
+}
+.builder-menu h2 {
+  color: var(--color-gold);
+  padding: var(--spacing-md);
+  font-weight: bold;
+  font-family: var(--font-primary);
 }
 .builder-menu .menu-header {
   display: flex;
@@ -73,13 +80,31 @@ function select(tab: string) {
   padding: var(--spacing-sm) var(--spacing-md);
   cursor: pointer;
   color: var(--color-cream);
+  font-family: var(--font-secondary);
+  font-weight: bold;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  padding: var(--spacing-md);
+  cursor: pointer;
+  color: var(--color-cream);
+}
+li:hover {
+  background: var(--color-darker-charcoal);
+  font-weight: bold;
+  border-radius: var(--radius-md);
 }
 .submenu {
   list-style: none;
   padding-left: var(--spacing-md);
 }
 .submenu li {
-  padding: var(--spacing-xs) 0;
+  padding: var(--spacing-md) 0;
   cursor: pointer;
   color: var(--color-light-gray);
 }

@@ -1,6 +1,7 @@
 <!-- src/components/ui/AccountMenu.vue -->
 <template>
   <nav class="account-menu">
+    <h2>User Account</h2>
     <ul>
       <li
         v-for="item in items"
@@ -21,23 +22,31 @@ const props = defineProps<{ selected: string }>()
 const emit = defineEmits<(e: 'update:selected', val: string) => void>()
 
 const items = [
-  { key: 'Informations', label: 'Informations' },
-  { key: 'My roadmaps', label: 'My roadmaps' },
-  { key: 'Bookmarks', label: 'Bookmarks' },
-  { key: 'Chats', label: 'Chats' },
+  { key: 'informations', label: 'Informations' },
+  { key: 'roadmaps', label: 'My roadmaps' },
+  { key: 'bookmarks', label: 'Bookmarks' },
+  // { key: 'chats', label: 'Chats' },
 ]
 
 function select(key: string) {
   emit('update:selected', key)
 }
+
+console.log(props)
 </script>
 
 <style scoped>
 .account-menu {
   width: 200px;
-  background: var(--color-charcoal);
+  background: var(--color-dark-gray);
   border-radius: var(--radius-md);
   overflow: hidden;
+}
+.account-menu h2 {
+  color: var(--color-gold);
+  padding: var(--spacing-md);
+  font-weight: bold;
+  font-family: var(--font-primary);
 }
 .account-menu ul {
   list-style: none;

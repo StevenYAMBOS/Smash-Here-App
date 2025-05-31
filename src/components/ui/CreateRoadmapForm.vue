@@ -56,7 +56,7 @@ async function submit() {
     steps: selectedSteps.value,
     contents: selectedContents.value.map((c) => c.id),
   }
-  await fetch(`${import.meta.env.VITE_API_URL}/roadmaps`, {
+  await fetch(`${import.meta.env.VITE_API_URL}/roadmap`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),

@@ -21,6 +21,7 @@ export type User = {
   RoadmapsStarted: string[]
   RoadmapsCreated: string[]
   StepsCreated: string[]
+  ContentsCreated: string[]
   Comments: string[]
 }
 
