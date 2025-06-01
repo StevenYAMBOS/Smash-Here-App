@@ -1,57 +1,37 @@
-<!-- src/components/ui/UserRoadmapCard.vue -->
+<!-- src/components/ui/UserStepCard.vue -->
 
 <template>
-  <div class="user-roadmap-card">
-    <div class="cover-wrapper">
-      <img :src="roadmap.cover" :alt="roadmap.title" class="cover" />
-    </div>
+  <div class="user-step-card">
     <div class="info">
-      <h3 class="title">{{ roadmap.title }}</h3>
-      <p class="subTitle">{{ roadmap.subTitle }}</p>
-      <p class="description">{{ roadmap.description }}</p>
+      <h3 class="title">{{ step.title }}</h3>
+      <p class="subTitle">{{ step.subTitle }}</p>
+      <p class="description">{{ step.description }}</p>
       <div class="meta">
-        <span>
-          <i class="pi pi-list"></i>
-          {{ (roadmap.Steps ?? []).length }} steps
-        </span>
-        <span v-if="props.showPublished">
-          <i class="pi pi-check-circle"></i>
-          {{ roadmap.published ? 'Published' : 'Draft' }}
-        </span>
-        <span v-if="props.showPremium">
-          <i class="pi pi-star"></i>
-          {{ roadmap.premium ? 'Premium' : 'Free' }}
-        </span>
+        <span> <i class="pi pi-bookmark" /> {{ (step.Roadmaps ?? []).length }} roadmaps </span>
+        <span> <i class="pi pi-file" /> {{ (step.Contents ?? []).length }} contents </span>
       </div>
     </div>
     <div class="actions">
-      <Button
-        v-if="showView"
-        icon="pi pi-eye"
-        class="p-button-text"
-        title="Show"
-        @click="$emit('view', roadmap.id)"
-      />
       <Button
         v-if="showStats"
         icon="pi pi-chart-bar"
         class="p-button-text"
         title="Analytics"
-        @click="$emit('stats', roadmap.id)"
+        @click="$emit('stats', step.id)"
       />
       <Button
         v-if="showEdit"
         icon="pi pi-pencil"
         class="p-button-text"
         title="Edit"
-        @click="$emit('edit', roadmap.id)"
+        @click="$emit('edit', step.id)"
       />
       <Button
         v-if="showDelete"
         icon="pi pi-trash"
         class="p-button-text p-button-danger"
         title="Delete"
-        @click="$emit('delete', roadmap.id)"
+        @click="$emit('delete', step.id)"
       />
     </div>
   </div>
@@ -59,37 +39,30 @@
 
 <script setup lang="ts">
 import { defineProps, defineEmits, withDefaults } from 'vue'
-import type { Roadmap } from '@/types/collections'
+import type { Step } from '@/types/collections'
 import Button from 'primevue/button'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = withDefaults(
   defineProps<{
-    roadmap: Roadmap
-    showView?: boolean
+    step: Step
     showStats?: boolean
     showEdit?: boolean
     showDelete?: boolean
-    showPublished?: boolean
-    showPremium?: boolean
   }>(),
-  {
-    showPublished: true,
-    showPremium: true,
-  },
+  {},
 )
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const emit = defineEmits<{
-  (e: 'view', id: string): void
   (e: 'stats', id: string): void
   (e: 'edit', id: string): void
   (e: 'delete', id: string): void
 }>()
-
-console.log(props, emit)
 </script>
 
 <style scoped>
-.user-roadmap-card {
+.user-step-card {
   display: flex;
   align-items: stretch;
   background: var(--color-charcoal);
@@ -102,19 +75,14 @@ console.log(props, emit)
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
-.user-roadmap-card:hover {
+.user-step-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
-
-.cover-wrapper {
-  flex-shrink: 0;
-  position: relative;
-}
-.cover {
-  width: 200px;
-  height: 120px;
-  object-fit: cover;
+.user-step-card::before {
+  content: '';
+  width: 5px;
+  background: var(--color-gold);
 }
 
 .info {
@@ -128,7 +96,6 @@ console.log(props, emit)
     'meta meta';
   grid-row-gap: var(--spacing-sm);
 }
-
 .title {
   grid-area: title;
   font-size: var(--font-size-2xl);
@@ -136,7 +103,6 @@ console.log(props, emit)
   font-family: var(--font-primary);
   margin: 0;
 }
-
 .subTitle {
   grid-area: subTitle;
   font-size: var(--font-size-base);
@@ -145,22 +111,19 @@ console.log(props, emit)
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-sm);
 }
-
 .description {
   grid-area: description;
   font-size: var(--font-size-sm);
   color: var(--color-medium-gray);
   margin: 0;
-  word-break: break-all;
+  white-space: pre-wrap;
 }
-
 .meta {
   grid-area: meta;
   display: flex;
   gap: var(--spacing-xl);
   margin-top: var(--spacing-sm);
 }
-
 .meta span {
   display: flex;
   align-items: center;
@@ -168,7 +131,6 @@ console.log(props, emit)
   font-size: var(--font-size-sm);
   color: var(--color-light-gray);
 }
-
 .meta i {
   color: var(--color-gold);
   font-size: var(--font-size-base);
@@ -181,7 +143,6 @@ console.log(props, emit)
   padding-right: var(--spacing-md);
   gap: var(--spacing-md);
 }
-
 .actions ::v-deep(.p-button-text) {
   background: var(--color-darker-charcoal);
   border: none;
@@ -190,17 +151,14 @@ console.log(props, emit)
     background-color 0.2s ease,
     opacity 0.2s ease;
 }
-
 .actions ::v-deep(.p-button-text:hover) {
   background: var(--color-dark-gray) !important;
   opacity: 0.8;
   color: var(--color-gold) !important;
 }
-
 .actions ::v-deep(.p-button-danger) {
   color: var(--color-cream) !important;
 }
-
 .actions ::v-deep(.p-button-danger:hover) {
   background: var(--color-light-yellow) !important;
   color: var(--color-charcoal) !important;

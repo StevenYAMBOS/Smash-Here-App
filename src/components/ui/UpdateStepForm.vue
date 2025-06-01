@@ -1,33 +1,56 @@
-<!-- src/components/ui/UpdateContentForm.vue -->
+<!-- src/components/ui/UpdateStepForm.vue -->
 
 <template>
-  <form @submit.prevent="submit" class="update-content-form">
-    <h2>Edit Content</h2>
+  <form @submit.prevent="submit" class="update-step-form">
+    <h2>Edit Step</h2>
     <div class="field">
       <label for="title">Title</label>
       <input id="title" v-model="title" type="text" required />
     </div>
+
     <div class="field">
-      <label for="type">Type</label>
-      <select id="type" v-model="type" required>
-        <option value="" disabled>Select a type</option>
-        <option value="video">Video</option>
-        <option value="article">Article</option>
-        <option value="page">Page</option>
-        <option value="roadmap">Roadmap</option>
-      </select>
+      <label for="subTitle">Subtitle</label>
+      <input id="subTitle" v-model="subTitle" type="text" required />
     </div>
+
     <div class="field">
-      <label for="link">Link</label>
-      <input id="link" v-model="link" type="url" required />
+      <label for="description">Description</label>
+      <textarea id="description" v-model="description" type="text" required />
     </div>
+
     <div class="field">
-      <label>Associate with steps</label>
+      <label>Associate with roadmaps</label>
       <MultiSelect
-        id="over_label"
+        id="over_label_roadmaps"
         class="p-multiselect-field"
-        v-model="selectedSteps"
-        :options="availableSteps"
+        v-model="selectedRoadmaps"
+        :options="availableRoadmaps"
+        optionLabel="title"
+        optionValue="id"
+        display="chip"
+        size="normal"
+        placeholder="Select steps"
+        searchable
+        filter
+        showClear
+        variant="filled"
+        track-by="title"
+      >
+        <!-- Slot for each option in the dropdown -->
+        <template #option="slotProps">
+          <i class="pi pi-sitemap" style="margin-right: 0.5rem; color: var(--color-gold)"></i>
+          {{ slotProps.option.title }}
+        </template>
+      </MultiSelect>
+    </div>
+
+    <div class="field">
+      <label>Associate with contents</label>
+      <MultiSelect
+        id="over_label_content"
+        class="p-multiselect-field"
+        v-model="selectedContents"
+        :options="availableContents"
         optionLabel="title"
         optionValue="id"
         display="chip"
@@ -54,7 +77,7 @@
         icon="pi-times-circle"
         iconPosition="left"
         variant="secondary"
-        @click.prevent="emit('navigate', 'list-contents')"
+        @click.prevent="emit('navigate', 'list-steps')"
       />
       <SubmitButton
         :label="loading ? 'Saving…' : 'Save changes'"
@@ -74,76 +97,95 @@ import { useUserStore } from '@/stores/user'
 import { useToast } from 'vue-toast-notification'
 import MultiSelect from 'primevue/multiselect'
 import SubmitButton from './SubmitButton.vue'
-import type { Content, Step } from '@/types/collections'
+import type { Step, Content, Roadmap } from '@/types/collections'
 import { defineProps } from 'vue'
 
 const toast = useToast()
 const userStore = useUserStore()
 
 const props = defineProps<{
-  content: Content
+  step: Step
 }>()
 
 const loading = ref(false)
-const title = ref(props.content.title)
-const type = ref(props.content.type)
-const link = ref(props.content.link)
-const selectedSteps = ref<string[]>([...(props.content.Steps || [])])
+const title = ref(props.step.title)
+const subTitle = ref(props.step.subTitle)
+const description = ref(props.step.description)
+const selectedRoadmaps = ref<string[]>([...(props.step.Roadmaps || [])])
+const selectedContents = ref<string[]>([...(props.step.Contents || [])])
 
 // On s'assure d'avoir la liste complète des steps de l'utilisateur
 onMounted(async () => {
-  if (!userStore.stepsCreated?.length) {
-    await userStore.fetchUserSteps()
-  }
+  await userStore.fetchUserRoadmaps()
+  await userStore.fetchUserContents()
 })
 
 // Options pour le MultiSelect
-const availableSteps = computed<Step[]>(() => userStore.stepsCreated || [])
+const availableRoadmaps = computed<Roadmap[]>(() => userStore.roadmapsCreated || [])
+const availableContents = computed<Content[]>(() => userStore.contentsCreated || [])
 
 async function submit() {
   loading.value = true
   try {
-    // 1) Mettre à jour les champs du content
+    // 1) Mettre à jour les champs du step
     await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/content/${props.content.id}`,
+      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${props.step.id}`,
       {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
+          'Step-Type': 'application/json',
           Authorization: `Bearer ${userStore.token}`,
         },
-        body: JSON.stringify({ title: title.value, type: type.value, link: link.value }),
+        body: JSON.stringify({
+          title: title.value,
+          subTitle: subTitle.value,
+          description: description.value,
+        }),
       },
     )
 
-    // 2) Mettre à jour l'association steps
+    // 2) Mettre à jour l'association roadmaps
     await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/contents/${props.content.id}/steps`,
+      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/steps/${props.step.id}/roadmaps`,
       {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
+          'Step-Type': 'application/json',
           Authorization: `Bearer ${userStore.token}`,
         },
-        body: JSON.stringify({ Steps: selectedSteps.value }),
+        body: JSON.stringify({ Roadmaps: selectedRoadmaps.value }),
+      },
+    )
+
+    // 2) Mettre à jour l'association contents
+    await fetch(
+      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/contents/${props.step.id}/steps`,
+      {
+        method: 'PUT',
+        headers: {
+          'Step-Type': 'application/json',
+          Authorization: `Bearer ${userStore.token}`,
+        },
+        body: JSON.stringify({ Contents: selectedContents.value }),
       },
     )
 
     // 3) Mettre à jour le store
-    const idx = userStore.contentsCreated.findIndex((c) => c.id === props.content.id)
+    const idx = userStore.stepsCreated.findIndex((c) => c.id === props.step.id)
     if (idx !== -1) {
-      userStore.contentsCreated[idx] = {
-        ...userStore.contentsCreated[idx],
+      userStore.stepsCreated[idx] = {
+        ...userStore.stepsCreated[idx],
         title: title.value,
-        type: type.value,
-        link: link.value,
-        Steps: [...selectedSteps.value],
+        subTitle: subTitle.value,
+        description: description.value,
+        Roadmaps: [...selectedRoadmaps.value],
+        Contents: [...selectedContents.value],
       }
     }
 
-    toast.success('Content updated successfully!')
+    toast.success('Step updated successfully!')
     // repasser au listing
-    emit('navigate', 'list-contents')
+    emit('navigate', 'list-steps')
   } catch (err) {
     console.error(err)
     toast.error('Update failed')
@@ -170,7 +212,7 @@ form h2 {
 }
 
 /* Form Card */
-.update-content-form {
+.update-step-form {
   width: 100%;
   background: var(--color-darker-charcoal);
   padding: var(--spacing-2xl);
@@ -191,6 +233,7 @@ form h2 {
   font-weight: bold;
   margin-bottom: var(--spacing-md);
 }
+
 .field input,
 .field select {
   width: 100%;
@@ -211,7 +254,26 @@ form h2 {
   border-color: var(--color-gold);
   background: var(--color-dark-gray);
 }
-
+.field textarea,
+.field select {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-medium-gray);
+  background: var(--color-charcoal);
+  color: var(--color-cream);
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+.field textarea:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  background: var(--color-dark-gray);
+}
 /* =============================
    PrimeVue MultiSelect Styling
    ============================= */
@@ -342,7 +404,7 @@ form h2 {
    ============================= */
 .actions-row {
   display: flex;
-  justify-content: flex-start;
+  justify-step: flex-start;
   gap: var(--spacing-md);
   margin-top: var(--spacing-lg);
 }
@@ -350,7 +412,7 @@ form h2 {
   margin-right: var(--spacing-sm);
 }
 
-/* Ajoutez ces règles à la fin du <style scoped> de UpdateContentForm.vue */
+/* Ajoutez ces règles à la fin du <style scoped> de UpdateStepForm.vue */
 
 /* 1. Override du champ de recherche à l’intérieur du MultiSelect (bordure verte par défaut) */
 .p-multiselect-filter {

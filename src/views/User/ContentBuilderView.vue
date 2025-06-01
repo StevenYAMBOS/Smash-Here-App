@@ -5,12 +5,77 @@
     <ContentBuilderMenu v-model:selected="selectedTab" @navigate="onNavigate" />
 
     <div class="builder-content">
+      <!-- ***************** ROADMAPS ***************** -->
       <template v-if="selectedTab === 'create-roadmap'">
+        <h2>Create a new roadmap</h2>
         <CreateRoadmapForm />
       </template>
       <template v-else-if="selectedTab === 'list-roadmaps'">
-        <!-- <UserRoadmapsListView /> -->
+        <h2>Your roadmaps</h2>
+        <SearchBar placeholder="Search for your roadmaps" v-model="searchText" />
+
+        <UserRoadmapCard
+          v-for="rm in filteredRoadmaps"
+          :key="rm.id"
+          :roadmap="rm"
+          :showStats="true"
+          :showEdit="true"
+          :showDelete="true"
+          @stats="(id) => router.push(`/dashboard/roadmpas/${id}`)"
+          @edit="onEditRoadmap"
+          @delete="openConfirm"
+        />
       </template>
+      <!-- Onglet fantôme pour l'édition -->
+      <template v-else-if="selectedTab === 'update-roadmap'">
+        <UpdateRoadmapForm v-if="editingRoadmap" :step="editingRoadmap" @navigate="onNavigate" />
+      </template>
+      <!-- zone modale de confirmation -->
+      <div v-if="confirmVisible" class="confirm-backdrop" @click="cancelDelete"></div>
+      <div v-if="confirmVisible" class="confirm-modal">
+        <p>Are you sure you want to delete this roadmap ?</p>
+        <div class="confirm-actions">
+          <button class="btn-yes" @click="proceedDelete">Yes</button>
+          <button class="btn-no" @click="cancelDelete">No</button>
+        </div>
+      </div>
+
+      <!-- ***************** ÉTAPES ***************** -->
+      <template v-if="selectedTab === 'create-step'">
+        <h2>Create a new step</h2>
+        <CreateStepForm />
+      </template>
+      <template v-else-if="selectedTab === 'list-steps'">
+        <h2>Your steps</h2>
+        <SearchBar placeholder="Search for your roadmaps" v-model="searchText" />
+
+        <UserStepCard
+          v-for="rm in filteredSteps"
+          :key="rm.id"
+          :step="rm"
+          :showStats="true"
+          :showEdit="true"
+          :showDelete="true"
+          @stats="(id) => router.push(`/dashboard/steps/${id}`)"
+          @edit="onEditStep"
+          @delete="openConfirm"
+        />
+      </template>
+      <!-- Onglet fantôme pour l'édition -->
+      <template v-else-if="selectedTab === 'update-step'">
+        <UpdateStepForm v-if="editingStep" :step="editingStep" @navigate="onNavigate" />
+      </template>
+      <!-- zone modale de confirmation -->
+      <div v-if="confirmVisible" class="confirm-backdrop" @click="cancelDelete"></div>
+      <div v-if="confirmVisible" class="confirm-modal">
+        <p>Are you sure you want to delete this step ?</p>
+        <div class="confirm-actions">
+          <button class="btn-yes" @click="proceedDelete">Yes</button>
+          <button class="btn-no" @click="cancelDelete">No</button>
+        </div>
+      </div>
+
+      <!-- ***************** CONTENUS ***************** -->
       <template v-if="selectedTab === 'create-content'">
         <CreateContentForm />
       </template>
@@ -30,19 +95,17 @@
           @delete="openConfirm"
         />
       </template>
-
       <!-- Onglet fantôme pour l'édition -->
       <template v-else-if="selectedTab === 'update-content'">
         <UpdateContentForm v-if="editingContent" :content="editingContent" @navigate="onNavigate" />
       </template>
-
       <!-- zone modale de confirmation -->
       <div v-if="confirmVisible" class="confirm-backdrop" @click="cancelDelete"></div>
       <div v-if="confirmVisible" class="confirm-modal">
-        <p>Êtes-vous sûr de vouloir supprimer ce contenu ?</p>
+        <p>Are you sure you want to delete this content ?</p>
         <div class="confirm-actions">
-          <button class="btn-yes" @click="proceedDelete">Oui</button>
-          <button class="btn-no" @click="cancelDelete">Non</button>
+          <button class="btn-yes" @click="proceedDelete">Yes</button>
+          <button class="btn-no" @click="cancelDelete">No</button>
         </div>
       </div>
     </div>
@@ -53,19 +116,24 @@
 import { ref, onMounted } from 'vue'
 import ContentBuilderMenu from '@/components/ui/ContentBuilderMenu.vue'
 import CreateRoadmapForm from '@/components/ui/CreateRoadmapForm.vue'
+import UserRoadmapCard from '@/components/ui/UserRoadmapCard.vue'
 import CreateContentForm from '@/components/ui/CreateContentForm.vue'
+import CreateStepForm from '@/components/ui/CreateStepForm.vue'
 import UserContentCard from '@/components/ui/UserContentCard.vue'
+import UserStepCard from '@/components/ui/UserStepCard.vue'
 import UpdateContentForm from '@/components/ui/UpdateContentForm.vue'
+import UpdateStepForm from '@/components/ui/UpdateStepForm.vue'
 import { computed } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useRouter } from 'vue-router'
 import SearchBar from '@/components/ui/SearchBar.vue'
-import type { Content } from '@/types/collections'
-// import UserRoadmapsListView from '@/components/ui/UserRoadmapsListView.vue'
+import type { Content, Step, Roadmap } from '@/types/collections'
 
 const selectedTab = ref('create-roadmap')
 // nouvel état pour l’édition
 const editingContent = ref<Content | null>(null)
+const editingStep = ref<Step | null>(null)
+const editingRoadmap = ref<Roadmap | null>(null)
 const router = useRouter()
 const userStore = useUserStore()
 
@@ -96,6 +164,20 @@ async function proceedDelete() {
   cancelDelete()
 }
 
+const filteredRoadmaps = computed(() => {
+  const listOfRoadmaps = userStore.roadmapsCreated || []
+  if (!searchText.value.trim()) return listOfRoadmaps
+  return listOfRoadmaps.filter((rm) =>
+    rm.title.toLowerCase().includes(searchText.value.toLowerCase()),
+  )
+})
+
+const filteredSteps = computed(() => {
+  const listOfSteps = userStore.stepsCreated || []
+  if (!searchText.value.trim()) return listOfSteps
+  return listOfSteps.filter((rm) => rm.title.toLowerCase().includes(searchText.value.toLowerCase()))
+})
+
 const filteredContents = computed(() => {
   const listOfContents = userStore.contentsCreated || []
   if (!searchText.value.trim()) return listOfContents
@@ -106,6 +188,24 @@ const filteredContents = computed(() => {
 
 function onNavigate(tab: string) {
   selectedTab.value = tab
+}
+
+// appelé par le <UserRoadmapCard @edit>
+function onEditRoadmap(id: string) {
+  const c = userStore.roadmapsCreated.find((c) => c.id === id)
+  if (c) {
+    editingRoadmap.value = c
+    selectedTab.value = 'update-roadmap'
+  }
+}
+
+// appelé par le <UserStepCard @edit>
+function onEditStep(id: string) {
+  const c = userStore.stepsCreated.find((c) => c.id === id)
+  if (c) {
+    editingStep.value = c
+    selectedTab.value = 'update-step'
+  }
 }
 
 // appelé par le <UserContentCard @edit>

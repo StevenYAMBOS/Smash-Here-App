@@ -4,10 +4,13 @@
   <div class="user-content-card">
     <div class="info">
       <h3 class="title">{{ content.title }}</h3>
-      <p class="type">Type of content : {{ content.type }}</p>
-      <p class="type">{{ content.link }}</p>
+      <p class="type">{{ content.type }}</p>
+      <p class="link">{{ content.link }}</p>
       <div class="meta">
-        <span>Associated with {{ (content.Steps ?? []).length }} steps</span>
+        <span>
+          <i class="pi pi-list"></i>
+          {{ (content.Steps ?? []).length }} steps
+        </span>
       </div>
     </div>
     <div class="actions">
@@ -66,38 +69,38 @@ console.log(props, emit)
 <style scoped>
 .user-content-card {
   display: flex;
+  align-items: stretch;
   background: var(--color-charcoal);
   border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   margin-bottom: var(--spacing-lg);
-  padding: var(--spacing-md);
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
-.user-content-card::before {
-  content: '';
-  width: 4px;
-  background: var(--color-gold);
-  border-top-left-radius: var(--radius-md);
-  border-bottom-left-radius: var(--radius-md);
+
+.user-content-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 .user-content-card::before {
   content: '';
-  width: 4px;
+  width: 5px;
   background: var(--color-gold);
-  border-top-left-radius: var(--radius-md);
-  border-bottom-left-radius: var(--radius-md);
 }
 
-/* SECTION infos repensée */
 .info {
   flex: 1;
   padding: var(--spacing-md) var(--spacing-lg);
   display: grid;
   grid-template-areas:
-    'title title'
-    'type link'
-    'meta meta';
+    'title'
+    'type'
+    'link'
+    'meta';
   grid-gap: var(--spacing-sm);
 }
 
@@ -120,42 +123,63 @@ console.log(props, emit)
 
 .link {
   grid-area: link;
-  font-size: var(--font-size-sm);
-  color: var(--color-gold);
+  font-size: var(--font-size-base);
+  color: var(--color-light-gray);
+  background: var(--color-darker-charcoal);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
   word-break: break-all;
-  text-decoration: underline;
 }
 
 .meta {
   grid-area: meta;
   display: flex;
-  gap: var(--spacing-lg);
-  align-items: center;
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-sm);
 }
 
 .meta span {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
   font-size: var(--font-size-sm);
-  color: var(--color-medium-gray);
+  color: var(--color-light-gray);
+}
+
+.meta i {
+  color: var(--color-gold);
+  font-size: var(--font-size-base);
 }
 
 .actions {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
+  padding-right: var(--spacing-md);
+  gap: var(--spacing-md);
 }
-.actions button {
-  margin-right: var(--spacing-sm);
-  padding: var(--spacing-xs) var(--spacing-sm);
+
+.actions ::v-deep(.p-button-text) {
+  background: var(--color-darker-charcoal);
   border: none;
-  border-radius: var(--radius-sm);
-  background: var(--color-cream);
-  color: var(--color-black);
-  cursor: pointer;
+  color: var(--color-cream);
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .actions ::v-deep(.p-button-text:hover) {
-  opacity: 0.7;
-  transition: background-color 0.3s ease-in-out;
+  background: var(--color-dark-gray) !important;
+  opacity: 0.8;
+  color: var(--color-gold) !important;
+}
+
+.actions ::v-deep(.p-button-danger) {
   color: var(--color-cream) !important;
+}
+
+.actions ::v-deep(.p-button-danger:hover) {
+  background: var(--color-light-yellow) !important;
+  color: var(--color-charcoal) !important;
 }
 </style>
