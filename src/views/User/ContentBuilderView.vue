@@ -35,7 +35,7 @@
       <div v-if="confirmVisible" class="confirm-modal">
         <p>Are you sure you want to delete this roadmap ?</p>
         <div class="confirm-actions">
-          <button class="btn-yes" @click="proceedDelete">Yes</button>
+          <button class="btn-yes" @click="proceedDeleteRoadmap">Yes</button>
           <button class="btn-no" @click="cancelDelete">No</button>
         </div>
       </div>
@@ -70,7 +70,7 @@
       <div v-if="confirmVisible" class="confirm-modal">
         <p>Are you sure you want to delete this step ?</p>
         <div class="confirm-actions">
-          <button class="btn-yes" @click="proceedDelete">Yes</button>
+          <button class="btn-yes" @click="proceedDeleteStep">Yes</button>
           <button class="btn-no" @click="cancelDelete">No</button>
         </div>
       </div>
@@ -104,7 +104,7 @@
       <div v-if="confirmVisible" class="confirm-modal">
         <p>Are you sure you want to delete this content ?</p>
         <div class="confirm-actions">
-          <button class="btn-yes" @click="proceedDelete">Yes</button>
+          <button class="btn-yes" @click="proceedDeleteContent">Yes</button>
           <button class="btn-no" @click="cancelDelete">No</button>
         </div>
       </div>
@@ -156,8 +156,24 @@ function cancelDelete() {
   confirmVisible.value = false
 }
 
-// Confirme et exécute la suppression
-async function proceedDelete() {
+// Suppression roadmap
+async function proceedDeleteRoadmap() {
+  if (pendingDeleteId.value) {
+    await userStore.deleteRoadmap(pendingDeleteId.value)
+  }
+  cancelDelete()
+}
+
+// Suppression étape
+async function proceedDeleteStep() {
+  if (pendingDeleteId.value) {
+    await userStore.deleteStep(pendingDeleteId.value)
+  }
+  cancelDelete()
+}
+
+// Suppression contenu
+async function proceedDeleteContent() {
   if (pendingDeleteId.value) {
     await userStore.deleteContent(pendingDeleteId.value)
   }
@@ -201,9 +217,9 @@ function onEditRoadmap(id: string) {
 
 // appelé par le <UserStepCard @edit>
 function onEditStep(id: string) {
-  const c = userStore.stepsCreated.find((c) => c.id === id)
-  if (c) {
-    editingStep.value = c
+  const s = userStore.stepsCreated.find((s) => s.id === id)
+  if (s) {
+    editingStep.value = s
     selectedTab.value = 'update-step'
   }
 }

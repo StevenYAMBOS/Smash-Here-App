@@ -15,7 +15,7 @@
 
     <div class="field">
       <label for="description">Description</label>
-      <textarea id="description" v-model="description" type="text" required />
+      <textarea id="description" v-model="description" rows="3" required></textarea>
     </div>
 
     <div class="field">
@@ -116,8 +116,10 @@ const selectedContents = ref<string[]>([...(props.step.Contents || [])])
 
 // On s'assure d'avoir la liste complète des steps de l'utilisateur
 onMounted(async () => {
-  await userStore.fetchUserRoadmaps()
-  await userStore.fetchUserContents()
+  if (!userStore.contentsCreated?.length || !userStore.roadmapsCreated?.length) {
+    await userStore.fetchUserRoadmaps()
+    await userStore.fetchUserContents()
+  }
 })
 
 // Options pour le MultiSelect
@@ -133,13 +135,13 @@ async function submit() {
       {
         method: 'PUT',
         headers: {
-          'Step-Type': 'application/json',
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${userStore.token}`,
         },
         body: JSON.stringify({
-          title: title.value,
-          subTitle: subTitle.value,
-          description: description.value,
+          Title: title.value,
+          Subtitle: subTitle.value,
+          Description: description.value,
         }),
       },
     )
@@ -150,25 +152,26 @@ async function submit() {
       {
         method: 'PUT',
         headers: {
-          'Step-Type': 'application/json',
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${userStore.token}`,
         },
         body: JSON.stringify({ Roadmaps: selectedRoadmaps.value }),
       },
     )
-
-    // 2) Mettre à jour l'association contents
-    await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/contents/${props.step.id}/steps`,
-      {
-        method: 'PUT',
-        headers: {
-          'Step-Type': 'application/json',
-          Authorization: `Bearer ${userStore.token}`,
+    // On doit appeler l’endpoint “PUT /contents/{contentId}/steps” pour chaque contentId
+    for (const cId of selectedContents.value) {
+      await fetch(
+        `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/contents/${cId}/steps`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userStore.token}`,
+          },
+          body: JSON.stringify({ Steps: [props.step.id] }),
         },
-        body: JSON.stringify({ Contents: selectedContents.value }),
-      },
-    )
+      )
+    }
 
     // 3) Mettre à jour le store
     const idx = userStore.stepsCreated.findIndex((c) => c.id === props.step.id)

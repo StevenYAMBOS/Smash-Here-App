@@ -132,6 +132,27 @@ export const useUserStore = defineStore('user', {
         this.stepsCreated = []
       }
     },
+    async deleteStep(id: string) {
+      // 1) Appel à l’API pour supprimer le contenu
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${id}`,
+        {
+          method: 'DELETE',
+          headers: { Authorization: `Bearer ${this.token}` },
+        },
+      )
+      if (!res.ok) {
+        throw new Error(`Suppression échouée (${res.status})`)
+      }
+
+      // 2) Met à jour le tableau d’IDs dans le profile
+      if (this.profile) {
+        this.profile.StepsCreated = this.profile.StepsCreated.filter((sid) => sid !== id)
+      }
+
+      // 3) Met à jour le state des objets chargés
+      this.stepsCreated = this.stepsCreated.filter((sm) => sm.id !== id)
+    },
     /**
      * Récupère toutes les contenus dont l'utilisateur est l'auteur
      * en interrogeant /content/{id} pour chaque id.

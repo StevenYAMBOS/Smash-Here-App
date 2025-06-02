@@ -42,7 +42,6 @@ import { defineProps, defineEmits, withDefaults } from 'vue'
 import type { Step } from '@/types/collections'
 import Button from 'primevue/button'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = withDefaults(
   defineProps<{
     step: Step
@@ -53,12 +52,12 @@ const props = withDefaults(
   {},
 )
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const emit = defineEmits<{
   (e: 'stats', id: string): void
   (e: 'edit', id: string): void
   (e: 'delete', id: string): void
 }>()
+console.log(emit, props)
 </script>
 
 <style scoped>
