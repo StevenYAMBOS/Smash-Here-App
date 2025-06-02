@@ -1,13 +1,14 @@
 // src/stores/user.ts
 
 import { defineStore } from 'pinia'
-import type { User, Roadmap, Content, Step } from '@/types/collections'
+import type { User, Roadmap, Content, Step, Game } from '@/types/collections'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
     // Si un token existe dans localStorage, on l'utilise
     token: (localStorage.getItem('token') ?? '') as string,
     profile: null as User | null,
+    games: [] as Game[],
     roadmapsCreated: [] as Roadmap[],
     bookmarks: [] as Roadmap[],
     contentsCreated: [] as Content[],
@@ -21,10 +22,12 @@ export const useUserStore = defineStore('user', {
     clear() {
       this.token = ''
       this.profile = null
+      this.games = []
       this.bookmarks = []
       this.roadmapsCreated = []
       this.contentsCreated = []
       this.stepsCreated = []
+      this.games = []
       localStorage.removeItem('token')
     },
     async fetchProfile() {
@@ -48,6 +51,19 @@ export const useUserStore = defineStore('user', {
       await this.fetchUserBookmarks()
       await this.fetchUserSteps()
       await this.fetchUserContents()
+      await this.fetchAllGames()
+    },
+    // Récupère tous les jeux (GET /games)
+    async fetchAllGames() {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/games`,
+        )
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        this.games = (await res.json()) as Game[]
+      } catch {
+        this.games = []
+      }
     },
     /**
      * Récupère toutes les roadmaps dont l'utilisateur est l'auteur

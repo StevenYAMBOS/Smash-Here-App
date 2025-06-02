@@ -62,3 +62,9 @@ npm run dev
 ## License
 
 [MIT](https://www.youtube.com/watch?v=3FmN46XQius)
+
+J'aimerais que tu respectes ces consignes dans tes prochaines réponses :
+
+- Partages uniquement le code à modifier/ajouter
+- Explique où ajouter le code que tu as partagé
+- Explique chaque étapes de ta solution dans les détails

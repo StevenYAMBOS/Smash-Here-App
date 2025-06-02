@@ -28,7 +28,7 @@
       </template>
       <!-- Onglet fantôme pour l'édition -->
       <template v-else-if="selectedTab === 'update-roadmap'">
-        <UpdateRoadmapForm v-if="editingRoadmap" :step="editingRoadmap" @navigate="onNavigate" />
+        <UpdateRoadmapForm v-if="editingRoadmap" :roadmap="editingRoadmap" @navigate="onNavigate" />
       </template>
       <!-- zone modale de confirmation -->
       <div v-if="confirmVisible" class="confirm-backdrop" @click="cancelDelete"></div>
@@ -122,6 +122,7 @@ import CreateStepForm from '@/components/ui/CreateStepForm.vue'
 import UserContentCard from '@/components/ui/UserContentCard.vue'
 import UserStepCard from '@/components/ui/UserStepCard.vue'
 import UpdateContentForm from '@/components/ui/UpdateContentForm.vue'
+import UpdateRoadmapForm from '@/components/ui/UpdateRoadmapForm.vue'
 import UpdateStepForm from '@/components/ui/UpdateStepForm.vue'
 import { computed } from 'vue'
 import { useUserStore } from '@/stores/user'

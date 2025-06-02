@@ -98,6 +98,7 @@ console.log(props, emit)
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   margin-bottom: var(--spacing-lg);
   cursor: pointer;
+  max-height: 200px;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
@@ -112,8 +113,10 @@ console.log(props, emit)
   position: relative;
 }
 .cover {
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
   width: 200px;
-  height: 120px;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -152,6 +155,11 @@ console.log(props, emit)
   color: var(--color-medium-gray);
   margin: 0;
   word-break: break-all;
+  /* Limiter le texte à 3 lignes maximum et ajouter “...” */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .meta {
