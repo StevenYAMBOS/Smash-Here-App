@@ -6,20 +6,14 @@
 
     <!-- Champ Titre -->
     <div class="field">
-      <label for="title">Titre</label>
-      <input
-        id="title"
-        v-model="title"
-        type="text"
-        placeholder="Entrez le titre de la roadmap"
-        required
-      />
+      <label for="title">Title</label>
+      <input id="title" v-model="title" type="text" placeholder="New title" required />
     </div>
 
     <!-- Champ Sous-titre -->
     <div class="field">
-      <label for="subTitle">Sous-titre</label>
-      <input id="subTitle" v-model="subTitle" type="text" placeholder="Entrez le sous-titre" />
+      <label for="subTitle">Subtitle</label>
+      <input id="subTitle" v-model="subTitle" type="text" placeholder="New subtitle" />
     </div>
 
     <!-- Champ Description -->
@@ -29,14 +23,14 @@
         id="description"
         v-model="description"
         rows="4"
-        placeholder="Entrez la description"
+        placeholder="New description"
         required
       ></textarea>
     </div>
 
     <!-- Champ Image de couverture -->
     <div class="field">
-      <label for="cover">Image de couverture (URL)</label>
+      <label for="cover">Cover image (WEBP or PNG)</label>
       <input id="cover" v-model="cover" type="url" placeholder="https://example.com/cover.jpg" />
     </div>
 
@@ -44,7 +38,7 @@
     <div class="field">
       <label>
         <input type="checkbox" v-model="published" />
-        <span>Publié</span>
+        <span>Published</span>
       </label>
     </div>
 
@@ -56,29 +50,9 @@
       </label>
     </div>
 
-    <!-- Sélection des jeux existants -->
-    <div class="field">
-      <label>Jeux associés</label>
-      <Multiselect
-        v-model="selectedGames"
-        :options="games"
-        label="title"
-        track-by="id"
-        placeholder="Sélectionnez les jeux"
-        multiple
-        close-on-select="false"
-        class="multiselect-field"
-      >
-        <template #option="slotProps">
-          <i class="pi pi-gamepad" style="margin-right: 0.5rem; color: var(--color-gold)"></i>
-          {{ slotProps.option.title }}
-        </template>
-      </Multiselect>
-    </div>
-
     <!-- Bouton de soumission -->
     <SubmitButton
-      :label="loading ? 'Saving…' : 'Créer la roadmap'"
+      :label="loading ? 'Saving…' : 'Create roadmap'"
       :disabled="loading"
       icon="pi pi-save"
       iconPosition="left"
@@ -89,10 +63,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import Multiselect from 'vue-multiselect'
 import 'vue-multiselect/dist/vue-multiselect.min.css'
 import SubmitButton from './SubmitButton.vue'
-import type { Game } from '@/types/collections'
 import { useUserStore } from '@/stores/user'
 
 const userStore = useUserStore()
@@ -102,8 +74,6 @@ const cover = ref('')
 const description = ref('')
 const published = ref(false)
 const premium = ref(false)
-const games = ref<Game[]>([])
-const selectedGames = ref<string[]>([])
 const loading = ref(false)
 
 onMounted(async () => {
@@ -121,7 +91,6 @@ async function submit() {
     description: description.value,
     published: published.value,
     premium: premium.value,
-    Games: selectedGames.value, // tableau d’IDs de jeux
   }
 
   try {
@@ -144,7 +113,6 @@ async function submit() {
     description.value = ''
     published.value = false
     premium.value = false
-    selectedGames.value = []
   } catch (err) {
     console.error(err)
   } finally {
