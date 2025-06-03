@@ -68,7 +68,7 @@
         :options="availableStepsForHierarchy"
         label="title"
         track-by="id"
-        placeholder="Sélectionnez les étapes parentes"
+        placeholder="Select"
         multiple
         close-on-select="false"
         class="multiselect-field"
