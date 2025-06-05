@@ -8,30 +8,30 @@
         @click="currentTab = 'info'"
         class="tab-button"
       >
-        Informations de base
+        Informations
       </button>
       <button
         :class="{ active: currentTab === 'structure' }"
         @click="currentTab = 'structure'"
         class="tab-button"
       >
-        Structure des étapes
+        Steps
       </button>
     </div>
 
-    <!-- Contenu Onglet “Informations de base” -->
+    <!-- **************** Onglet “Informations de base” **************** -->
     <div v-if="currentTab === 'info'" class="tab-content">
       <form @submit.prevent="submitInfo" class="update-roadmap-form">
-        <h2>Modifier la Roadmap – Informations de base</h2>
+        <h2>Informations</h2>
 
         <div class="form-section">
           <div class="field">
-            <label for="title">Titre</label>
+            <label for="title">Title</label>
             <input id="title" v-model="title" type="text" required />
           </div>
 
           <div class="field">
-            <label for="subTitle">Sous-titre</label>
+            <label for="subTitle">Subtitle</label>
             <input id="subTitle" v-model="subTitle" type="text" />
           </div>
 
@@ -42,7 +42,7 @@
 
           <div class="field-row">
             <div class="switch-field">
-              <label for="published-switch">Publié</label>
+              <label for="published-switch">Published</label>
               <button
                 id="published-switch"
                 type="button"
@@ -73,7 +73,7 @@
           </div>
 
           <div class="field">
-            <label>Jeux associés</label>
+            <label>Roadmap's games</label>
             <Multiselect
               v-model="selectedGames"
               :options="availableGames"
@@ -87,27 +87,38 @@
           </div>
 
           <div class="field">
-            <label for="cover">Image de couverture</label>
-            <div class="file-input-wrapper">
-              <input
-                id="cover"
-                type="file"
-                accept="image/webp,image/png,image/jpeg"
-                @change="handleFileChange"
-                class="file-input"
+            <label for="cover">Cover image</label>
+
+            <!-- Zone de prévisualisation (cliquable) -->
+            <div class="cover-preview-wrapper" @click="triggerFileInput">
+              <img
+                v-if="coverPreview"
+                :src="coverPreview"
+                alt="Cover Preview"
+                class="cover-preview-img"
               />
-              <button type="button" class="file-input-button" @click="triggerFileInput">
-                <i class="pi pi-upload"></i>
-                {{ coverFile ? coverFile.name : 'Choisir une image' }}
-              </button>
+              <div v-else class="cover-placeholder">
+                <i class="pi pi-image"></i>
+                <span>Nouvelle couverture...</span>
+              </div>
             </div>
-            <p class="file-hint">Formats acceptés : WEBP, PNG, JPEG (max 10 MB)</p>
+
+            <!-- Input file (caché) -->
+            <input
+              id="cover"
+              type="file"
+              accept="image/webp,image/png,image/jpeg"
+              @change="handleFileChange"
+              class="file-input"
+            />
+
+            <p class="file-hint">Accepted format : WEBP, PNG, JPEG (max 10 MB)</p>
           </div>
         </div>
 
         <div class="actions-row">
           <SubmitButton
-            label="Annuler"
+            label="Cancel"
             icon="pi pi-times"
             variant="secondary"
             type="button"
@@ -115,7 +126,7 @@
           />
           <SubmitButton
             id="btn-save-info"
-            :label="infoLoading ? 'Enregistrement…' : 'Enregistrer les infos'"
+            :label="infoLoading ? 'Saving...' : 'Save'"
             :disabled="infoLoading"
             icon="pi pi-save"
             variant="primary"
@@ -125,9 +136,9 @@
       </form>
     </div>
 
-    <!-- Contenu Onglet “Structure des étapes” -->
+    <!-- **************** Onglet "Étapes” **************** -->
     <div v-if="currentTab === 'structure'" class="tab-content">
-      <h2>Modifier la Roadmap – Structure des étapes</h2>
+      <h2>Steps</h2>
 
       <div class="structure-actions">
         <div class="field">
@@ -192,7 +203,7 @@
               <div class="node-content">
                 <div class="node-header">
                   <i class="pi pi-flag" v-if="!data.hasPrevious"></i>
-                  <span>{{}}</span>
+                  <span>{{ data.label }}</span>
                 </div>
                 <div class="node-actions">
                   <button
@@ -246,7 +257,7 @@ const emit = defineEmits<{
 // Onglets
 const currentTab = ref<'info' | 'structure'>('info')
 
-// ------------- INFOS DE BASE -------------
+/* +++++++++++++++++++++++++++++ INFOS DE BASE +++++++++++++++++++++++++++++ */
 
 const infoLoading = ref(false)
 const title = ref(props.roadmap.title)
@@ -256,11 +267,12 @@ const coverFile = ref<File | null>(null)
 const published = ref(props.roadmap.published || false)
 const premium = ref(props.roadmap.premium || false)
 const selectedGames = ref<Game[]>([])
-
 const availableGames = computed(() => userStore.games || [])
 
-// Récupérer les jeux associés initiaux
+// Récupération de données
 onMounted(async () => {
+  coverPreview.value = props.roadmap.cover || null
+
   if (!userStore.games?.length) {
     await userStore.fetchAllGames()
   }
@@ -269,11 +281,16 @@ onMounted(async () => {
   }
 })
 
+// URL de prévisualisation de la couverture
+const coverPreview = ref<string | null>(null)
+
+// Gestion de l'image
 function handleFileChange(event: Event) {
   const target = event.target as HTMLInputElement
   const file = target.files?.[0]
   if (!file) return
 
+  // Validation taille et type
   if (file.size > 10 * 1024 * 1024) {
     toast.error('La taille doit être < 10 MB.')
     return
@@ -283,14 +300,21 @@ function handleFileChange(event: Event) {
     toast.error('Format invalide (WEBP, PNG, JPEG).')
     return
   }
+
+  // Enregistrer le fichier sélectionné
   coverFile.value = file
+
+  // Générer une URL locale pour affichage de prévisualisation
+  coverPreview.value = URL.createObjectURL(file)
 }
 
+// Changement de l'image
 function triggerFileInput() {
   const fileInput = document.getElementById('cover') as HTMLInputElement
   fileInput?.click()
 }
 
+// Validation formulaire (informations de bases)
 async function submitInfo() {
   if (infoLoading.value) return
   infoLoading.value = true
@@ -308,7 +332,7 @@ async function submitInfo() {
     }
 
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${props.roadmap.id}`,
+      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${props.roadmap.id}/info`,
       {
         method: 'PUT',
         headers: {
@@ -320,16 +344,18 @@ async function submitInfo() {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
-    toast.success('Informations mises à jour avec succès !')
+    toast.success('Roadmap updated !')
+    await userStore.fetchProfile()
+    emit('navigate', 'list-roadmaps')
   } catch (err) {
     console.error(err)
-    toast.error('Échec de la mise à jour des informations.')
+    toast.error('Error during update')
   } finally {
     infoLoading.value = false
   }
 }
 
-// ------------- STRUCTURE DES ÉTAPES -------------
+/* +++++++++++++++++++++++++++++ STRUCTURE DES ÉTAPES +++++++++++++++++++++++++++++ */
 
 const structureLoading = ref(false)
 const availableSteps = computed(() => userStore.stepsCreated || [])
@@ -693,7 +719,8 @@ async function submitStructure() {
 
 <style scoped>
 .update-roadmap-container {
-  max-width: 1000px;
+  width: 100%;
+  max-width: 1500px;
   margin: 0 auto;
   padding: 1rem;
 }
@@ -852,5 +879,235 @@ async function submitStructure() {
   background: none;
   color: #ff5c5c;
   cursor: pointer;
+}
+
+/* === Styles spécifiques à l’onglet “Informations de base” === */
+
+/* Conteneur général */
+.update-roadmap-form {
+  background: var(--color-darker-charcoal);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+}
+
+/* Titres de section */
+.update-roadmap-form h2 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-2xl);
+  color: var(--color-gold);
+  font-weight: bold;
+}
+
+/* Groupe de champs (label + input/textarea) */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+.field label {
+  font-size: var(--font-size-base);
+  font-family: var(--font-secondary);
+  color: var(--color-cream);
+  font-weight: bold;
+}
+.field input,
+.field textarea {
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-medium-gray);
+  border-radius: var(--radius-md);
+  background: var(--color-dark-gray);
+  font-size: var(--font-size-base);
+  font-family: var(--font-secondary);
+  color: var(--color-cream);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+/* Rangée de toggles */
+.field-row {
+  display: flex;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+.switch-field {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+.switch-field label {
+  font-size: var(--font-size-base);
+  color: var(--color-darker-gray);
+}
+.switch-button {
+  width: 48px;
+  height: 24px;
+  background: var(--color-medium-gray);
+  border-radius: var(--radius-full);
+  position: relative;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.switch-button.active {
+  background: var(--color-gold);
+}
+.switch-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: var(--color-white);
+  border-radius: var(--radius-full);
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+}
+.switch-button.active .switch-handle {
+  transform: translateX(24px);
+}
+
+/* Multiselect */
+.multiselect-field {
+  width: 100%;
+  font-family: var(--font-secondary);
+}
+.multiselect-field .multiselect__tags {
+  background: var(--color-off-white);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-light-gray);
+}
+.multiselect-field .multiselect__tags,
+.multiselect-field .multiselect__input {
+  padding: var(--spacing-sm);
+}
+.multiselect-field .multiselect__option--highlight {
+  background: var(--color-light-yellow);
+}
+
+/* Upload d’image */
+.file-input-wrapper {
+  position: relative;
+}
+.file-input {
+  display: none;
+}
+.file-input-button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 2px dashed var(--color-gold);
+  background: var(--color-dark-gray);
+  border-radius: var(--radius-md);
+  font-family: var(--font-secondary);
+  color: var(--color-white);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+.file-input-button:hover {
+  background: var(--color-cream);
+  color: var(--color-darker-charcoal);
+  border: 2px solid var(--color-dark-gray);
+}
+.file-hint {
+  font-size: var(--font-size-sm);
+  color: var(--color-medium-gray);
+  margin-top: var(--spacing-xs);
+}
+
+/* Boutons d’action */
+.actions-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+.actions-row button {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+}
+
+/* Bouton Annuler */
+.actions-row .pi-times {
+  margin-right: var(--spacing-xs);
+}
+.actions-row button[variant='secondary'] {
+  background: var(--color-off-white);
+  color: var(--color-medium-gray);
+}
+.actions-row button[variant='secondary']:hover {
+  background: var(--color-light-gray);
+}
+
+/* Bouton Enregistrer */
+.actions-row #btn-save-info {
+  background: var(--color-gold);
+  color: var(--color-darker-charcoal);
+}
+.actions-row #btn-save-info:hover {
+  opacity: 80%;
+}
+.actions-row #btn-save-info:disabled {
+  background: var(--color-light-gray);
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .update-roadmap-form {
+    padding: var(--spacing-lg);
+  }
+  .field-row {
+    flex-direction: column;
+  }
+}
+
+/* === Styles pour la prévisualisation de la couverture === */
+.cover-preview-wrapper {
+  width: 200px;
+  height: 120px;
+  border: 2px dashed var(--color-medium-gray);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  background: var(--color-off-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cover-preview-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s;
+}
+
+.cover-placeholder {
+  text-align: center;
+  color: var(--color-medium-gray);
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-sm);
+}
+.cover-placeholder i {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-xs);
+  display: block;
 }
 </style>
