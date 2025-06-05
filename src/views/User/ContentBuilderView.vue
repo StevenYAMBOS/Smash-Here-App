@@ -23,7 +23,7 @@
           :showDelete="true"
           @stats="(id) => router.push(`/dashboard/roadmpas/${id}`)"
           @edit="onEditRoadmap"
-          @delete="openConfirm"
+          @delete="openConfirmRoadmap"
         />
       </template>
       <!-- Onglet fantôme pour l'édition -->
@@ -31,12 +31,16 @@
         <UpdateRoadmapForm v-if="editingRoadmap" :roadmap="editingRoadmap" @navigate="onNavigate" />
       </template>
       <!-- zone modale de confirmation -->
-      <div v-if="confirmVisible" class="confirm-backdrop" @click="cancelDelete"></div>
-      <div v-if="confirmVisible" class="confirm-modal">
+      <div
+        v-if="confirmVisibleRoadmap"
+        class="confirm-backdrop"
+        @click="proceedDeleteRoadmap"
+      ></div>
+      <div v-if="confirmVisibleRoadmap" class="confirm-modal">
         <p>Are you sure you want to delete this roadmap ?</p>
         <div class="confirm-actions">
           <button class="btn-yes" @click="proceedDeleteRoadmap">Yes</button>
-          <button class="btn-no" @click="cancelDelete">No</button>
+          <button class="btn-no" @click="cancelDeleteRoadmap">No</button>
         </div>
       </div>
 
@@ -58,7 +62,7 @@
           :showDelete="true"
           @stats="(id) => router.push(`/dashboard/steps/${id}`)"
           @edit="onEditStep"
-          @delete="openConfirm"
+          @delete="openConfirmStep"
         />
       </template>
       <!-- Onglet fantôme pour l'édition -->
@@ -66,12 +70,12 @@
         <UpdateStepForm v-if="editingStep" :step="editingStep" @navigate="onNavigate" />
       </template>
       <!-- zone modale de confirmation -->
-      <div v-if="confirmVisible" class="confirm-backdrop" @click="cancelDelete"></div>
-      <div v-if="confirmVisible" class="confirm-modal">
+      <div v-if="confirmVisibleStep" class="confirm-backdrop" @click="cancelDeleteStep"></div>
+      <div v-if="confirmVisibleStep" class="confirm-modal">
         <p>Are you sure you want to delete this step ?</p>
         <div class="confirm-actions">
           <button class="btn-yes" @click="proceedDeleteStep">Yes</button>
-          <button class="btn-no" @click="cancelDelete">No</button>
+          <button class="btn-no" @click="cancelDeleteStep">No</button>
         </div>
       </div>
 
@@ -92,7 +96,7 @@
           :showDelete="true"
           @stats="(id) => router.push(`/dashboard/contents/${id}`)"
           @edit="onEditContent"
-          @delete="openConfirm"
+          @delete="openConfirmContent"
         />
       </template>
       <!-- Onglet fantôme pour l'édition -->
@@ -100,12 +104,12 @@
         <UpdateContentForm v-if="editingContent" :content="editingContent" @navigate="onNavigate" />
       </template>
       <!-- zone modale de confirmation -->
-      <div v-if="confirmVisible" class="confirm-backdrop" @click="cancelDelete"></div>
-      <div v-if="confirmVisible" class="confirm-modal">
+      <div v-if="confirmVisibleContent" class="confirm-backdrop" @click="cancelDeleteContent"></div>
+      <div v-if="confirmVisibleContent" class="confirm-modal">
         <p>Are you sure you want to delete this content ?</p>
         <div class="confirm-actions">
           <button class="btn-yes" @click="proceedDeleteContent">Yes</button>
-          <button class="btn-no" @click="cancelDelete">No</button>
+          <button class="btn-no" @click="cancelDeleteContent">No</button>
         </div>
       </div>
     </div>
@@ -141,44 +145,72 @@ const userStore = useUserStore()
 const searchText = ref('')
 
 // ID de contenu en attente de suppression
-const pendingDeleteId = ref<string | null>(null)
+const pendingDeleteRoadmapId = ref<string | null>(null)
+const pendingDeleteStepId = ref<string | null>(null)
+const pendingDeleteContentId = ref<string | null>(null)
 // Contrôle l’affichage du modal
-const confirmVisible = ref(false)
+const confirmVisibleRoadmap = ref(false)
+const confirmVisibleStep = ref(false)
+const confirmVisibleContent = ref(false)
 
-// Ouvre la pop-up de confirmation
-function openConfirm(id: string) {
-  pendingDeleteId.value = id
-  confirmVisible.value = true
+// Ouvre la pop-up de confirmation (roadmaps)
+function openConfirmRoadmap(id: string) {
+  pendingDeleteRoadmapId.value = id
+  confirmVisibleRoadmap.value = true
 }
 
-// Annule la suppression
-function cancelDelete() {
-  pendingDeleteId.value = null
-  confirmVisible.value = false
+// Ouvre la pop-up de confirmation (étapes)
+function openConfirmStep(id: string) {
+  pendingDeleteStepId.value = id
+  confirmVisibleStep.value = true
+}
+
+// Ouvre la pop-up de confirmation (contenus)
+function openConfirmContent(id: string) {
+  pendingDeleteContentId.value = id
+  confirmVisibleContent.value = true
+}
+
+// Annule la suppression (roadmaps)
+function cancelDeleteRoadmap() {
+  pendingDeleteRoadmapId.value = null
+  confirmVisibleRoadmap.value = false
+}
+
+// Annule la suppression (étapes)
+function cancelDeleteStep() {
+  pendingDeleteStepId.value = null
+  confirmVisibleStep.value = false
+}
+
+// Annule la suppression (contenus)
+function cancelDeleteContent() {
+  pendingDeleteContentId.value = null
+  confirmVisibleContent.value = false
 }
 
 // Suppression roadmap
 async function proceedDeleteRoadmap() {
-  if (pendingDeleteId.value) {
-    await userStore.deleteRoadmap(pendingDeleteId.value)
+  if (pendingDeleteRoadmapId.value) {
+    await userStore.deleteRoadmap(pendingDeleteRoadmapId.value)
   }
-  cancelDelete()
+  cancelDeleteRoadmap()
 }
 
 // Suppression étape
 async function proceedDeleteStep() {
-  if (pendingDeleteId.value) {
-    await userStore.deleteStep(pendingDeleteId.value)
+  if (pendingDeleteStepId.value) {
+    await userStore.deleteStep(pendingDeleteStepId.value)
   }
-  cancelDelete()
+  cancelDeleteStep()
 }
 
 // Suppression contenu
 async function proceedDeleteContent() {
-  if (pendingDeleteId.value) {
-    await userStore.deleteContent(pendingDeleteId.value)
+  if (pendingDeleteContentId.value) {
+    await userStore.deleteContent(pendingDeleteContentId.value)
   }
-  cancelDelete()
+  cancelDeleteContent()
 }
 
 const filteredRoadmaps = computed(() => {

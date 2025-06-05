@@ -31,8 +31,6 @@ const items = [
 function select(key: string) {
   emit('update:selected', key)
 }
-
-console.log(props)
 </script>
 
 <style scoped>

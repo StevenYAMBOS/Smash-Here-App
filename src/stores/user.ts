@@ -91,7 +91,6 @@ export const useUserStore = defineStore('user', {
      * - Met à jour le state pour retirer l’id et l’objet correspondant
      */
     async deleteRoadmap(id: string) {
-      // 1) Appel à l’API pour supprimer la roadmap
       const res = await fetch(
         `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${id}`,
         {
@@ -103,12 +102,10 @@ export const useUserStore = defineStore('user', {
         throw new Error(`Suppression échouée (${res.status})`)
       }
 
-      // 2) Met à jour le tableau d’IDs dans le profile
       if (this.profile) {
         this.profile.RoadmapsCreated = this.profile.RoadmapsCreated.filter((rid) => rid !== id)
       }
 
-      // 3) Met à jour le state des objets chargés
       this.roadmapsCreated = this.roadmapsCreated.filter((rm) => rm.id !== id)
     },
     /**
@@ -127,7 +124,6 @@ export const useUserStore = defineStore('user', {
       )
       try {
         this.bookmarks = await Promise.all(promises)
-        console.log(promises)
       } catch {
         this.bookmarks = []
       }
@@ -209,11 +205,11 @@ export const useUserStore = defineStore('user', {
 
       // 2) Met à jour le tableau d’IDs dans le profile
       if (this.profile) {
-        this.profile.ContentsCreated = this.profile.ContentsCreated.filter((rid) => rid !== id)
+        this.profile.ContentsCreated = this.profile.ContentsCreated.filter((cid) => cid !== id)
       }
 
       // 3) Met à jour le state des objets chargés
-      this.contentsCreated = this.contentsCreated.filter((rm) => rm.id !== id)
+      this.contentsCreated = this.contentsCreated.filter((c) => c.id !== id)
     },
   },
 })

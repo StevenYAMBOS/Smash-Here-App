@@ -62,8 +62,6 @@ const emit = defineEmits<{
   (e: 'edit', id: string): void
   (e: 'delete', id: string): void
 }>()
-
-console.log(props, emit)
 </script>
 
 <style scoped>
