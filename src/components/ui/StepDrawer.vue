@@ -4,18 +4,35 @@
     <Backdrop v-if="visible" @close="$emit('close')" />
 
     <aside v-if="visible" class="drawer">
-      <button class="close-btn" @click="$emit('close')">✕</button>
+      <div class="drawer-header">
+        <h3 class="step-title">
+          <i class="pi pi-flag-fill"></i>
+          {{ step?.title }}
+        </h3>
+        <button class="close-btn" @click="$emit('close')">
+          <i class="pi pi-times"></i>
+        </button>
+      </div>
 
       <div class="drawer-content">
-        <h3 class="step-title">{{ step?.title }}</h3>
         <p class="step-desc">{{ step?.description }}</p>
 
         <template v-if="contents.length">
-          <ul>
-            <li v-for="c in contents" :key="c.id">
-              <a :href="c.link" target="_blank">{{ c.title }}</a>
-            </li>
-          </ul>
+          <div class="contents-list">
+            <div v-for="c in contents" :key="c.id" class="content-item">
+              <i
+                :class="{
+                  'pi pi-video': c.type === 'video',
+                  'pi pi-file-text': c.type === 'article',
+                  'pi pi-external-link': c.type === 'link',
+                }"
+                class="content-icon"
+              />
+              <a :href="c.link" target="_blank" class="content-link">
+                {{ c.title }}
+              </a>
+            </div>
+          </div>
         </template>
         <p v-else class="status">Aucun contenu à afficher.</p>
       </div>
@@ -45,14 +62,27 @@ defineEmits<{
   position: fixed;
   top: 0;
   right: 0;
-  width: 50%;
   height: 100%;
+  width: 30%;
+  min-width: 320px;
   background: var(--color-darker-charcoal);
+  border-left: 4px solid var(--color-gold);
+  border-top-left-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
   padding: var(--spacing-lg);
-  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.3);
+  box-shadow: -8px 0 16px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
   z-index: 101;
   overflow-y: auto;
   transition: transform 0.3s ease-in;
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
 }
 
 .drawer-content {
@@ -61,47 +91,67 @@ defineEmits<{
 
 /* Bouton fermer */
 .close-btn {
-  padding: 0 var(--spacing-sm);
-  background: var(--color-cream);
-  border: 1px solid var(--color-cream);
-  border-radius: var(--radius-md);
-  color: var(--color-black);
-  font-size: 1.5rem;
-  float: right;
+  background: none;
+  border: none;
+  color: var(--color-light-gray);
+  font-size: var(--font-size-2xl);
   cursor: pointer;
 }
-
 .close-btn:hover {
-  opacity: 70%;
-  transition: background-color 0.3s ease-in-out;
+  color: var(--color-cream);
 }
 
 /* Titre & description de l’étape */
 .step-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-3xl);
   color: var(--color-gold);
-  margin: 0 0 var(--spacing-sm);
-  font-size: var(--font-size-4xl);
-  font-family: var(--font-secondary);
-  font-weight: bold;
-}
-.step-desc {
-  color: var(--color-light-gray);
-  margin: 0 0 var(--spacing-md);
-  font-size: var(--font-size-base);
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
+  margin: 0;
 }
 
-/* Liste des contenus */
-.drawer ul {
-  list-style: none;
-  padding: 0;
+.step-desc {
+  color: var(--color-medium-gray);
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.4;
 }
-.drawer li + li {
-  margin-top: var(--spacing-sm);
+
+.contents-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
 }
-.drawer a {
+.content-item {
+  display: flex;
+  align-items: center;
+  background: var(--color-charcoal);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  transition: background 0.2s;
+}
+.content-item:hover {
+  background: var(--color-darker-charcoal);
+}
+.content-icon {
+  font-size: var(--font-size-xl);
+  color: var(--color-gold);
+  margin-right: var(--spacing-md);
+}
+.content-link {
   color: var(--color-cream);
-  font-weight: bold;
+  font-family: var(--font-secondary);
   text-decoration: none;
+  font-weight: 500;
+}
+.content-link:hover {
+  text-decoration: underline;
+}
+.status {
+  color: var(--color-light-gray);
+  font-style: italic;
+  text-align: center;
+  margin-top: var(--spacing-2xl);
 }
 </style>

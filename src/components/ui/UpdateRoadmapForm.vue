@@ -798,7 +798,14 @@ async function submitStructure() {
     const stepIds = selectedSteps.value.map((s) => s.id)
 
     const formData = new FormData()
-    formData.append('Steps', stepIds.join(','))
+
+    // 🔧 CORRECTION : Gérer le cas où il n'y a pas d'étapes
+    if (stepIds.length > 0) {
+      formData.append('Steps', stepIds.join(','))
+    } else {
+      // Envoyer explicitement une chaîne vide ou ne pas ajouter le champ
+      formData.append('Steps', '') // ou simplement ne pas append du tout
+    }
 
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${props.roadmap.id}/steps`,

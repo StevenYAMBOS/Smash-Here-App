@@ -2,7 +2,7 @@
 
 export type UserType = 'superadmin' | 'coach' | 'user'
 export type StepStatus = 'pending' | 'inProgress' | 'done' | 'skipped'
-export type ContentType = 'video' | 'article' | 'page' | 'roadmap'
+export type ContentType = 'video' | 'article' | 'page' | 'roadmap' | 'link'
 
 // -----------------------
 // Collection: user

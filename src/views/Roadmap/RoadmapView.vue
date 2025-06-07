@@ -2,17 +2,15 @@
 
 <script setup lang="ts">
 import StepDrawer from '@/components/ui/StepDrawer.vue'
-import { onMounted, reactive, ref, computed } from 'vue'
+import { onMounted, reactive, ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import HeaderRoadmap from '@/components/layout/HeaderRoadmap.vue'
-import { VueFlow } from '@vue-flow/core'
-import { MiniMap } from '@vue-flow/minimap'
-import { Controls } from '@vue-flow/controls'
-import { Background } from '@vue-flow/background'
-import '@vue-flow/controls/dist/style.css'
-import '@vue-flow/minimap/dist/style.css'
+import { MarkerType, VueFlow, useVueFlow } from '@vue-flow/core'
+import { Background, Controls, MiniMap } from '@vue-flow/additional-components'
 import '@vue-flow/core/dist/style.css'
 import '@vue-flow/core/dist/theme-default.css'
+import type { Content, Roadmap, Step } from '@/types/collections'
+
 const state = reactive({
   roadmap: null as Roadmap | null,
   steps: [] as Step[],
@@ -20,7 +18,7 @@ const state = reactive({
   error: '',
 })
 
-// ID de l’étape sélectionnée et contenus à afficher
+// ID de l'étape sélectionnée et contenus à afficher
 const selectedStepId = ref<string | null>(null)
 const stepContents = ref<Content[]>([])
 const drawerOpen = ref(false)
@@ -28,33 +26,195 @@ const drawerOpen = ref(false)
 const route = useRoute()
 const roadmapId = route.params.id as string
 
-// dimensions pour VueFlow
-const NODE_WIDTH = 200
-const NODE_HEIGHT = 100
+// États VueFlow
+const nodes = ref<any[]>([])
+const edges = ref<any[]>([])
 
-// transforme state.steps en nodes & edges
-const nodes = computed(() =>
-  state.steps.map(
-    (s: { id: any; title: any; subTitle: any; Contents: string | any[] }, i: number) => ({
-      id: s.id,
-      position: { x: i * (NODE_WIDTH + 50), y: 0 }, // simple layout horizontal
-      data: { label: s.title, subLabel: s.subTitle, contents: s.Contents?.length || 0 },
-      style: { width: NODE_WIDTH, height: NODE_HEIGHT },
-      draggable: false, // read-only
-    }),
-  ),
-)
-const edges = computed(() =>
-  state.steps.flatMap((s: { PreviousSteps: any; id: any }) =>
-    (s.PreviousSteps ?? []).map((p: any) => ({
-      id: `${p}-${s.id}`,
-      source: p,
-      target: s.id,
-      animated: false,
-      style: { stroke: '#888', strokeWidth: 1 },
-    })),
-  ),
-)
+// Extraire fitView
+const { fitView } = useVueFlow()
+
+// Construire l'arbre hiérarchique
+function buildFlowFromSteps() {
+  if (!state.steps.length) {
+    nodes.value = []
+    edges.value = []
+    return
+  }
+
+  console.log('Building flow from steps:', state.steps)
+
+  // Créer une map des nœuds
+  const nodeMap = new Map<string, any>()
+
+  state.steps.forEach((step) => {
+    nodeMap.set(step.id, {
+      id: step.id,
+      type: 'custom',
+      position: { x: 0, y: 0 },
+      data: {
+        title: step.title,
+        subTitle: step.subTitle,
+        contents: step.Contents?.length || 0,
+        hasPrevious: step.PreviousSteps && step.PreviousSteps.length > 0,
+      },
+      draggable: false,
+      selectable: true,
+      style: { width: 250, height: 120 },
+    })
+  })
+
+  // Générer les edges basés sur PreviousSteps et NextSteps
+  const edgeList: any[] = []
+
+  state.steps.forEach((step) => {
+    // Créer des edges depuis les étapes précédentes vers cette étape
+    if (step.PreviousSteps && step.PreviousSteps.length > 0) {
+      step.PreviousSteps.forEach((previousStepId) => {
+        edgeList.push({
+          id: `${previousStepId}-${step.id}`,
+          source: previousStepId,
+          target: step.id,
+          type: 'smoothstep',
+          animated: true,
+          style: {
+            stroke: '#ffd700',
+            strokeWidth: 3,
+            strokeDasharray: '10 5',
+            filter: 'drop-shadow(0 2px 8px rgba(255, 215, 0, 0.4))',
+          },
+          markerEnd: {
+            type: MarkerType.ArrowClosed,
+            color: '#ffd700',
+            width: 20,
+            height: 20,
+          },
+          deletable: false,
+        })
+      })
+    }
+
+    // Alternative : créer des edges vers les étapes suivantes
+    if (step.NextSteps && step.NextSteps.length > 0) {
+      step.NextSteps.forEach((nextStepId) => {
+        // Vérifier qu'on n'a pas déjà créé cet edge
+        const edgeExists = edgeList.some(
+          (edge) => edge.source === step.id && edge.target === nextStepId,
+        )
+
+        if (!edgeExists) {
+          edgeList.push({
+            id: `${step.id}-${nextStepId}`,
+            source: step.id,
+            target: nextStepId,
+            type: 'smoothstep',
+            animated: true,
+            style: {
+              stroke: '#ffd700',
+              strokeWidth: 3,
+              strokeDasharray: '10 5',
+              filter: 'drop-shadow(0 2px 8px rgba(255, 215, 0, 0.4))',
+            },
+            markerEnd: {
+              type: MarkerType.ArrowClosed,
+              color: '#ffd700',
+              width: 20,
+              height: 20,
+            },
+            deletable: false,
+          })
+        }
+      })
+    }
+  })
+
+  nodes.value = Array.from(nodeMap.values())
+  edges.value = edgeList
+
+  console.log('Generated nodes:', nodes.value)
+  console.log('Generated edges:', edges.value)
+
+  // Auto-layout hiérarchique
+  layoutNodes()
+}
+
+// Fonction de layout automatique
+function layoutNodes() {
+  const H_GAP = 350
+  const V_GAP = 180
+  const levels = new Map<number, any[]>()
+  const visited = new Set<string>()
+
+  // BFS pour organiser les nœuds par niveaux
+  const queue: { nodeId: string; level: number }[] = []
+
+  // Trouver les nœuds racines (sans prédécesseurs)
+  const roots = nodes.value.filter((node) => !node.data.hasPrevious)
+
+  if (roots.length === 0 && nodes.value.length > 0) {
+    // Si aucune racine n'est trouvée, prendre le premier nœud
+    queue.push({ nodeId: nodes.value[0].id, level: 0 })
+  } else {
+    roots.forEach((node) => queue.push({ nodeId: node.id, level: 0 }))
+  }
+
+  // Traitement BFS
+  while (queue.length > 0) {
+    const { nodeId, level } = queue.shift()!
+
+    if (visited.has(nodeId)) continue
+    visited.add(nodeId)
+
+    // Ajouter le nœud au niveau approprié
+    if (!levels.has(level)) {
+      levels.set(level, [])
+    }
+    const node = nodes.value.find((n) => n.id === nodeId)
+    if (node) {
+      levels.get(level)!.push(node)
+    }
+
+    // Trouver les enfants (nœuds connectés par des edges sortants)
+    edges.value
+      .filter((edge) => edge.source === nodeId)
+      .forEach((edge) => {
+        if (!visited.has(edge.target)) {
+          queue.push({ nodeId: edge.target, level: level + 1 })
+        }
+      })
+  }
+
+  // Positionner les nœuds
+  levels.forEach((nodesAtLevel, level) => {
+    const totalWidth = (nodesAtLevel.length - 1) * H_GAP
+    const startX = -totalWidth / 2
+
+    nodesAtLevel.forEach((node, index) => {
+      node.position = {
+        x: startX + index * H_GAP,
+        y: level * V_GAP,
+      }
+    })
+  })
+
+  // Ajuster pour éviter les positions négatives
+  const minX = Math.min(...nodes.value.map((n) => n.position.x))
+  const minY = Math.min(...nodes.value.map((n) => n.position.y))
+
+  if (minX < 0 || minY < 0) {
+    nodes.value.forEach((node) => {
+      node.position.x = Math.max(50, node.position.x - minX + 50)
+      node.position.y = Math.max(50, node.position.y - minY + 50)
+    })
+  }
+
+  // Centrer la vue après un court délai
+  setTimeout(() => {
+    fitView({ padding: 0.15 })
+  }, 150)
+}
+
+// Reconstruire le flow quand les steps changent
+watch(() => state.steps, buildFlowFromSteps, { immediate: true })
 
 // Récupération initiale
 onMounted(async () => {
@@ -76,29 +236,27 @@ onMounted(async () => {
   }
 })
 
-/** Computed pour récupérer l’objet Step sélectionné */
-const selectedStep = computed(
-  () => state.steps.find((s: { id: string | null }) => s.id === selectedStepId.value) || null,
-)
+/** Computed pour récupérer l'objet Step sélectionné */
+const selectedStep = computed(() => state.steps.find((s) => s.id === selectedStepId.value) || null)
 
 // Ouverture de la drawer et fetch des contenus
 async function openStep(stepId: string) {
   selectedStepId.value = stepId
   drawerOpen.value = true
 
-  const res = await fetch(
-    `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${stepId}/contents`,
-  )
-  if (!res.ok) {
-    console.error('Fetch failed', res.status)
-    stepContents.value = []
-    return
-  }
-
   try {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${stepId}/contents`,
+    )
+    if (!res.ok) {
+      console.error('Fetch failed', res.status)
+      stepContents.value = []
+      return
+    }
+
     stepContents.value = await res.json()
-  } catch {
-    console.error('JSON parse error')
+  } catch (error) {
+    console.error('Error fetching step contents:', error)
     stepContents.value = []
   }
 }
@@ -117,23 +275,46 @@ async function openStep(stepId: string) {
     <p v-if="state.loading" class="status">Loading...</p>
     <p v-if="state.error" class="status error">{{ state.error }}</p>
 
-    <!-- VueFlow read-only -->
-    <VueFlow
-      v-if="nodes.length"
-      :nodes="nodes"
-      :edges="edges"
-      :fit-view-on-init="true"
-      :nodes-draggable="false"
-      :nodes-connectable="false"
-      :elements-selectable="false"
-      class="roadmap-vueflow"
-      @node-click="(_: any, node: { id: string }) => openStep(node.id)"
-    >
-      <Background color="#444" gap="16" size="1" />
-      <Controls />
-      <MiniMap />
-    </VueFlow>
+    <!-- VueFlow avec gestion des clics -->
+    <div class="flow-wrapper">
+      <div class="flow-container">
+        <VueFlow
+          v-if="nodes.length && !state.loading"
+          v-model:nodes="nodes"
+          v-model:edges="edges"
+          :fit-view-on-init="true"
+          :nodes-draggable="false"
+          :nodes-connectable="false"
+          :elements-selectable="true"
+          class="roadmap-vueflow"
+        >
+          <!-- Template pour les nœuds personnalisés -->
+          <template #node-custom="{ data, id }">
+            <div class="rf-node" :class="{ 'root-node': !data.hasPrevious }" @click="openStep(id)">
+              <div class="node-header">
+                <i class="pi pi-flag" v-if="!data.hasPrevious"></i>
+                <h4>{{ data.title }}</h4>
+              </div>
+              <small v-if="data.subTitle">{{ data.subTitle }}</small>
+              <div class="contents-badge">
+                {{ data.contents }} contenu{{ data.contents > 1 ? 's' : '' }}
+              </div>
+            </div>
+          </template>
 
+          <Background color="#2a2a2a" :gap="20" />
+          <Controls />
+          <MiniMap />
+        </VueFlow>
+
+        <!-- Message si aucune étape -->
+        <div v-else-if="!state.loading && !state.steps.length" class="no-steps">
+          <p>Aucune étape trouvée pour cette roadmap.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawer pour afficher les détails de l'étape -->
     <StepDrawer
       :visible="drawerOpen"
       :step="selectedStep"
@@ -149,23 +330,114 @@ async function openStep(stepId: string) {
   margin: var(--spacing-lg) 0;
   color: var(--color-light-gray);
 }
+
 .status.error {
   color: var(--color-gold);
 }
 
+.no-steps {
+  text-align: center;
+  margin: var(--spacing-xl) 0;
+  color: var(--color-light-gray);
+}
+
 .roadmap-vueflow {
   width: 100%;
-  height: 600px;
+  height: 700px;
   background: var(--color-darker-charcoal);
   border: 1px solid var(--color-medium-gray);
   border-radius: var(--radius-md);
+  overflow: hidden;
 }
 
-/* drawer backdrop */
-.drawer-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 100;
+.flow-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: var(--spacing-3xl) 0;
+}
+
+.flow-container {
+  width: 100%;
+  max-width: 1000px;
+  background: var(--color-darker-charcoal);
+  border: 2px solid var(--color-medium-gray);
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.flow-container.dragging {
+  cursor: grabbing;
+  border-color: var(--color-gold);
+  background: rgba(255, 215, 0, 0.05);
+}
+
+.rf-node {
+  background: var(--color-dark-gray);
+  border: 2px solid var(--color-medium-gray);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  text-align: center;
+  color: var(--color-cream);
+  font-family: var(--font-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.rf-node:hover {
+  border-color: var(--color-gold);
+  background: var(--color-charcoal);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+}
+
+.rf-node.root-node {
+  border-color: var(--color-gold);
+  background: var(--color-charcoal);
+  box-shadow: 0 4px 16px rgba(255, 215, 0, 0.4);
+}
+
+.rf-node .node-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.rf-node .node-header i {
+  color: var(--color-gold);
+  font-size: var(--font-size-base);
+}
+
+.rf-node h4 {
+  margin: 0;
+  font-size: var(--font-size-base);
+  color: var(--color-gold);
+  font-weight: 600;
+  text-align: center;
+}
+
+.rf-node small {
+  display: block;
+  color: var(--color-light-gray);
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  line-height: 1.3;
+}
+
+.contents-badge {
+  background: var(--color-gold);
+  color: var(--color-charcoal);
+  font-size: var(--font-size-xs);
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-sm);
+  margin-top: var(--spacing-sm);
+  display: inline-block;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 </style>
