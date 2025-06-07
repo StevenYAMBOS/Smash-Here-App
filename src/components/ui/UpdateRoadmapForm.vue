@@ -74,16 +74,24 @@
 
           <div class="field">
             <label>Roadmap's games</label>
-            <Multiselect
-              v-model="selectedGames"
+            <MultiSelect
+              id="games_label"
+              v-model="selectedGameIds"
               :options="availableGames"
-              label="title"
-              track-by="id"
-              placeholder="Sélectionner des jeux"
-              multiple
-              :close-on-select="false"
-              class="multiselect-field"
-            />
+              optionLabel="title"
+              optionValue="id"
+              display="chip"
+              placeholder="Select games"
+              :showClear="true"
+              class="p-multiselect-field"
+            >
+              <template #option="slotProps">
+                <div class="game-option">
+                  <i class="pi pi-gamepad2"></i>
+                  <span>{{ slotProps.option.title }}</span>
+                </div>
+              </template>
+            </MultiSelect>
           </div>
 
           <div class="field">
@@ -140,32 +148,60 @@
     <div v-if="currentTab === 'structure'" class="tab-content">
       <h2>Steps</h2>
 
+      <div class="flow-info-card">
+        <div class="flow-info-header">
+          <i class="pi pi-info-circle"></i>
+          <h4>How to organize your roadmap</h4>
+        </div>
+        <div class="flow-info-content">
+          <div class="flow-info-item">
+            <i class="pi pi-arrows-alt"></i>
+            <span><strong>Move nodes:</strong> Drag to reposition steps</span>
+          </div>
+          <div class="flow-info-item">
+            <i class="pi pi-link"></i>
+            <span><strong>Connect steps:</strong> Drag from bottom handle to top handle</span>
+          </div>
+          <div class="flow-info-item">
+            <i class="pi pi-times-circle"></i>
+            <span
+              ><strong>Remove:</strong> Click the × button on nodes or select edges and press
+              Delete</span
+            >
+          </div>
+        </div>
+      </div>
+
       <div class="structure-actions">
         <div class="field">
-          <label>Étapes disponibles</label>
-          <Multiselect
-            v-model="selectedSteps"
+          <label>Available Steps</label>
+          <MultiSelect
+            v-model="selectedStepIds"
             :options="availableSteps"
-            label="title"
-            track-by="id"
-            placeholder="Sélectionner des étapes à ajouter"
-            multiple
-            :close-on-select="false"
-            class="multiselect-field"
+            optionLabel="title"
+            optionValue="id"
+            display="chip"
+            placeholder="Select steps to include"
+            :showClear="true"
+            @change="onStepSelectionChange"
+            class="p-multiselect-field"
           >
             <template #option="slotProps">
-              <div class="step-option" @click.stop="addStep(slotProps.option)">
-                <i class="pi pi-sitemap"></i>
+              <div
+                class="step-multiselect-option"
+                draggable="true"
+                @dragstart="onDragStart($event, slotProps.option)"
+              >
+                <i class="pi pi-diagram"></i>
                 <span>{{ slotProps.option.title }}</span>
-                <i class="pi pi-plus add-icon"></i>
               </div>
             </template>
-          </Multiselect>
+          </MultiSelect>
         </div>
 
         <div class="structure-save">
           <SubmitButton
-            :label="structureLoading ? 'Enregistrement…' : 'Enregistrer la structure'"
+            :label="structureLoading ? 'Saving...' : 'Save'"
             :disabled="structureLoading"
             icon="pi pi-save"
             variant="primary"
@@ -221,7 +257,7 @@
             </div>
           </template>
 
-          <Background variant="dots" :color="backgroundColor" :gap="16" :size="1" />
+          <Background variant="lines" :color="'#2a2a2a'" :gap="20" />
           <Controls :show-zoom="true" :show-fit-view="true" :show-interactive="true" />
           <MiniMap :pannable="true" :zoomable="true" />
         </VueFlow>
@@ -236,7 +272,8 @@ import { VueFlow, useVueFlow, Position, Handle, MarkerType } from '@vue-flow/cor
 import { Background, Controls, MiniMap } from '@vue-flow/additional-components'
 import '@vue-flow/core/dist/style.css'
 import '@vue-flow/core/dist/theme-default.css'
-import Multiselect from '@vueform/multiselect'
+// import Multiselect from '@vueform/multiselect'
+import MultiSelect from 'primevue/multiselect'
 import { useUserStore } from '@/stores/user'
 import { useToast } from 'vue-toast-notification'
 import SubmitButton from './SubmitButton.vue'
@@ -266,7 +303,7 @@ const description = ref(props.roadmap.description)
 const coverFile = ref<File | null>(null)
 const published = ref(props.roadmap.published || false)
 const premium = ref(props.roadmap.premium || false)
-const selectedGames = ref<Game[]>([])
+const selectedGameIds = ref<string[]>([])
 const availableGames = computed(() => userStore.games || [])
 
 // Récupération de données
@@ -277,9 +314,20 @@ onMounted(async () => {
     await userStore.fetchAllGames()
   }
   if (props.roadmap.Games?.length) {
-    selectedGames.value = availableGames.value.filter((g) => props.roadmap.Games.includes(g.id))
+    selectedGameIds.value = props.roadmap.Games
   }
 })
+const selectedStepIds = ref<string[]>([])
+
+// Synchroniser selectedStepIds avec selectedSteps
+watch(selectedStepIds, (newIds) => {
+  selectedSteps.value = availableSteps.value.filter((step) => newIds.includes(step.id))
+})
+
+// Fonction appelée quand la sélection change
+function onStepSelectionChange() {
+  // La synchronisation se fait via le watch
+}
 
 // URL de prévisualisation de la couverture
 const coverPreview = ref<string | null>(null)
@@ -292,12 +340,12 @@ function handleFileChange(event: Event) {
 
   // Validation taille et type
   if (file.size > 10 * 1024 * 1024) {
-    toast.error('La taille doit être < 10 MB.')
+    toast.error('The size must be < 10 MB.')
     return
   }
   const validTypes = ['image/webp', 'image/png', 'image/jpeg', 'image/jpg']
   if (!validTypes.includes(file.type)) {
-    toast.error('Format invalide (WEBP, PNG, JPEG).')
+    toast.error('Invalide format (WEBP, PNG, JPEG).')
     return
   }
 
@@ -326,12 +374,13 @@ async function submitInfo() {
     formData.append('description', description.value)
     formData.append('published', published.value.toString())
     formData.append('premium', premium.value.toString())
-    formData.append('Games', selectedGames.value.map((g) => g.id).join(','))
+    // Ne pas inclure Games dans FormData car le backend les gère séparément
+
     if (coverFile.value) {
       formData.append('cover', coverFile.value)
     }
 
-    const response = await fetch(
+    const infoResponse = await fetch(
       `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${props.roadmap.id}/info`,
       {
         method: 'PUT',
@@ -341,15 +390,36 @@ async function submitInfo() {
         body: formData,
       },
     )
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+
+    if (!infoResponse.ok) {
+      throw new Error(`HTTP error! status: ${infoResponse.status}`)
     }
-    toast.success('Roadmap updated !')
-    await userStore.fetchProfile()
+
+    // Mettre à jour les jeux avec un call API séparé
+    const gamesResponse = await fetch(
+      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${props.roadmap.id}/games`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userStore.token}`,
+        },
+        body: JSON.stringify({
+          Games: selectedGameIds.value,
+        }),
+      },
+    )
+
+    if (!gamesResponse.ok) {
+      throw new Error(`Failed to update games association`)
+    }
+
+    toast.success('Roadmap updated successfully!')
+    await userStore.fetchUserRoadmaps()
     emit('navigate', 'list-roadmaps')
   } catch (err) {
     console.error(err)
-    toast.error('Error during update')
+    toast.error(err instanceof Error ? err.message : 'Error during update')
   } finally {
     infoLoading.value = false
   }
@@ -404,6 +474,7 @@ onMounted(async () => {
 
   // Initialiser selectedSteps à partir de roadmap.Steps (tableau d’IDs)
   if (props.roadmap.Steps?.length) {
+    selectedStepIds.value = props.roadmap.Steps
     selectedSteps.value = availableSteps.value.filter((s) => props.roadmap.Steps.includes(s.id))
     buildFlowFromSteps()
   }
@@ -509,21 +580,40 @@ function autoLayout() {
   }, 50)
 }
 
-function resetFlow() {
-  buildFlowFromSteps()
+// Retirer une étape
+async function removeStepNode(nodeId: string) {
+  try {
+    // Appel API pour retirer l'étape de la roadmap
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${props.roadmap.id}/step/${nodeId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${userStore.token}`,
+        },
+      },
+    )
+
+    if (!response.ok) {
+      throw new Error('Erreur lors de la suppression')
+    }
+
+    // Retirer de la liste locale seulement si l'API a réussi
+    selectedSteps.value = selectedSteps.value.filter((s) => s.id !== nodeId)
+    selectedStepIds.value = selectedStepIds.value.filter((id) => id !== nodeId)
+    // Mettre à jour le store local
+    await userStore.fetchUserSteps()
+    // toast.success('Step removed from the roadmap')
+  } catch (err) {
+    console.error('Erreur suppression étape:', err)
+    toast.error('Unable to remove step')
+  }
 }
 
-function removeStepNode(nodeId: string) {
-  selectedSteps.value = selectedSteps.value.filter((s) => s.id !== nodeId)
-  // Appel API pour mettre à jour la liste Steps
-  submitStructure()
-}
-
+// Ajouter une étape
 function addStep(step: Step) {
   if (!selectedSteps.value.find((s) => s.id === step.id)) {
     selectedSteps.value = [...selectedSteps.value, step]
-    // Mise à jour immédiate du backend
-    submitStructure()
   }
 }
 
@@ -533,6 +623,7 @@ function onDragStart(event: DragEvent, step: Step) {
   isDragging.value = true
   event.dataTransfer!.effectAllowed = 'copy'
 }
+
 function onDrop(event: DragEvent) {
   event.preventDefault()
   if (!draggedStep.value) return
@@ -557,6 +648,7 @@ function onNodesChange(changes: any[]) {
   nodes.value = applyNodeChanges(changes, nodes.value)
 }
 
+// Relier les étapes entre-elles
 async function onConnect(params: { source: string; target: string }) {
   if (params.source === params.target) return
 
@@ -574,60 +666,67 @@ async function onConnect(params: { source: string; target: string }) {
   }
   edges.value = addEdges([newEdge], edges.value)
 
-  const sourceStep = selectedSteps.value.find((s) => s.id === params.source)!
-  const targetStep = selectedSteps.value.find((s) => s.id === params.target)!
+  const sourceStep = selectedSteps.value.find((s) => s.id === params.source)
+  const targetStep = selectedSteps.value.find((s) => s.id === params.target)
+
+  if (!sourceStep || !targetStep) return
 
   // Mettre à jour en mémoire
-  sourceStep.NextSteps = sourceStep.NextSteps || []
+  if (!sourceStep.NextSteps) sourceStep.NextSteps = []
+  if (!targetStep.PreviousSteps) targetStep.PreviousSteps = []
+
   if (!sourceStep.NextSteps.includes(params.target)) {
     sourceStep.NextSteps.push(params.target)
   }
-  targetStep.PreviousSteps = targetStep.PreviousSteps || []
   if (!targetStep.PreviousSteps.includes(params.source)) {
     targetStep.PreviousSteps.push(params.source)
   }
 
-  // API : mettre à jour sourceStep
-  try {
-    await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${sourceStep.id}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userStore.token}`,
-        },
-        body: JSON.stringify({
-          NextSteps: sourceStep.NextSteps,
-          PreviousSteps: sourceStep.PreviousSteps || [],
-          Roadmaps: sourceStep.Roadmaps.includes(props.roadmap.id)
-            ? sourceStep.Roadmaps
-            : [...sourceStep.Roadmaps, props.roadmap.id],
-        }),
-      },
-    )
+  // Mettre à jour le flag hasPrevious visuellement
+  const targetNode = nodes.value.find((n: any) => n.id === params.target)
+  if (targetNode) {
+    targetNode.data.hasPrevious = true
+  }
 
-    // API : mettre à jour targetStep
-    await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${targetStep.id}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userStore.token}`,
+  // Mettre à jour les deux étapes
+  try {
+    const updateStep = async (step: Step) => {
+      const payload = {
+        title: step.title,
+        subTitle: step.subTitle || '',
+        description: step.description || '',
+        PreviousSteps: step.PreviousSteps || [],
+        NextSteps: step.NextSteps || [],
+      }
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${step.id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userStore.token}`,
+          },
+          body: JSON.stringify(payload),
         },
-        body: JSON.stringify({
-          NextSteps: targetStep.NextSteps || [],
-          PreviousSteps: targetStep.PreviousSteps,
-          Roadmaps: targetStep.Roadmaps.includes(props.roadmap.id)
-            ? targetStep.Roadmaps
-            : [...targetStep.Roadmaps, props.roadmap.id],
-        }),
-      },
-    )
+      )
+
+      if (!response.ok) {
+        throw new Error(`Erreur mise à jour étape ${step.title}`)
+      }
+    }
+
+    await Promise.all([updateStep(sourceStep), updateStep(targetStep)])
+    await userStore.fetchUserSteps()
+    toast.success('Steps connected')
   } catch (err) {
     console.error('Erreur lors de la mise à jour des steps :', err)
-    toast.error('Impossible de synchroniser le lien en base.')
+    toast.error('Unable to create connection')
+
+    // Rollback visuel
+    edges.value = edges.value.filter((e) => e.id !== newEdge.id)
+    sourceStep.NextSteps = sourceStep.NextSteps?.filter((id) => id !== params.target)
+    targetStep.PreviousSteps = targetStep.PreviousSteps?.filter((id) => id !== params.source)
   }
 }
 
@@ -679,9 +778,10 @@ async function onEdgesChange(changes: any[]) {
             }),
           },
         )
+        await userStore.fetchUserSteps()
       } catch (err) {
         console.error('Erreur suppression lien step :', err)
-        toast.error('Impossible de synchroniser la suppression du lien.')
+        toast.error('Unable to synchronize link deletion.')
       }
     }
   }
@@ -696,21 +796,31 @@ async function submitStructure() {
 
   try {
     const stepIds = selectedSteps.value.map((s) => s.id)
-    await fetch(
+
+    const formData = new FormData()
+    formData.append('Steps', stepIds.join(','))
+
+    const response = await fetch(
       `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${props.roadmap.id}/steps`,
       {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${userStore.token}`,
         },
-        body: JSON.stringify({ Steps: stepIds }),
+        body: formData,
       },
     )
-    toast.success('Structure de la roadmap enregistrée !')
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    toast.success('Roadmap updated with success !')
+    await userStore.fetchUserSteps()
+    await userStore.fetchUserRoadmaps()
   } catch (err) {
     console.error('Erreur mise à jour Steps :', err)
-    toast.error('Impossible de mettre à jour la structure.')
+    toast.error('Unable to update structure.')
   } finally {
     structureLoading.value = false
   }
@@ -728,20 +838,87 @@ async function submitStructure() {
 /* Onglets */
 .tabs {
   display: flex;
-  border-bottom: 2px solid #ddd;
-  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--color-medium-gray);
+  margin-bottom: var(--spacing-xl);
+  background: var(--color-darker-charcoal);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  padding: 0 var(--spacing-md);
 }
+
 .tab-button {
-  padding: 0.5rem 1rem;
+  padding: var(--spacing-md) var(--spacing-lg);
   background: none;
   border: none;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
   font-weight: bold;
   cursor: pointer;
-  border-bottom: 2px solid transparent;
+  border-bottom: 3px solid transparent;
+  color: var(--color-light-gray);
+  transition: all 0.3s ease;
 }
+
+.tab-button:hover {
+  color: var(--color-cream);
+}
+
 .tab-button.active {
   border-bottom-color: var(--color-gold);
   color: var(--color-gold);
+}
+
+/* Améliorer le titre de l'onglet étapes */
+.tab-content h2 {
+  color: var(--color-gold);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-lg);
+}
+
+.flow-info-card {
+  background: var(--color-charcoal);
+  border: 1px solid var(--color-medium-gray);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.flow-info-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.flow-info-header i {
+  color: var(--color-gold);
+  font-size: var(--font-size-lg);
+}
+
+.flow-info-header h4 {
+  color: var(--color-cream);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  margin: 0;
+}
+
+.flow-info-content {
+  display: grid;
+  gap: var(--spacing-sm);
+}
+
+.flow-info-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  color: var(--color-cream);
+  font-size: var(--font-size-sm);
+}
+
+.flow-info-item i {
+  color: var(--color-gold);
+  width: 20px;
+  text-align: center;
 }
 
 /* Contenu */
@@ -793,9 +970,6 @@ async function submitStructure() {
 .switch-button.active .switch-handle {
   transform: translateX(20px);
 }
-.multiselect-field {
-  width: 100%;
-}
 .file-input-wrapper {
   position: relative;
 }
@@ -833,8 +1007,20 @@ async function submitStructure() {
   background: #1e1e1e;
   border-radius: 8px;
 }
+
+.flow-container {
+  height: 600px;
+  background: var(--color-darker-charcoal);
+  border: 2px solid var(--color-medium-gray);
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+}
+
 .flow-container.dragging {
   cursor: grabbing;
+  border-color: var(--color-gold);
+  background: rgba(255, 215, 0, 0.05);
 }
 
 .step-option {
@@ -853,32 +1039,68 @@ async function submitStructure() {
 .add-icon {
   color: var(--color-gold);
 }
+
 .custom-node {
-  background: #444;
-  border-radius: 6px;
-  padding: 0.5rem;
-  color: #fff;
-  min-width: 120px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  background: var(--color-dark-gray);
+  border: 2px solid var(--color-medium-gray);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-md);
+  min-width: 150px;
+  transition: all 0.2s ease;
 }
+
+.custom-node:hover {
+  border-color: var(--color-gold);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
 .custom-node.root-node {
-  border: 2px solid var(--color-gold);
+  border-color: var(--color-gold);
+  background: var(--color-charcoal);
 }
+
+.node-content {
+  position: relative;
+}
+
 .node-header {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
+  color: var(--color-cream);
+  font-weight: bold;
+  font-family: var(--font-primary);
 }
+
+.node-header i {
+  color: var(--color-gold);
+}
+
 .node-actions {
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: -8px;
+  right: -8px;
 }
+
 .btn-remove {
+  background: var(--color-gold);
+  color: var(--color-charcoal);
   border: none;
-  background: none;
-  color: #ff5c5c;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 12px;
+}
+
+.btn-remove:hover {
+  background: #ff4444;
+  color: white;
+  transform: scale(1.1);
 }
 
 /* === Styles spécifiques à l’onglet “Informations de base” === */
@@ -975,22 +1197,59 @@ async function submitStructure() {
   transform: translateX(24px);
 }
 
-/* Multiselect */
+/* Options dans les multiselect */
+.game-option,
+.step-multiselect-option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.game-option i,
+.step-multiselect-option i {
+  color: var(--color-gold);
+}
+
+.step-multiselect-option {
+  cursor: grab;
+}
+
+.step-multiselect-option:active {
+  cursor: grabbing;
+}
+
+/* Override Multiselect styles */
 .multiselect-field {
   width: 100%;
-  font-family: var(--font-secondary);
 }
-.multiselect-field .multiselect__tags {
-  background: var(--color-off-white);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--color-light-gray);
+
+/* Supprimer les puces de liste */
+.multiselect-field ul,
+.multiselect-field li,
+.p-multiselect ul,
+.p-multiselect li {
+  list-style: none !important;
+  list-style-type: none !important;
 }
-.multiselect-field .multiselect__tags,
-.multiselect-field .multiselect__input {
-  padding: var(--spacing-sm);
+
+.multiselect-field .multiselect__content-wrapper {
+  background: var(--color-charcoal);
+  border: 1px solid var(--color-medium-gray);
 }
+
+.multiselect-field .multiselect__option {
+  background: var(--color-charcoal);
+  color: var(--color-cream);
+  border: none;
+  list-style: none;
+}
+
 .multiselect-field .multiselect__option--highlight {
-  background: var(--color-light-yellow);
+  background: var(--color-dark-gray);
+  color: var(--color-gold);
 }
 
 /* Upload d’image */

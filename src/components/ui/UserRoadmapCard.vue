@@ -78,7 +78,7 @@ const props = withDefaults(
   },
 )
 
-const emit = defineEmits<{
+defineEmits<{
   (e: 'view', id: string): void
   (e: 'stats', id: string): void
   (e: 'edit', id: string): void
@@ -106,16 +106,19 @@ const emit = defineEmits<{
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
-.cover-wrapper {
+/* .cover-wrapper {
   flex-shrink: 0;
   position: relative;
-}
-.cover {
-  padding: var(--spacing-lg);
+  overflow: hidden;
   border-radius: var(--radius-lg);
+  padding-left: var(--spacing-md);
+} */
+.cover {
   width: 200px;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+  padding-left: var(--spacing-md);
 }
 
 .info {

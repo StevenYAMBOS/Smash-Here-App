@@ -1,13 +1,18 @@
 <!-- src/views/Roadmap/RoadmapView.vue -->
 
 <script setup lang="ts">
-import FlowchartGraph from '@/components/ui/FlowchartGraph.vue'
 import StepDrawer from '@/components/ui/StepDrawer.vue'
 import { onMounted, reactive, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import HeaderRoadmap from '@/components/layout/HeaderRoadmap.vue'
-import type { Content, Roadmap, Step } from '@/types/collections'
-
+import { VueFlow } from '@vue-flow/core'
+import { MiniMap } from '@vue-flow/minimap'
+import { Controls } from '@vue-flow/controls'
+import { Background } from '@vue-flow/background'
+import '@vue-flow/controls/dist/style.css'
+import '@vue-flow/minimap/dist/style.css'
+import '@vue-flow/core/dist/style.css'
+import '@vue-flow/core/dist/theme-default.css'
 const state = reactive({
   roadmap: null as Roadmap | null,
   steps: [] as Step[],
@@ -22,6 +27,34 @@ const drawerOpen = ref(false)
 
 const route = useRoute()
 const roadmapId = route.params.id as string
+
+// dimensions pour VueFlow
+const NODE_WIDTH = 200
+const NODE_HEIGHT = 100
+
+// transforme state.steps en nodes & edges
+const nodes = computed(() =>
+  state.steps.map(
+    (s: { id: any; title: any; subTitle: any; Contents: string | any[] }, i: number) => ({
+      id: s.id,
+      position: { x: i * (NODE_WIDTH + 50), y: 0 }, // simple layout horizontal
+      data: { label: s.title, subLabel: s.subTitle, contents: s.Contents?.length || 0 },
+      style: { width: NODE_WIDTH, height: NODE_HEIGHT },
+      draggable: false, // read-only
+    }),
+  ),
+)
+const edges = computed(() =>
+  state.steps.flatMap((s: { PreviousSteps: any; id: any }) =>
+    (s.PreviousSteps ?? []).map((p: any) => ({
+      id: `${p}-${s.id}`,
+      source: p,
+      target: s.id,
+      animated: false,
+      style: { stroke: '#888', strokeWidth: 1 },
+    })),
+  ),
+)
 
 // Récupération initiale
 onMounted(async () => {
@@ -44,7 +77,9 @@ onMounted(async () => {
 })
 
 /** Computed pour récupérer l’objet Step sélectionné */
-const selectedStep = computed(() => state.steps.find((s) => s.id === selectedStepId.value) || null)
+const selectedStep = computed(
+  () => state.steps.find((s: { id: string | null }) => s.id === selectedStepId.value) || null,
+)
 
 // Ouverture de la drawer et fetch des contenus
 async function openStep(stepId: string) {
@@ -82,7 +117,22 @@ async function openStep(stepId: string) {
     <p v-if="state.loading" class="status">Loading...</p>
     <p v-if="state.error" class="status error">{{ state.error }}</p>
 
-    <FlowchartGraph v-if="state.steps.length" :steps="state.steps" @select="openStep" />
+    <!-- VueFlow read-only -->
+    <VueFlow
+      v-if="nodes.length"
+      :nodes="nodes"
+      :edges="edges"
+      :fit-view-on-init="true"
+      :nodes-draggable="false"
+      :nodes-connectable="false"
+      :elements-selectable="false"
+      class="roadmap-vueflow"
+      @node-click="(_: any, node: { id: string }) => openStep(node.id)"
+    >
+      <Background color="#444" gap="16" size="1" />
+      <Controls />
+      <MiniMap />
+    </VueFlow>
 
     <StepDrawer
       :visible="drawerOpen"
@@ -101,6 +151,14 @@ async function openStep(stepId: string) {
 }
 .status.error {
   color: var(--color-gold);
+}
+
+.roadmap-vueflow {
+  width: 100%;
+  height: 600px;
+  background: var(--color-darker-charcoal);
+  border: 1px solid var(--color-medium-gray);
+  border-radius: var(--radius-md);
 }
 
 /* drawer backdrop */

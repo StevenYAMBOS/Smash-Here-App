@@ -28,13 +28,13 @@ import { defineProps, defineEmits } from 'vue'
 import type { Content, Step } from '@/types/collections'
 import Backdrop from './BackDrop.vue'
 
-const props = defineProps<{
+defineProps<{
   visible: boolean
   step: Step | null
   contents: Content[]
 }>()
 
-const emit = defineEmits<{
+defineEmits<{
   (e: 'close'): void
 }>()
 </script>
