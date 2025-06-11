@@ -5,7 +5,7 @@
     <img :src="roadmap.cover" :alt="roadmap.title" class="roadmap-cover" />
     <h3 class="roadmap-title">{{ roadmap.title }}</h3>
     <span class="step-count">
-      {{ (roadmap.Steps ?? []).length }} étape{{ (roadmap.Steps ?? []).length > 1 ? 's' : '' }}
+      {{ (roadmap.Steps ?? []).length }} step{{ (roadmap.Steps ?? []).length > 1 ? 's' : '' }}
     </span>
   </router-link>
 </template>
@@ -14,7 +14,7 @@
 import { defineProps } from 'vue'
 import type { Roadmap } from '@/types/collections'
 
-const props = defineProps<{ roadmap: Roadmap }>()
+defineProps<{ roadmap: Roadmap }>()
 </script>
 
 <style scoped>

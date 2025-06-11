@@ -44,7 +44,7 @@ import { defineProps, defineEmits, withDefaults } from 'vue'
 import type { Content } from '@/types/collections'
 import Button from 'primevue/button'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     content: Content
     showStats?: boolean
@@ -57,7 +57,7 @@ const props = withDefaults(
   },
 )
 
-const emit = defineEmits<{
+defineEmits<{
   (e: 'stats', id: string): void
   (e: 'edit', id: string): void
   (e: 'delete', id: string): void

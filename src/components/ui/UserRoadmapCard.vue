@@ -116,9 +116,9 @@ defineEmits<{
 .cover {
   width: 200px;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   border-radius: var(--radius-lg);
-  padding-left: var(--spacing-md);
+  /* padding-left: var(--spacing-md); */
 }
 
 .info {
@@ -213,5 +213,50 @@ defineEmits<{
 .actions ::v-deep(.p-button-danger:hover) {
   background: var(--color-light-yellow) !important;
   color: var(--color-charcoal) !important;
+}
+
+/* === Responsive mobile (<768px) === */
+@media (max-width: 768px) {
+  .user-roadmap-card {
+    flex-direction: column;
+    max-height: none;
+  }
+  .cover {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    padding-left: 0;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+  }
+  .info {
+    padding: var(--spacing-md);
+    grid-template-areas:
+      'title'
+      'subTitle'
+      'description'
+      'meta';
+  }
+  .title {
+    font-size: var(--font-size-xl);
+  }
+  .subTitle {
+    font-size: var(--font-size-sm);
+  }
+  .description {
+    -webkit-line-clamp: 4; /* un peu plus de texte visible */
+  }
+  .meta {
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+  }
+  .actions {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  .actions ::v-deep(.p-button-text) {
+    flex: 1;
+    margin: 0 var(--spacing-xs);
+  }
 }
 </style>

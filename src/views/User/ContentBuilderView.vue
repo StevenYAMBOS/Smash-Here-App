@@ -2,37 +2,98 @@
 
 <template>
   <div class="builder-page">
-    <ContentBuilderMenu v-model:selected="selectedTab" @navigate="onNavigate" />
+    <ContentBuilderMenu
+      v-model:selected="selectedTab"
+      @navigate="onNavigate"
+      class="builder-menu"
+    />
 
     <div class="builder-content">
+      <div class="builder-header">
+        <h2>
+          <i class="pi pi-cog"></i>
+          {{ tabLabels[selectedTab] }}
+        </h2>
+        <SearchBar
+          v-if="['list-roadmaps', 'list-steps', 'list-contents'].includes(selectedTab)"
+          placeholder="Search…"
+          v-model="searchText"
+          class="builder-search"
+        />
+      </div>
+
       <!-- ***************** ROADMAPS ***************** -->
       <template v-if="selectedTab === 'create-roadmap'">
-        <h2>Create a new roadmap</h2>
         <CreateRoadmapForm />
       </template>
       <template v-else-if="selectedTab === 'list-roadmaps'">
-        <h2>Your roadmaps</h2>
-        <SearchBar placeholder="Search for your roadmaps" v-model="searchText" />
-
-        <UserRoadmapCard
-          v-for="rm in filteredRoadmaps"
-          :key="rm.id"
-          :roadmap="rm"
-          :show-view="true"
-          :showStats="true"
-          :showEdit="true"
-          :showDelete="true"
-          @view="(id) => router.push(`/roadmap/${id}`)"
-          @stats="(id) => router.push(`/dashboard/roadmpas/${id}`)"
-          @edit="onEditRoadmap"
-          @delete="openConfirmRoadmap"
-        />
+        <div class="cards-grid">
+          <UserRoadmapCard
+            v-for="rm in filteredRoadmaps"
+            :key="rm.id"
+            :roadmap="rm"
+            :show-view="true"
+            :showStats="true"
+            :showEdit="true"
+            :showDelete="true"
+            @view="(id) => router.push(`/roadmap/${id}`)"
+            @stats="(id) => router.push(`/dashboard/roadmpas/${id}`)"
+            @edit="onEditRoadmap"
+            @delete="openConfirmRoadmap"
+          />
+        </div>
       </template>
-      <!-- Onglet fantôme pour l'édition -->
       <template v-else-if="selectedTab === 'update-roadmap'">
         <UpdateRoadmapForm v-if="editingRoadmap" :roadmap="editingRoadmap" @navigate="onNavigate" />
       </template>
-      <!-- zone modale de confirmation -->
+
+      <!-- ***************** ÉTAPES ***************** -->
+      <template v-if="selectedTab === 'list-steps'">
+        <div class="cards-grid">
+          <UserStepCard
+            v-for="st in filteredSteps"
+            :key="st.id"
+            :step="st"
+            :showStats="true"
+            :showEdit="true"
+            :showDelete="true"
+            @stats="(id) => router.push(`/dashboard/steps/${id}`)"
+            @edit="onEditStep"
+            @delete="openConfirmStep"
+          />
+        </div>
+      </template>
+      <template v-else-if="selectedTab === 'create-step'">
+        <CreateStepForm />
+      </template>
+      <template v-else-if="selectedTab === 'update-step'">
+        <UpdateStepForm v-if="editingStep" :step="editingStep" @navigate="onNavigate" />
+      </template>
+
+      <!-- ***************** CONTENUS ***************** -->
+      <template v-if="selectedTab === 'list-contents'">
+        <div class="cards-grid">
+          <UserContentCard
+            v-for="c in filteredContents"
+            :key="c.id"
+            :content="c"
+            :showStats="true"
+            :showEdit="true"
+            :showDelete="true"
+            @stats="(id) => router.push(`/dashboard/contents/${id}`)"
+            @edit="onEditContent"
+            @delete="openConfirmContent"
+          />
+        </div>
+      </template>
+      <template v-else-if="selectedTab === 'create-content'">
+        <CreateContentForm />
+      </template>
+      <template v-else-if="selectedTab === 'update-content'">
+        <UpdateContentForm v-if="editingContent" :content="editingContent" @navigate="onNavigate" />
+      </template>
+
+      <!-- confirmation modals -->
       <div
         v-if="confirmVisibleRoadmap"
         class="confirm-backdrop"
@@ -46,32 +107,6 @@
         </div>
       </div>
 
-      <!-- ***************** ÉTAPES ***************** -->
-      <template v-if="selectedTab === 'create-step'">
-        <h2>Create a new step</h2>
-        <CreateStepForm />
-      </template>
-      <template v-else-if="selectedTab === 'list-steps'">
-        <h2>Your steps</h2>
-        <SearchBar placeholder="Search for your roadmaps" v-model="searchText" />
-
-        <UserStepCard
-          v-for="rm in filteredSteps"
-          :key="rm.id"
-          :step="rm"
-          :showStats="true"
-          :showEdit="true"
-          :showDelete="true"
-          @stats="(id) => router.push(`/dashboard/steps/${id}`)"
-          @edit="onEditStep"
-          @delete="openConfirmStep"
-        />
-      </template>
-      <!-- Onglet fantôme pour l'édition -->
-      <template v-else-if="selectedTab === 'update-step'">
-        <UpdateStepForm v-if="editingStep" :step="editingStep" @navigate="onNavigate" />
-      </template>
-      <!-- zone modale de confirmation -->
       <div v-if="confirmVisibleStep" class="confirm-backdrop" @click="cancelDeleteStep"></div>
       <div v-if="confirmVisibleStep" class="confirm-modal">
         <p>Are you sure you want to delete this step ?</p>
@@ -81,31 +116,6 @@
         </div>
       </div>
 
-      <!-- ***************** CONTENUS ***************** -->
-      <template v-if="selectedTab === 'create-content'">
-        <CreateContentForm />
-      </template>
-      <template v-else-if="selectedTab === 'list-contents'">
-        <h2>Your contents</h2>
-        <SearchBar placeholder="Search for your roadmaps" v-model="searchText" />
-
-        <UserContentCard
-          v-for="rm in filteredContents"
-          :key="rm.id"
-          :content="rm"
-          :showStats="true"
-          :showEdit="true"
-          :showDelete="true"
-          @stats="(id) => router.push(`/dashboard/contents/${id}`)"
-          @edit="onEditContent"
-          @delete="openConfirmContent"
-        />
-      </template>
-      <!-- Onglet fantôme pour l'édition -->
-      <template v-else-if="selectedTab === 'update-content'">
-        <UpdateContentForm v-if="editingContent" :content="editingContent" @navigate="onNavigate" />
-      </template>
-      <!-- zone modale de confirmation -->
       <div v-if="confirmVisibleContent" class="confirm-backdrop" @click="cancelDeleteContent"></div>
       <div v-if="confirmVisibleContent" class="confirm-modal">
         <p>Are you sure you want to delete this content ?</p>
@@ -145,6 +155,19 @@ const router = useRouter()
 const userStore = useUserStore()
 
 const searchText = ref('')
+
+// Libellés pour le header
+const tabLabels: Record<string, string> = {
+  'create-roadmap': 'Create Roadmap',
+  'list-roadmaps': 'Your Roadmaps',
+  'update-roadmap': 'Edit Roadmap',
+  'create-step': 'Create Step',
+  'list-steps': 'Your Steps',
+  'update-step': 'Edit Step',
+  'create-content': 'Create Content',
+  'list-contents': 'Your Contents',
+  'update-content': 'Edit Content',
+}
 
 // ID de contenu en attente de suppression
 const pendingDeleteRoadmapId = ref<string | null>(null)
@@ -276,27 +299,67 @@ onMounted(async () => {
 <style scoped>
 .builder-page {
   display: flex;
+  background: var(--color-darker-charcoal);
+  /* display: flex;
   gap: var(--spacing-lg);
   padding: var(--spacing-2xl);
   background: var(--color-dark-charcoal);
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto; */
 }
+
+.builder-menu {
+  width: 200px;
+  background: var(--color-charcoal);
+  border-right: 2px solid var(--color-gold);
+}
+
 .builder-content {
+  flex: 1;
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
   /* flex: 1; */
-  width: 100%;
+  /* width: 100%;
   background: var(--color-dark-gray);
   padding: var(--spacing-lg);
   border-radius: var(--radius-md);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-xl); */
 }
 
-h2 {
+.builder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+}
+
+.builder-header h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-primary);
+  color: var(--color-cream);
+  font-size: var(--font-size-2xl);
+}
+
+/* h2 {
   color: var(--color-cream);
   font-weight: bold;
   font-family: var(--font-primary);
+} */
+
+.builder-search {
+  width: 300px;
+}
+
+.cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  margin: auto 0;
 }
 
 .status {
@@ -351,5 +414,28 @@ h2 {
 .confirm-actions .btn-yes:hover,
 .confirm-actions .btn-no:hover {
   opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .builder-page {
+    flex-direction: column;
+  }
+  .builder-menu {
+    width: 100%;
+    border-right: none;
+    border-bottom: 2px solid var(--color-gold);
+  }
+  .builder-header {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  .builder-search {
+    width: 100%;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
 }
 </style>

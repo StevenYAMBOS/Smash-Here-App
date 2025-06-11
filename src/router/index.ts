@@ -12,6 +12,12 @@ import RoadmapsListView from '@/views/Roadmaps/RoadmapsListView.vue'
 import RoadmapView from '@/views/Roadmap/RoadmapView.vue'
 import UserAccount from '@/views/User/UserAccount.vue'
 import ContentBuilderView from '@/views/User/ContentBuilderView.vue'
+import TermsAndConditionsView from '@/views/Legal/TermsAndConditionsView.vue'
+import GeneralTermsOfUseView from '@/views/Legal/GeneralTermsOfUseView.vue'
+import PrivacyPolicyView from '@/views/Legal/PrivacyPolicyView.vue'
+import CookiePolicyView from '@/views/Legal/CookiePolicyView.vue'
+import FAQView from '@/views/Support/FAQView.vue'
+import ContactView from '@/views/Support/ContactView.vue'
 
 const routes = [
   {
@@ -21,6 +27,20 @@ const routes = [
       { path: '', name: 'home', component: HomeView },
       { path: '/profile', name: 'profile', component: UserAccount },
       { path: '/dashboard', name: 'dashboard', component: ContentBuilderView },
+      {
+        path: '/terms-and-conditions',
+        name: 'terms-and-conditions',
+        component: TermsAndConditionsView,
+      },
+      {
+        path: '/general-terms-of-use',
+        name: 'general-terms-of-use',
+        component: GeneralTermsOfUseView,
+      },
+      { path: '/privacy-policy', name: 'privacy-policy', component: PrivacyPolicyView },
+      { path: '/cookies-policy', name: 'cookies-policy', component: CookiePolicyView },
+      { path: '/faq', name: 'faq', component: FAQView },
+      { path: '/contact', name: 'contact', component: ContactView },
       {
         path: '/games',
         name: 'games',

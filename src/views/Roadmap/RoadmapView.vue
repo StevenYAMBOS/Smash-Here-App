@@ -303,13 +303,14 @@ async function openStep(stepId: string) {
           </template>
 
           <Background color="#2a2a2a" :gap="20" />
-          <Controls />
-          <MiniMap />
+          <Controls :show-zoom="true" :show-fit-view="true" :show-interactive="true" />
+
+          <MiniMap :pannable="true" :zoomable="true" />
         </VueFlow>
 
         <!-- Message si aucune étape -->
         <div v-else-if="!state.loading && !state.steps.length" class="no-steps">
-          <p>Aucune étape trouvée pour cette roadmap.</p>
+          <p>No steps avaible for this roadmap.</p>
         </div>
       </div>
     </div>

@@ -12,7 +12,6 @@
       <div class="navbar-menu" :class="{ active: isMenuOpen }">
         <router-link to="/" class="navbar-link">Home</router-link>
         <router-link to="/games" class="navbar-link">Games</router-link>
-        <router-link to="/ranking" class="navbar-link">Ranking</router-link>
       </div>
 
       <!-- Inscription Button -->
@@ -38,13 +37,11 @@
 import { ref } from 'vue'
 import NavButton from '../ui/NavButton.vue'
 import { useUserStore } from '@/stores/user'
-import { useRouter } from 'vue-router'
 import UserMenu from '@/components/ui/UserMenu.vue'
 
 // State for mobile menu
 const isMenuOpen = ref(false)
 const userStore = useUserStore()
-const router = useRouter()
 
 // Toggle mobile menu
 const toggleMenu = () => {
@@ -53,11 +50,6 @@ const toggleMenu = () => {
 
 const toggleUserMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
-}
-
-// Redirige vers la page de profil (à créer)
-function goToProfile() {
-  router.push('/profile')
 }
 </script>
 

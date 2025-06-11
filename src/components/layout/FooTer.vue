@@ -13,8 +13,6 @@
           <ul>
             <li><router-link to="/games">Games</router-link></li>
             <li><router-link to="/roadmaps">Roadmaps</router-link></li>
-            <li><router-link to="/ranking">Ranking</router-link></li>
-            <li><router-link to="/login">Login</router-link></li>
           </ul>
         </div>
         <div class="footer-column">
@@ -27,10 +25,10 @@
         <div class="footer-column">
           <h4>Legal</h4>
           <ul>
-            <li><router-link to="/mentions-legales">Terms and conditions</router-link></li>
-            <li><router-link to="/cgu">General terms of use</router-link></li>
-            <li><router-link to="/confidentialite">Privacy policy</router-link></li>
-            <li><router-link to="/cookies">Cookies</router-link></li>
+            <li><router-link to="/terms-and-conditions">Terms and conditions</router-link></li>
+            <li><router-link to="/general-terms-of-use">General terms of use</router-link></li>
+            <li><router-link to="/privacy-policy">Privacy policy</router-link></li>
+            <li><router-link to="/cookies-policy">Cookies</router-link></li>
           </ul>
         </div>
       </div>
