@@ -4,6 +4,7 @@
       <h1 class="header-title">{{ title }}</h1>
       <p class="header-subTitle">{{ subTitle }}</p>
       <button v-if="buttonText && buttonLink" class="header-button" @click="navigateTo">
+        <!-- <i class="pi pi-sign-in"></i> -->
         {{ buttonText }}
       </button>
     </div>
@@ -61,24 +62,27 @@ const navigateTo = () => {
 }
 
 .header-button {
-  display: inline-block;
-  background: linear-gradient(to right, var(--color-cream), var(--color-gold));
-  color: var(--color-black);
-  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
   padding: var(--spacing-md) var(--spacing-xl);
+  background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
+  color: var(--color-charcoal);
   border: none;
   border-radius: var(--radius-md);
-  text-decoration: none;
-  font-size: var(--font-size-sm);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .header-button:hover {
-  background: linear-gradient(to right, var(--color-gold), var(--color-cream));
-}
-
-.header-button:hover {
-  background-color: var(--color-light-yellow);
+  background: linear-gradient(135deg, var(--color-light-yellow), var(--color-gold));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
 }
 </style>

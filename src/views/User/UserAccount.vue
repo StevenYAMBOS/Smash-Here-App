@@ -24,12 +24,10 @@
             :key="rm.id"
             :roadmap="rm"
             :showView="true"
-            :showStats="true"
-            :showEdit="true"
-            :showDelete="true"
-            @view="(id) => router.push(`/dashboard/roadmaps/${id}`)"
-            @edit="(id) => router.push(`/dashboard/roadmaps/${id}/edit`)"
-            @delete="(id) => userStore.deleteRoadmap(id)"
+            :showStats="false"
+            :showEdit="false"
+            :showDelete="false"
+            @view="(id) => router.push(`/roadmap/${id}`)"
           />
         </div>
         <!-- Sinon -->

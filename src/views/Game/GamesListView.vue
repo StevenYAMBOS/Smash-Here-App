@@ -54,6 +54,7 @@ const filteredGames = computed(() => {
         :subTitle="game.subTitle"
         :cover="game.cover"
         :id="game.id"
+        :roadmaps-count="game.Roadmaps?.length || 0"
       />
     </div>
 
@@ -72,11 +73,12 @@ const filteredGames = computed(() => {
 }
 
 .games-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-xl);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(400px, 400px));
   justify-content: center;
+  gap: var(--spacing-3xl);
   padding-bottom: var(--spacing-2xl);
+  margin: 0 auto;
 }
 
 .status-text {
@@ -87,5 +89,11 @@ const filteredGames = computed(() => {
 
 .status-text.error {
   color: red;
+}
+
+@media (max-width: 768px) {
+  .games-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

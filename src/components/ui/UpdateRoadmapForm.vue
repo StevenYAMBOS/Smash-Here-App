@@ -257,7 +257,7 @@
             </div>
           </template>
 
-          <Background variant="lines" :color="'#2a2a2a'" :gap="20" />
+          <Background :color="'#2a2a2a'" :gap="20" />
           <Controls :show-zoom="true" :show-fit-view="true" :show-interactive="true" />
           <MiniMap :pannable="true" :zoomable="true" />
         </VueFlow>
@@ -277,7 +277,7 @@ import MultiSelect from 'primevue/multiselect'
 import { useUserStore } from '@/stores/user'
 import { useToast } from 'vue-toast-notification'
 import SubmitButton from './SubmitButton.vue'
-import type { Roadmap, Game, Step } from '@/types/collections'
+import type { Roadmap, Step } from '@/types/collections'
 
 const toast = useToast()
 const userStore = useUserStore()
@@ -434,11 +434,12 @@ const selectedSteps = ref<Step[]>([])
 // VueFlow state
 const isDragging = ref(false)
 const draggedStep = ref<Step | null>(null)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const nodes = ref<any[]>([])
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const edges = ref<any[]>([])
 
 // Styles VueFlow
-const backgroundColor = '#333333'
 const handleStyle = {
   background: 'var(--color-gold)',
   width: '12px',
@@ -492,6 +493,7 @@ watch(selectedSteps, (newSteps) => {
 
 // Construire nodes & edges à partir de selectedSteps
 function buildFlowFromSteps() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const nodeMap = new Map<string, any>()
   selectedSteps.value.forEach((step) => {
     const node = {
@@ -507,7 +509,7 @@ function buildFlowFromSteps() {
     nodeMap.set(step.id, node)
   })
   nodes.value = Array.from(nodeMap.values())
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const edgeList: any[] = []
   selectedSteps.value.forEach((step) => {
     if (step.NextSteps?.length) {
@@ -536,10 +538,13 @@ function autoLayout() {
   const H_GAP = 250
   const V_GAP = 150
   const visited = new Set<string>()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const levels = new Map<number, any[]>()
 
   // Racines = nœuds sans PreviousSteps
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const roots = nodes.value.filter((n: any) => !n.data.hasPrevious)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const queue: { node: any; level: number }[] = roots.map((r: any) => ({
     node: r,
     level: 0,
@@ -555,10 +560,12 @@ function autoLayout() {
 
     // Enfants = tous les nodes pointés par edges
     const children = edges.value
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .filter((e: any) => e.source === node.id)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((e: any) => nodes.value.find((n: any) => n.id === e.target))
       .filter(Boolean)
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     children.forEach((child: any) => {
       queue.push({ node: child, level: level + 1 })
     })
@@ -567,6 +574,7 @@ function autoLayout() {
   levels.forEach((levelNodes, level) => {
     const totalWidth = (levelNodes.length - 1) * H_GAP
     const startX = -totalWidth / 2
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     levelNodes.forEach((node: any, idx: number) => {
       node.position = {
         x: startX + idx * H_GAP,
@@ -636,6 +644,7 @@ function onDrop(event: DragEvent) {
   }
   addStep(draggedStep.value)
   setTimeout(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const node = nodes.value.find((n: any) => n.id === draggedStep.value!.id)
     if (node) node.position = pos
   }, 100)
@@ -643,7 +652,7 @@ function onDrop(event: DragEvent) {
   draggedStep.value = null
   isDragging.value = false
 }
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function onNodesChange(changes: any[]) {
   nodes.value = applyNodeChanges(changes, nodes.value)
 }
@@ -683,6 +692,7 @@ async function onConnect(params: { source: string; target: string }) {
   }
 
   // Mettre à jour le flag hasPrevious visuellement
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const targetNode = nodes.value.find((n: any) => n.id === params.target)
   if (targetNode) {
     targetNode.data.hasPrevious = true
@@ -729,11 +739,12 @@ async function onConnect(params: { source: string; target: string }) {
     targetStep.PreviousSteps = targetStep.PreviousSteps?.filter((id) => id !== params.source)
   }
 }
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function onEdgesChange(changes: any[]) {
   for (const change of changes) {
     if (change.type === 'remove') {
       const edgeId = change.id
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const edgeToRemove = edges.value.find((e: any) => e.id === edgeId)
       if (!edgeToRemove) continue
 

@@ -2,9 +2,9 @@
 
 <template>
   <div class="not-found">
-    <h1>404 - Page non trouvée</h1>
-    <p>La page que vous recherchez n'existe pas ou a été déplacée.</p>
-    <router-link to="/" class="back-home">Retour à l’accueil</router-link>
+    <h1>404 - Page not found</h1>
+    <p>The page you are looking for does not exist or has been moved.</p>
+    <router-link to="/" class="back-home">Back to home page</router-link>
   </div>
 </template>
 

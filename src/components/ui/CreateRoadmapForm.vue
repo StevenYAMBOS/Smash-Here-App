@@ -2,7 +2,7 @@
 
 <template>
   <form @submit.prevent="submit" class="create-roadmap-form">
-    <h2>Create a New Roadmap</h2>
+    <h2>Create a new Roadmap</h2>
 
     <!-- Champ Titre -->
     <div class="field">
@@ -30,55 +30,55 @@
 
     <div class="field">
       <!-- Champ Image de couverture -->
-          <label for="cover">Cover Image</label>
-          <div class="file-input-wrapper">
-            <input
-              id="cover"
-              type="file"
-              accept="image/webp,image/png,image/jpeg"
-              @change="handleFileChange"
-              class="file-input"
-            />
-            <button type="button" class="file-input-button" @click="triggerFileInput">
-              <i class="pi pi-upload"></i>
-              {{ coverFile ? coverFile.name : 'Choose an image' }}
-            </button>
-          </div>
-          <p class="file-hint">Accepted formats: WEBP, PNG, JPEG (max 10MB)</p>
-        </div>
+      <label for="cover">Cover Image</label>
+      <div class="file-input-wrapper">
+        <input
+          id="cover"
+          type="file"
+          accept="image/webp,image/png,image/jpeg"
+          @change="handleFileChange"
+          class="file-input"
+        />
+        <button type="button" class="file-input-button" @click="triggerFileInput">
+          <i class="pi pi-upload"></i>
+          {{ coverFile ? coverFile.name : 'Choose an image' }}
+        </button>
+      </div>
+      <p class="file-hint">Accepted formats: WEBP, PNG, JPEG (max 10MB)</p>
+    </div>
 
     <!-- Champ Published (checkbox) -->
     <div class="field-row">
-          <div class="switch-field">
-            <label for="published-switch">Published</label>
-            <button
-              id="published-switch"
-              type="button"
-              class="switch-button"
-              :class="{ active: published }"
-              @click="published = !published"
-              role="switch"
-              :aria-checked="published"
-            >
-              <span class="switch-handle"></span>
-            </button>
-          </div>
-    <!-- Champ Premium (checkbox) -->
-          <div class="switch-field">
-            <label for="premium-switch">Premium</label>
-            <button
-              id="premium-switch"
-              type="button"
-              class="switch-button"
-              :class="{ active: premium }"
-              @click="premium = !premium"
-              role="switch"
-              :aria-checked="premium"
-            >
-              <span class="switch-handle"></span>
-            </button>
-          </div>
-        </div>
+      <div class="switch-field">
+        <label for="published-switch">Published</label>
+        <button
+          id="published-switch"
+          type="button"
+          class="switch-button"
+          :class="{ active: published }"
+          @click="published = !published"
+          role="switch"
+          :aria-checked="published"
+        >
+          <span class="switch-handle"></span>
+        </button>
+      </div>
+      <!-- Champ Premium (checkbox) -->
+      <!-- <div class="switch-field">
+        <label for="premium-switch">Premium</label>
+        <button
+          id="premium-switch"
+          type="button"
+          class="switch-button"
+          :class="{ active: premium }"
+          @click="premium = !premium"
+          role="switch"
+          :aria-checked="premium"
+        >
+          <span class="switch-handle"></span>
+        </button>
+      </div> -->
+    </div>
 
     <!-- Bouton de soumission -->
     <SubmitButton
@@ -94,6 +94,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { defineEmits } from 'vue'
 import 'vue-multiselect/dist/vue-multiselect.min.css'
 import SubmitButton from './SubmitButton.vue'
 import { useUserStore } from '@/stores/user'
@@ -106,7 +107,7 @@ const subTitle = ref('')
 const coverFile = ref<File | null>(null)
 const description = ref('')
 const published = ref(false)
-const premium = ref(false)
+// const premium = ref(false)
 const loading = ref(false)
 
 function handleFileChange(event: Event) {
@@ -142,18 +143,18 @@ onMounted(async () => {
 
 async function submit() {
   if (loading.value) return
-  
+
   // Validation
   if (!title.value || !subTitle.value || !description.value) {
     toast.error('Title, subtitle and description are required')
     return
   }
-  
+
   // if (!coverFile.value) {
   //   toast.error('Cover image is required')
   //   return
   // }
-  
+
   loading.value = true
 
   // Créer FormData pour multipart
@@ -163,7 +164,7 @@ async function submit() {
   formData.append('description', description.value)
   formData.append('cover', coverFile.value)
   formData.append('published', published.value.toString())
-  formData.append('premium', premium.value.toString())
+  // formData.append('premium', premium.value.toString())
 
   try {
     const res = await fetch(
@@ -177,29 +178,29 @@ async function submit() {
         body: formData,
       },
     )
-    
+
     if (!res.ok) {
       const errorText = await res.text()
       throw new Error(errorText || `HTTP ${res.status}`)
     }
-    
+
     toast.success('Roadmap created successfully!')
-    
+
     // Réinitialiser le formulaire
     title.value = ''
     subTitle.value = ''
     description.value = ''
     coverFile.value = null
     published.value = false
-    premium.value = false
-    
+    // premium.value = false
+
     // Réinitialiser l'input file
     const fileInput = document.getElementById('cover') as HTMLInputElement
     if (fileInput) fileInput.value = ''
-    
+
     // Rafraîchir la liste des roadmaps
     await userStore.fetchProfile()
-    
+    emit('navigate', 'list-roadmaps')
   } catch (err) {
     console.error(err)
     toast.error(err instanceof Error ? err.message : 'Failed to create roadmap')
@@ -207,6 +208,10 @@ async function submit() {
     loading.value = false
   }
 }
+
+const emit = defineEmits<{
+  (e: 'navigate', tab: string): void
+}>()
 </script>
 
 <style scoped>
@@ -224,6 +229,7 @@ async function submit() {
   font-family: var(--font-primary);
   font-size: var(--font-size-2xl);
   margin-bottom: var(--spacing-lg);
+  font-weight: bold;
 }
 .field {
   margin-bottom: var(--spacing-lg);

@@ -33,7 +33,7 @@
             :key="rm.id"
             :roadmap="rm"
             :show-view="true"
-            :showStats="true"
+            :showStats="false"
             :showEdit="true"
             :showDelete="true"
             @view="(id) => router.push(`/roadmap/${id}`)"
@@ -54,7 +54,7 @@
             v-for="st in filteredSteps"
             :key="st.id"
             :step="st"
-            :showStats="true"
+            :showStats="false"
             :showEdit="true"
             :showDelete="true"
             @stats="(id) => router.push(`/dashboard/steps/${id}`)"
@@ -77,7 +77,7 @@
             v-for="c in filteredContents"
             :key="c.id"
             :content="c"
-            :showStats="true"
+            :showStats="false"
             :showEdit="true"
             :showDelete="true"
             @stats="(id) => router.push(`/dashboard/contents/${id}`)"
@@ -100,7 +100,7 @@
         @click="proceedDeleteRoadmap"
       ></div>
       <div v-if="confirmVisibleRoadmap" class="confirm-modal">
-        <p>Are you sure you want to delete this roadmap ?</p>
+        <p>Are you sure you want to delete this roadmap ? This action cannot be reversed.</p>
         <div class="confirm-actions">
           <button class="btn-yes" @click="proceedDeleteRoadmap">Yes</button>
           <button class="btn-no" @click="cancelDeleteRoadmap">No</button>
@@ -109,7 +109,7 @@
 
       <div v-if="confirmVisibleStep" class="confirm-backdrop" @click="cancelDeleteStep"></div>
       <div v-if="confirmVisibleStep" class="confirm-modal">
-        <p>Are you sure you want to delete this step ?</p>
+        <p>Are you sure you want to delete this step ? This action cannot be reversed.</p>
         <div class="confirm-actions">
           <button class="btn-yes" @click="proceedDeleteStep">Yes</button>
           <button class="btn-no" @click="cancelDeleteStep">No</button>
@@ -118,7 +118,7 @@
 
       <div v-if="confirmVisibleContent" class="confirm-backdrop" @click="cancelDeleteContent"></div>
       <div v-if="confirmVisibleContent" class="confirm-modal">
-        <p>Are you sure you want to delete this content ?</p>
+        <p>Are you sure you want to delete this content ? This action cannot be reversed.</p>
         <div class="confirm-actions">
           <button class="btn-yes" @click="proceedDeleteContent">Yes</button>
           <button class="btn-no" @click="cancelDeleteContent">No</button>

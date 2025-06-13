@@ -3,10 +3,6 @@
 <template>
   <div class="profile-details">
     <div class="detail-item">
-      <label>ID</label>
-      <span>{{ profile.id }}</span>
-    </div>
-    <div class="detail-item">
       <label>Email</label>
       <span>{{ profile.email }}</span>
     </div>
@@ -33,7 +29,7 @@
 import { defineProps } from 'vue'
 import type { User } from '@/types/collections'
 
-const props = defineProps<{ profile: User }>()
+defineProps<{ profile: User }>()
 
 function formattedDate(iso: string) {
   return new Date(iso).toLocaleDateString('en', {

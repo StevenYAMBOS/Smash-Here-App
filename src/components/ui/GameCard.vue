@@ -7,6 +7,12 @@
     </div>
     <h2 class="game-title">{{ title }}</h2>
     <p class="game-subTitle">{{ subTitle }}</p>
+
+    <!-- NOUVEAU bloc -->
+    <p class="game-meta">
+      <i class="pi pi-sitemap"></i>
+      {{ roadmapsCount }} roadmap<span v-if="roadmapsCount > 1">s</span>
+    </p>
   </div>
 </template>
 
@@ -29,6 +35,7 @@ const props = defineProps<{
   title: string
   subTitle: string
   id: string
+  roadmapsCount: number
 }>()
 
 const router = useRouter()
@@ -93,5 +100,19 @@ const router = useRouter()
   font-size: var(--font-size-base);
   text-align: center;
   margin-top: var(--spacing-xs);
+}
+
+.game-meta {
+  margin-top: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--color-gold);
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.game-meta .pi-sitemap {
+  font-size: var(--font-size-base);
 }
 </style>

@@ -2,6 +2,8 @@
 
 <template>
   <form @submit.prevent="submit" class="create-content-form">
+    <h2>Create a new Content</h2>
+
     <div class="field">
       <label for="title">Title</label>
       <input id="title" v-model="title" type="text" placeholder="Enter content title" required />
@@ -29,6 +31,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { defineEmits } from 'vue'
 import { useToast } from 'vue-toast-notification'
 import SubmitButton from '@/components/ui/SubmitButton.vue'
 import { useUserStore } from '@/stores/user'
@@ -59,18 +62,26 @@ async function submit() {
       },
     )
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    const newContent = await res.json()
-    userStore.contentsCreated.unshift(newContent)
+    await res.json()
+
+    // userStore.contentsCreated.unshift(newContent)
     toast.success('Content created successfully!', { position: 'top-right' })
     // Réinitialisation du formulaire
     title.value = ''
     type.value = ''
     link.value = ''
+    await userStore.fetchProfile()
+    emit('navigate', 'list-contents')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     console.error(err)
     toast.error(err.message || 'Failed to create content', { position: 'top-right' })
   }
 }
+
+const emit = defineEmits<{
+  (e: 'navigate', tab: string): void
+}>()
 </script>
 
 <style scoped>
@@ -82,6 +93,13 @@ async function submit() {
   max-width: 500px;
   margin: auto;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+.create-content-form h2 {
+  color: var(--color-cream);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-lg);
+  font-weight: bold;
 }
 .field {
   margin-bottom: var(--spacing-lg);

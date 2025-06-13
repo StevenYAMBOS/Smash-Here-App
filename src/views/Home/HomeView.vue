@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import HeaderMenu from '@/components/layout/HeaderMenu.vue'
-import NumbersCard from '@/components/layout/NumbersCard.vue'
+// import NumbersCard from '@/components/layout/NumbersCard.vue'
 import GamesSlider from '@/components/ui/GamesSlider.vue'
 import RoadmapsSlider from '@/components/ui/RoadmapsSlider.vue'
 </script>
@@ -15,7 +15,7 @@ import RoadmapsSlider from '@/components/ui/RoadmapsSlider.vue'
       button-link="/games"
       button-text="Start now !"
     />
-    <NumbersCard />
+    <!-- <NumbersCard /> -->
 
     <!-- Section "JEUX" -->
     <section id="games-section" class="games-section">

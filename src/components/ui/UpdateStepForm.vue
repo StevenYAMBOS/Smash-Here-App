@@ -407,7 +407,7 @@ form h2 {
    ============================= */
 .actions-row {
   display: flex;
-  justify-step: flex-start;
+  justify-content: center;
   gap: var(--spacing-md);
   margin-top: var(--spacing-lg);
 }

@@ -130,9 +130,6 @@ function buildFlowFromSteps() {
   nodes.value = Array.from(nodeMap.values())
   edges.value = edgeList
 
-  console.log('Generated nodes:', nodes.value)
-  console.log('Generated edges:', edges.value)
-
   // Auto-layout hiérarchique
   layoutNodes()
 }
@@ -297,7 +294,7 @@ async function openStep(stepId: string) {
               </div>
               <small v-if="data.subTitle">{{ data.subTitle }}</small>
               <div class="contents-badge">
-                {{ data.contents }} contenu{{ data.contents > 1 ? 's' : '' }}
+                {{ data.contents }} content{{ data.contents > 1 ? 's' : '' }}
               </div>
             </div>
           </template>

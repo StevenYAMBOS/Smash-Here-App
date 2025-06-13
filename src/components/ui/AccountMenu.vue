@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue'
 
-const props = defineProps<{ selected: string }>()
+defineProps<{ selected: string }>()
 const emit = defineEmits<(e: 'update:selected', val: string) => void>()
 
 const items = [
