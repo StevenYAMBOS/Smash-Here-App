@@ -15,7 +15,7 @@
         <option value="" disabled>Select a type</option>
         <option value="video">Video</option>
         <option value="article">Article</option>
-        <option value="page">Page</option>
+        <option value="page">Page (X, Reddit etc...)</option>
         <option value="roadmap">Roadmap</option>
       </select>
     </div>

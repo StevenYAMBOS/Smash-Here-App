@@ -59,25 +59,28 @@ const variantClass = props.variant === 'secondary' ? 'btn-secondary' : 'btn-prim
 
 <style scoped>
 .submit-button {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md) var(--spacing-lg);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
+  color: var(--color-charcoal);
   border: none;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-secondary);
-  font-size: var(--font-size-base);
+  border-radius: var(--radius-md);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
   cursor: pointer;
-  transition:
-    opacity 0.3s ease,
-    background-color 0.3s ease;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 .submit-button.full-width {
   width: 100%;
 }
 .submit-button.btn-primary {
-  background: var(--color-gold);
+  background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
   color: var(--color-charcoal);
 }
 .submit-button.btn-secondary {
@@ -88,9 +91,12 @@ const variantClass = props.variant === 'secondary' ? 'btn-secondary' : 'btn-prim
 .submit-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 .submit-button:hover:not(:disabled) {
-  opacity: 0.8;
+  background: linear-gradient(135deg, var(--color-light-yellow), var(--color-gold));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
 }
 .loading-icon {
   font-size: 1.2em;

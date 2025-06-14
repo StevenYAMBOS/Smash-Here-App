@@ -28,6 +28,7 @@
             :showEdit="false"
             :showDelete="false"
             @view="(id) => router.push(`/roadmap/${id}`)"
+            @bookmarkChanged="handleBookmarkChange"
           />
         </div>
         <!-- Sinon -->
@@ -50,6 +51,7 @@
             :show-premium="false"
             :show-published="false"
             @view="(id) => router.push(`/roadmap/${id}`)"
+            @bookmarkChanged="handleBookmarkChange"
           />
         </div>
         <!-- Sinon -->
@@ -76,6 +78,10 @@ const router = useRouter()
 
 onMounted(async () => {
   await userStore.fetchProfile()
+  // Charger les bookmarks si l'utilisateur est connecté
+  if (userStore.profile) {
+    await userStore.fetchUserBookmarks()
+  }
 })
 
 const searchText = ref('')
@@ -91,7 +97,17 @@ const filteredBookmarks = computed(() => {
   if (!searchText.value.trim()) return list
   return list.filter((rm) => rm.title.toLowerCase().includes(searchText.value.toLowerCase()))
 })
-</script>
+
+// Gérer les changements de bookmark pour synchroniser l'interface
+const handleBookmarkChange = async (roadmapId: string, isBookmarked: boolean) => {
+  // Recharger les bookmarks pour s'assurer de la synchronisation
+  
+  // Si on est dans l'onglet bookmarks et qu'une roadmap a été supprimée des bookmarks,
+  // on peut optionnellement afficher un message ou mettre à jour l'affichage
+  if (selectedTab.value === 'bookmarks' && !isBookmarked) {
+    console.log(`Roadmap ${roadmapId} supprimée des bookmarks`)
+  }
+}</script>
 
 <style scoped>
 .account-container {

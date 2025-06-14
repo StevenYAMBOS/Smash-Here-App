@@ -41,8 +41,6 @@ function buildFlowFromSteps() {
     return
   }
 
-  console.log('Building flow from steps:', state.steps)
-
   // Créer une map des nœuds
   const nodeMap = new Map<string, any>()
 
@@ -241,19 +239,34 @@ async function openStep(stepId: string) {
   selectedStepId.value = stepId
   drawerOpen.value = true
 
+  // Initialiser avec un tableau vide pour éviter les erreurs null
+  stepContents.value = []
+
   try {
     const res = await fetch(
       `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${stepId}/contents`,
     )
+    
     if (!res.ok) {
       console.error('Fetch failed', res.status)
+      // Garder le tableau vide plutôt que de le définir à null
       stepContents.value = []
       return
     }
 
-    stepContents.value = await res.json()
+    const data = await res.json()
+    
+    // Vérifier que la réponse est bien un tableau
+    if (Array.isArray(data)) {
+      stepContents.value = data
+    } else {
+      console.warn('API response is not an array:', data)
+      stepContents.value = []
+    }
+    
   } catch (error) {
     console.error('Error fetching step contents:', error)
+    // En cas d'erreur, toujours utiliser un tableau vide
     stepContents.value = []
   }
 }
@@ -353,6 +366,7 @@ async function openStep(stepId: string) {
   justify-content: center;
   align-items: center;
   margin: var(--spacing-3xl) 0;
+ padding: 0 var(--spacing-lg);
 }
 
 .flow-container {
@@ -437,5 +451,75 @@ async function openStep(stepId: string) {
   display: inline-block;
   font-weight: 600;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 1024px) {
+  .flow-wrapper {
+    padding: 0 var(--spacing-xl);
+    margin: var(--spacing-2xl) 0;
+  }
+  
+  .flow-container {
+    max-width: 100%;
+  }
+  
+  .roadmap-vueflow {
+    height: 600px; /* Réduire la hauteur sur tablette */
+  }
+}
+
+@media (max-width: 768px) {
+  .flow-wrapper {
+    padding: 0 var(--spacing-xl);
+    margin: var(--spacing-xl) 0;
+  }
+  
+  .roadmap-vueflow {
+    height: 500px; /* Hauteur adaptée mobile */
+    border-radius: var(--radius-sm);
+  }
+  
+  .flow-container {
+    border-radius: var(--radius-sm);
+  }
+  
+  /* Adapter la taille des noeuds pour mobile */
+  .rf-node {
+    padding: var(--spacing-sm);
+  }
+  
+  .rf-node h4 {
+    font-size: var(--font-size-sm);
+  }
+  
+  .contents-badge {
+    font-size: var(--font-size-xs);
+    padding: 0.2rem 0.4rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .flow-wrapper {
+    padding: 0 var(--spacing-xl);
+  }
+  
+  .roadmap-vueflow {
+    height: 400px; /* Hauteur réduite pour petits écrans */
+  }
+  
+  /* Réduire encore la taille des éléments */
+  .rf-node {
+    padding: var(--spacing-xs);
+  }
+  
+  .rf-node .node-header {
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .rf-node small {
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--spacing-xs);
+  }
 }
 </style>

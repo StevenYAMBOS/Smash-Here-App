@@ -26,6 +26,21 @@
     </div>
     <div class="actions">
       <Button
+        v-if="userStore.profile"
+        :icon="
+          bookmarkLoading
+            ? 'pi pi-spin pi-spinner'
+            : isBookmarked
+              ? 'pi pi-bookmark-fill'
+              : 'pi pi-bookmark'
+        "
+        class="p-button-text bookmark-action"
+        :class="{ bookmarked: isBookmarked, loading: bookmarkLoading }"
+        :disabled="bookmarkLoading"
+        :title="isBookmarked ? 'Remove from bookmarks' : 'Add to bookmarks'"
+        @click="toggleBookmark"
+      />
+      <Button
         v-if="showView"
         icon="pi pi-eye"
         class="p-button-text"
@@ -58,9 +73,11 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, withDefaults } from 'vue'
+import { defineProps, defineEmits, withDefaults, ref, computed, onMounted } from 'vue'
 import type { Roadmap } from '@/types/collections'
 import Button from 'primevue/button'
+import { useUserStore } from '@/stores/user'
+import { useToast } from 'vue-toast-notification'
 
 const props = withDefaults(
   defineProps<{
@@ -78,12 +95,62 @@ const props = withDefaults(
   },
 )
 
-defineEmits<{
+const emit = defineEmits<{
   (e: 'view', id: string): void
   (e: 'stats', id: string): void
   (e: 'edit', id: string): void
   (e: 'delete', id: string): void
+  (e: 'bookmarkChanged', roadmapId: string, isBookmarked: boolean): void
 }>()
+
+const userStore = useUserStore()
+const toast = useToast()
+const bookmarkLoading = ref(false)
+
+// Vérifier si la roadmap est dans les bookmarks
+const isBookmarked = computed(() => {
+  if (!userStore.bookmarks) return false
+  return userStore.bookmarks.some((bookmark) => bookmark.id === props.roadmap.id)
+})
+
+// Fonction pour gérer le toggle des bookmarks
+const toggleBookmark = async () => {
+  if (!userStore.profile || bookmarkLoading.value) return
+
+  bookmarkLoading.value = true
+
+  try {
+    // Utiliser l'action du store qui gère l'API et la synchronisation
+    const result = await userStore.toggleBookmark(props.roadmap)
+    
+    if (result.success) {
+      // Émettre l'événement pour informer le parent du changement
+      emit('bookmarkChanged', props.roadmap.id, result.isBookmarked)
+      
+      // Afficher le message de succès
+      toast.success(
+        result.action === 'added'
+          ? 'Save in bookmarks'
+          : 'Removed from bookmarks'
+      )
+    } else {
+      console.error('Erreur lors du toggle bookmark:', result.error)
+      toast.error('Error. Please retry.')
+    }
+  } catch (error) {
+    console.error('Erreur lors de la modification du bookmark:', error)
+    toast.error('Server error.')
+  } finally {
+    bookmarkLoading.value = false
+  }
+}
+
+// Charger les bookmarks au montage du composant si nécessaire
+onMounted(async () => {
+  if (userStore.profile && !userStore.bookmarks) {
+    await userStore.fetchUserBookmarks()
+  }
+})
 </script>
 
 <style scoped>
@@ -215,6 +282,40 @@ defineEmits<{
   color: var(--color-charcoal) !important;
 }
 
+.actions ::v-deep(.bookmark-action) {
+  background: var(--color-darker-charcoal);
+  border: 2px solid var(--color-medium-gray);
+  color: var(--color-medium-gray);
+  transition: all 0.2s ease;
+}
+
+.actions ::v-deep(.bookmark-action:hover) {
+  background: rgba(255, 215, 0, 0.1) !important;
+  border-color: var(--color-gold) !important;
+  color: var(--color-gold) !important;
+}
+
+.actions ::v-deep(.bookmark-action.bookmarked) {
+  background: rgba(255, 215, 0, 0.1) !important;
+  border-color: var(--color-gold) !important;
+  color: var(--color-gold) !important;
+}
+
+.actions ::v-deep(.bookmark-action.bookmarked:hover) {
+  background: rgba(255, 215, 0, 0.2) !important;
+  border-color: var(--color-light-yellow) !important;
+  color: var(--color-light-yellow) !important;
+}
+
+.actions ::v-deep(.bookmark-action:disabled) {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+.actions ::v-deep(.bookmark-action.loading) {
+  pointer-events: none !important;
+}
+
 /* === Responsive mobile (<768px) === */
 @media (max-width: 768px) {
   .user-roadmap-card {
@@ -253,10 +354,21 @@ defineEmits<{
     flex-direction: row;
     justify-content: space-between;
     padding: var(--spacing-sm) var(--spacing-md);
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
   }
+
   .actions ::v-deep(.p-button-text) {
     flex: 1;
     margin: 0 var(--spacing-xs);
+    min-width: 40px;
+  }
+
+  /* S'assurer que le bookmark reste visible même avec beaucoup d'actions */
+  .actions ::v-deep(.bookmark-action) {
+    order: -1; /* Placer le bookmark en premier */
+    flex: 0 0 auto;
+    min-width: 44px;
   }
 }
 </style>

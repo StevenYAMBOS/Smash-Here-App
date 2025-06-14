@@ -56,7 +56,7 @@
               </button>
             </div>
 
-            <div class="switch-field">
+            <!-- <div class="switch-field">
               <label for="premium-switch">Premium</label>
               <button
                 id="premium-switch"
@@ -69,7 +69,7 @@
               >
                 <span class="switch-handle"></span>
               </button>
-            </div>
+            </div> -->
           </div>
 
           <div class="field">
@@ -148,119 +148,140 @@
     <div v-if="currentTab === 'structure'" class="tab-content">
       <h2>Steps</h2>
 
-      <div class="flow-info-card">
-        <div class="flow-info-header">
-          <i class="pi pi-info-circle"></i>
-          <h4>How to organize your roadmap</h4>
-        </div>
-        <div class="flow-info-content">
-          <div class="flow-info-item">
-            <i class="pi pi-arrows-alt"></i>
-            <span><strong>Move nodes:</strong> Drag to reposition steps</span>
-          </div>
-          <div class="flow-info-item">
-            <i class="pi pi-link"></i>
-            <span><strong>Connect steps:</strong> Drag from bottom handle to top handle</span>
-          </div>
-          <div class="flow-info-item">
-            <i class="pi pi-times-circle"></i>
-            <span
-              ><strong>Remove:</strong> Click the × button on nodes or select edges and press
-              Delete</span
-            >
+      <!-- Message pour mobile/tablette -->
+      <div class="mobile-steps-message">
+        <div class="mobile-message-card">
+          <i class="pi pi-desktop"></i>
+          <h3>Desktop Required</h3>
+          <p>
+            The roadmap structure editor is only available on desktop devices for optimal user
+            experience. Please use a computer to organize and connect your steps.
+          </p>
+          <div class="mobile-message-actions">
+            <button @click="currentTab = 'info'" class="mobile-back-button">
+              <i class="pi pi-arrow-left"></i>
+              Back to Informations
+            </button>
           </div>
         </div>
       </div>
 
-      <div class="structure-actions">
-        <div class="field">
-          <label>Available Steps</label>
-          <MultiSelect
-            v-model="selectedStepIds"
-            :options="availableSteps"
-            optionLabel="title"
-            optionValue="id"
-            display="chip"
-            placeholder="Select steps to include"
-            :showClear="true"
-            @change="onStepSelectionChange"
-            class="p-multiselect-field"
-          >
-            <template #option="slotProps">
-              <div
-                class="step-multiselect-option"
-                draggable="true"
-                @dragstart="onDragStart($event, slotProps.option)"
+      <!-- Contenu desktop (masqué sur mobile/tablette) -->
+      <div class="desktop-steps-content">
+        <div class="flow-info-card">
+          <div class="flow-info-header">
+            <i class="pi pi-info-circle"></i>
+            <h4>How to organize your roadmap</h4>
+          </div>
+          <div class="flow-info-content">
+            <div class="flow-info-item">
+              <i class="pi pi-arrows-alt"></i>
+              <span><strong>Move nodes:</strong> Drag to reposition steps</span>
+            </div>
+            <div class="flow-info-item">
+              <i class="pi pi-link"></i>
+              <span><strong>Connect steps:</strong> Drag from bottom handle to top handle</span>
+            </div>
+            <div class="flow-info-item">
+              <i class="pi pi-times-circle"></i>
+              <span
+                ><strong>Remove:</strong> Click the × button on nodes or select edges and press
+                Delete</span
               >
-                <i class="pi pi-diagram"></i>
-                <span>{{ slotProps.option.title }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="structure-actions">
+          <div class="field">
+            <label>Available Steps</label>
+            <MultiSelect
+              v-model="selectedStepIds"
+              :options="availableSteps"
+              optionLabel="title"
+              optionValue="id"
+              display="chip"
+              placeholder="Select steps to include"
+              :showClear="true"
+              @change="onStepSelectionChange"
+              class="p-multiselect-field"
+            >
+              <template #option="slotProps">
+                <div
+                  class="step-multiselect-option"
+                  draggable="true"
+                  @dragstart="onDragStart($event, slotProps.option)"
+                >
+                  <i class="pi pi-diagram"></i>
+                  <span>{{ slotProps.option.title }}</span>
+                </div>
+              </template>
+            </MultiSelect>
+          </div>
+
+          <div class="structure-save">
+            <SubmitButton
+              :label="structureLoading ? 'Saving...' : 'Save'"
+              :disabled="structureLoading"
+              icon="pi pi-save"
+              variant="primary"
+              type="button"
+              @click="submitStructure"
+            />
+          </div>
+        </div>
+
+        <div
+          v-if="selectedSteps.length > 0"
+          class="flow-container"
+          :class="{ dragging: isDragging }"
+          @dragover.prevent
+          @drop="onDrop"
+        >
+          <VueFlow
+            v-model:nodes="nodes"
+            v-model:edges="edges"
+            @connect="onConnect"
+            @edges-change="onEdgesChange"
+            @nodes-change="onNodesChange"
+            :fit-view-on-init="true"
+            :connection-line-style="connectionLineStyle"
+            :default-edge-options="defaultEdgeOptions"
+            :delete-key-code="['Delete', 'Backspace']"
+            :edges-updatable="true"
+            :edges-focusable="true"
+            class="roadmap-flow"
+          >
+            <template #node-custom="{ id, data }">
+              <div class="custom-node" :class="{ 'root-node': !data.hasPrevious }">
+                <Handle type="target" :position="Position.Top" :style="handleStyle" />
+
+                <div class="node-content">
+                  <div class="node-header">
+                    <i class="pi pi-flag" v-if="!data.hasPrevious"></i>
+                    <span>{{ data.label }}</span>
+                  </div>
+                  <div class="node-actions">
+                    <button
+                      type="button"
+                      @click.stop="removeStepNode(id)"
+                      class="btn-remove"
+                      title="Retirer cette étape"
+                    >
+                      <i class="pi pi-times"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <Handle type="source" :position="Position.Bottom" :style="handleStyle" />
               </div>
             </template>
-          </MultiSelect>
+
+            <Background :color="'#2a2a2a'" :gap="20" />
+            <Controls :show-zoom="true" :show-fit-view="true" :show-interactive="true" />
+            <MiniMap :pannable="true" :zoomable="true" />
+          </VueFlow>
         </div>
-
-        <div class="structure-save">
-          <SubmitButton
-            :label="structureLoading ? 'Saving...' : 'Save'"
-            :disabled="structureLoading"
-            icon="pi pi-save"
-            variant="primary"
-            type="button"
-            @click="submitStructure"
-          />
-        </div>
-      </div>
-
-      <div
-        v-if="selectedSteps.length > 0"
-        class="flow-container"
-        :class="{ dragging: isDragging }"
-        @dragover.prevent
-        @drop="onDrop"
-      >
-        <VueFlow
-          v-model:nodes="nodes"
-          v-model:edges="edges"
-          @connect="onConnect"
-          @edges-change="onEdgesChange"
-          @nodes-change="onNodesChange"
-          :fit-view-on-init="true"
-          :connection-line-style="connectionLineStyle"
-          :default-edge-options="defaultEdgeOptions"
-          :delete-key-code="['Delete', 'Backspace']"
-          :edges-updatable="true"
-          :edges-focusable="true"
-          class="roadmap-flow"
-        >
-          <template #node-custom="{ id, data }">
-            <div class="custom-node" :class="{ 'root-node': !data.hasPrevious }">
-              <Handle type="target" :position="Position.Top" :style="handleStyle" />
-
-              <div class="node-content">
-                <div class="node-header">
-                  <i class="pi pi-flag" v-if="!data.hasPrevious"></i>
-                  <span>{{ data.label }}</span>
-                </div>
-                <div class="node-actions">
-                  <button
-                    type="button"
-                    @click.stop="removeStepNode(id)"
-                    class="btn-remove"
-                    title="Retirer cette étape"
-                  >
-                    <i class="pi pi-times"></i>
-                  </button>
-                </div>
-              </div>
-
-              <Handle type="source" :position="Position.Bottom" :style="handleStyle" />
-            </div>
-          </template>
-
-          <Background :color="'#2a2a2a'" :gap="20" />
-          <Controls :show-zoom="true" :show-fit-view="true" :show-interactive="true" />
-          <MiniMap :pannable="true" :zoomable="true" />
-        </VueFlow>
       </div>
     </div>
   </div>
@@ -302,7 +323,7 @@ const subTitle = ref(props.roadmap.subTitle || '')
 const description = ref(props.roadmap.description)
 const coverFile = ref<File | null>(null)
 const published = ref(props.roadmap.published || false)
-const premium = ref(props.roadmap.premium || false)
+// const premium = ref(props.roadmap.premium || false)
 const selectedGameIds = ref<string[]>([])
 const availableGames = computed(() => userStore.games || [])
 
@@ -373,7 +394,7 @@ async function submitInfo() {
     formData.append('subTitle', subTitle.value)
     formData.append('description', description.value)
     formData.append('published', published.value.toString())
-    formData.append('premium', premium.value.toString())
+    // formData.append('premium', premium.value.toString())
     // Ne pas inclure Games dans FormData car le backend les gère séparément
 
     if (coverFile.value) {
@@ -947,6 +968,9 @@ async function submitStructure() {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 .field {
   display: flex;
@@ -1123,6 +1147,12 @@ async function submitStructure() {
 
 /* === Styles spécifiques à l’onglet “Informations de base” === */
 
+.p-multiselect-field {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
 /* Conteneur général */
 .update-roadmap-form {
   background: var(--color-darker-charcoal);
@@ -1132,6 +1162,10 @@ async function submitStructure() {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--spacing-lg);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Titres de section */
@@ -1147,6 +1181,9 @@ async function submitStructure() {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
 }
 .field label {
   font-size: var(--font-size-base);
@@ -1166,6 +1203,10 @@ async function submitStructure() {
   transition:
     border-color 0.2s,
     box-shadow 0.2s;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 .field input:focus,
 .field textarea:focus {
@@ -1326,6 +1367,7 @@ async function submitStructure() {
 .actions-row button[variant='secondary'] {
   background: var(--color-off-white);
   color: var(--color-medium-gray);
+  padding: var(--spacing-md) var(--spacing-xl);
 }
 .actions-row button[variant='secondary']:hover {
   background: var(--color-light-gray);
@@ -1333,25 +1375,96 @@ async function submitStructure() {
 
 /* Bouton Enregistrer */
 .actions-row #btn-save-info {
-  background: var(--color-gold);
-  color: var(--color-darker-charcoal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
+  color: var(--color-charcoal);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 .actions-row #btn-save-info:hover {
-  opacity: 80%;
+  background: linear-gradient(135deg, var(--color-light-yellow), var(--color-gold));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
 }
 .actions-row #btn-save-info:disabled {
-  background: var(--color-light-gray);
+  opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .update-roadmap-form {
-    padding: var(--spacing-lg);
-  }
-  .field-row {
-    flex-direction: column;
-  }
+/* Par défaut, masquer le message mobile et afficher le contenu desktop */
+.mobile-steps-message {
+  display: none;
+}
+
+.desktop-steps-content {
+  display: block;
+}
+
+/* Styles du message mobile */
+.mobile-message-card {
+  background: var(--color-charcoal);
+  border: 2px solid var(--color-gold);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2xl);
+  text-align: center;
+  margin: var(--spacing-xl) auto;
+  max-width: 500px;
+}
+
+.mobile-message-card i {
+  font-size: 3rem;
+  color: var(--color-gold);
+  margin-bottom: var(--spacing-lg);
+}
+
+.mobile-message-card h3 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xl);
+  color: var(--color-gold);
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.mobile-message-card p {
+  color: var(--color-cream);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  margin: 0 0 var(--spacing-lg) 0;
+}
+
+.mobile-message-actions {
+  margin-top: var(--spacing-lg);
+}
+
+.mobile-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--color-gold);
+  color: var(--color-charcoal);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-family: var(--font-primary);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-back-button:hover {
+  background: var(--color-light-yellow);
+  transform: translateY(-2px);
 }
 
 /* === Styles pour la prévisualisation de la couverture === */
@@ -1386,5 +1499,172 @@ async function submitStructure() {
   font-size: var(--font-size-2xl);
   margin-bottom: var(--spacing-xs);
   display: block;
+}
+
+/* Responsive général */
+@media (max-width: 1024px) {
+  .update-roadmap-container {
+    padding: var(--spacing-md);
+  }
+
+  .tabs {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .tab-button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+  }
+
+  /* Sur tablette et mobile, masquer le contenu desktop et afficher le message */
+  .mobile-steps-message {
+    display: block;
+  }
+
+  .desktop-steps-content {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .update-roadmap-container {
+    padding: var(--spacing-sm);
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  /* Onglet Informations - Responsive */
+  .update-roadmap-form {
+    padding: var(--spacing-lg);
+    margin: 0;
+    width: 100%;
+  }
+
+  .form-section {
+    gap: var(--spacing-md);
+  }
+
+  .field {
+    gap: var(--spacing-xs);
+  }
+
+  .update-roadmap-form h2 {
+    font-size: var(--font-size-xl);
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+  }
+
+  /* Réorganiser les switchs en colonne sur mobile */
+  .field-row {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  /* Adapter la prévisualisation de couverture */
+  .cover-preview-wrapper {
+    width: 100%;
+    max-width: 300px;
+    height: 180px;
+    margin: 0 auto;
+  }
+
+  /* Réorganiser les boutons d'action */
+  .actions-row {
+    flex-direction: column-reverse;
+    gap: var(--spacing-md);
+  }
+
+  .actions-row button {
+    width: 100%;
+    padding: var(--spacing-md);
+    font-size: var(--font-size-base);
+  }
+
+  .mobile-message-card {
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-xl);
+  }
+
+  .mobile-message-card i {
+    font-size: 2.5rem;
+  }
+
+  .mobile-message-card h3 {
+    font-size: var(--font-size-lg);
+  }
+
+  .mobile-message-card p {
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 576px) {
+  .tabs {
+    padding: 0;
+  }
+
+  .tab-button {
+    flex: 1;
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+
+  .update-roadmap-container {
+    padding: var(--spacing-xs);
+  }
+
+  .update-roadmap-form {
+    padding: var(--spacing-md);
+  }
+
+  .update-roadmap-form h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  /* Adapter les champs pour très petits écrans */
+  .field input,
+  .field textarea {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+
+  .field label {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  /* Adapter la taille des switchs */
+  .switch-button {
+    width: 40px;
+    height: 20px;
+  }
+
+  .switch-handle {
+    width: 16px;
+    height: 16px;
+  }
+
+  .switch-button.active .switch-handle {
+    transform: translateX(20px);
+  }
+
+  /* Couverture plus petite sur très petits écrans */
+  .cover-preview-wrapper {
+    width: 100%;
+    height: 150px;
+  }
+
+  .mobile-message-card {
+    margin: var(--spacing-md);
+    padding: var(--spacing-lg);
+  }
+
+  .mobile-back-button {
+    width: 100%;
+    justify-content: center;
+    padding: var(--spacing-md);
+  }
 }
 </style>

@@ -128,6 +128,72 @@ export const useUserStore = defineStore('user', {
         this.bookmarks = []
       }
     },
+    addToBookmarks(roadmap: Roadmap) {
+      // Ajouter l'ID aux bookmarks du profil si pas déjà présent
+      if (this.profile && !this.profile.Bookmarks.includes(roadmap.id)) {
+        this.profile.Bookmarks.push(roadmap.id)
+      }
+
+      // Ajouter la roadmap aux bookmarks si pas déjà présente
+      if (!this.bookmarks.some((bookmark) => bookmark.id === roadmap.id)) {
+        this.bookmarks.push(roadmap)
+      }
+    },
+    removeFromBookmarks(roadmapId: string) {
+      // Retirer l'ID des bookmarks du profil
+      if (this.profile) {
+        this.profile.Bookmarks = this.profile.Bookmarks.filter((id) => id !== roadmapId)
+      }
+
+      // Retirer la roadmap des bookmarks
+      this.bookmarks = this.bookmarks.filter((bookmark) => bookmark.id !== roadmapId)
+    },
+    async toggleBookmark(roadmap: Roadmap) {
+      if (!this.profile) return { success: false, error: 'User not connected' }
+
+      const isCurrentlyBookmarked = this.bookmarks.some((bookmark) => bookmark.id === roadmap.id)
+      const method = isCurrentlyBookmarked ? 'DELETE' : 'PUT'
+
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/bookmarks`,
+          {
+            method,
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${this.token}`,
+            },
+            body: JSON.stringify({ roadmapId: roadmap.id }),
+          },
+        )
+
+        if (response.ok) {
+          // Mettre à jour le store localement selon l'action
+          if (isCurrentlyBookmarked) {
+            this.removeFromBookmarks(roadmap.id)
+          } else {
+            this.addToBookmarks(roadmap)
+          }
+
+          return {
+            success: true,
+            isBookmarked: !isCurrentlyBookmarked,
+            action: isCurrentlyBookmarked ? 'removed' : 'added',
+          }
+        } else {
+          const errorText = await response.text()
+          return {
+            success: false,
+            error: `API Error: ${errorText}`,
+          }
+        }
+      } catch (error) {
+        return {
+          success: false,
+          error: `Network Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        }
+      }
+    },
     async fetchUserSteps() {
       if (!this.profile?.StepsCreated?.length) {
         this.stepsCreated = []

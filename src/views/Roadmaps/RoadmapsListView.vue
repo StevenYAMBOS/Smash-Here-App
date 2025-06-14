@@ -5,19 +5,22 @@ Composant qui affiche la liste des roadmaps d'un jeu
 -->
 
 <script setup lang="ts">
-import { onMounted, reactive, computed } from 'vue'
+import { onMounted, reactive, computed, provide } from 'vue'
 import { useRoute } from 'vue-router'
 import HeaderGame from '@/components/layout/HeaderGame.vue'
 import RoadmapCard from '@/components/ui/RoadmapCard.vue'
 import type { Game, Roadmap } from '@/types/collections'
 import SearchBar from '@/components/ui/SearchBar.vue'
+import { useUserStore } from '@/stores/user'
 
 const route = useRoute()
 const slug = route.params.slug as string
+const userStore = useUserStore()
 
 const state = reactive({
   game: null as Game | null,
   roadmaps: [] as Roadmap[],
+  bookmarks: [] as Roadmap[],
   loading: true,
   error: '',
 })
@@ -56,6 +59,10 @@ const fetchGameAndRoadmaps = async () => {
     )
     const roadmaps = await resRoadmaps.json()
     state.roadmaps = roadmaps
+    // Si l'utilisateur est connecté, récupérer ses bookmarks
+    if (userStore.profile) {
+      await fetchUserBookmarks()
+    }
   } catch (err) {
     state.error = 'Erreur lors du chargement des données.'
     console.error(err)
@@ -63,6 +70,56 @@ const fetchGameAndRoadmaps = async () => {
     state.loading = false
   }
 }
+
+const fetchUserBookmarks = async () => {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/bookmarks`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+        },
+      },
+    )
+
+    if (response.ok) {
+      const bookmarks = await response.json()
+
+      // Vérifier la structure des données et mapper correctement
+      if (Array.isArray(bookmarks)) {
+        // Si les bookmarks ont une propriété roadmapId
+        if (bookmarks.length > 0 && bookmarks[0].roadmapId) {
+          state.bookmarks = bookmarks.map((bookmark: Roadmap) => bookmark.roadmapId)
+        }
+        // Si les bookmarks sont directement des IDs de roadmap
+        else if (bookmarks.length > 0 && typeof bookmarks[0] === 'string') {
+          state.bookmarks = bookmarks
+        }
+        // Si les bookmarks ont une propriété id qui correspond à roadmapId
+        else if (bookmarks.length > 0 && bookmarks[0].id) {
+          state.bookmarks = bookmarks.map((bookmark: Roadmap) => bookmark.id)
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching bookmarks:', error)
+  }
+}
+
+// Fournir les bookmarks aux composants enfants
+provide('bookmarks', state.bookmarks)
+provide('updateBookmark', (roadmapId: string, isBookmarked: boolean) => {
+  if (isBookmarked) {
+    if (!state.bookmarks.includes(roadmapId)) {
+      state.bookmarks.push(roadmapId)
+    }
+  } else {
+    const index = state.bookmarks.indexOf(roadmapId)
+    if (index > -1) {
+      state.bookmarks.splice(index, 1)
+    }
+  }
+})
 
 onMounted(() => {
   fetchGameAndRoadmaps()
@@ -99,6 +156,7 @@ const filteredRoadmaps = computed(() => {
         :title="r.title"
         :subTitle="r.subTitle"
         :stepsCount="r.Steps?.length || 0"
+        :isBookmarked="state.bookmarks.includes(r.id)"
       />
     </div>
   </main>

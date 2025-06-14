@@ -20,11 +20,14 @@
         <template v-if="contents.length">
           <div class="contents-list">
             <div v-for="c in contents" :key="c.id" class="content-item">
+              <!-- Icône dynamique selon le type de contenu -->
               <i
                 :class="{
-                  'pi pi-video': c.type === 'video',
-                  'pi pi-file-text': c.type === 'article',
-                  'pi pi-external-link': c.type === 'link',
+                  'pi pi-play-circle': c.type === 'video',           // Icône vidéo
+                  'pi pi-book': c.type === 'article',   // Icône article
+                  'pi pi-external-link': c.type === 'link',  // Icône lien externe
+                  'pi pi-sitemap': c.type === 'roadmap',     // Icône roadmap (même que RoadmapCard)
+                  'pi pi-file': c.type === 'page',           // Icône page/document
                 }"
                 class="content-icon"
               />
@@ -34,7 +37,7 @@
             </div>
           </div>
         </template>
-        <p v-else class="status">Aucun contenu à afficher.</p>
+        <p v-else class="status">No content to show.</p>
       </div>
     </aside>
   </Teleport>

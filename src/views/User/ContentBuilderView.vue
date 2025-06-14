@@ -300,6 +300,8 @@ onMounted(async () => {
 .builder-page {
   display: flex;
   background: var(--color-darker-charcoal);
+    max-width: 1200px;
+  margin: 0 auto;
   /* display: flex;
   gap: var(--spacing-lg);
   padding: var(--spacing-2xl);
