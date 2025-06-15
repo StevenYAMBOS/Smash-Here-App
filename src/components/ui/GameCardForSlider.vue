@@ -20,6 +20,7 @@ const slug = computed(() =>
     <img :src="game.cover" :alt="game.title" class="game-cover" />
     <h3 class="game-title">{{ game.title }}</h3>
     <span class="roadmap-count">
+      <i class="pi pi-sitemap"></i>
       {{ (game.Roadmaps ?? []).length }} roadmap{{ (game.Roadmaps ?? []).length > 1 ? 's' : '' }}
     </span>
   </router-link>
@@ -55,7 +56,7 @@ const slug = computed(() =>
 }
 
 .game-card .roadmap-count {
-  color: var(--color-medium-gray);
+  color: var(--color-gold);
   font-size: var(--font-size-sm);
   margin-top: 0.25rem;
 }

@@ -13,11 +13,16 @@
         <i class="pi pi-list"></i>
         {{ stepsCount }} steps
       </p>
+      <!-- Ajouter l'auteur de la roadmap -->
+      <p class="roadmap-author">
+        <i class="pi pi-user"></i>
+        {{ author?.username || 'Loading...' }}
+      </p>
     </div>
-    
+
     <div class="roadmap-actions">
       <!-- Bookmark button - visible only if user is connected -->
-      <button 
+      <button
         v-if="userStore.profile"
         @click="toggleBookmark"
         class="bookmark-button"
@@ -25,11 +30,17 @@
         :disabled="bookmarkLoading"
         :title="isBookmarked ? 'Remove from bookmarks' : 'Add to bookmarks'"
       >
-        <i 
-          :class="bookmarkLoading ? 'pi pi-spin pi-spinner' : (isBookmarked ? 'pi pi-bookmark-fill' : 'pi pi-bookmark')"
+        <i
+          :class="
+            bookmarkLoading
+              ? 'pi pi-spin pi-spinner'
+              : isBookmarked
+                ? 'pi pi-bookmark-fill'
+                : 'pi pi-bookmark'
+          "
         ></i>
       </button>
-      
+
       <!-- Start button -->
       <NavButton :to="`/roadmap/${id}`">Start</NavButton>
     </div>
@@ -41,6 +52,7 @@ import { ref, inject, watch } from 'vue'
 import NavButton from './NavButton.vue'
 import { useUserStore } from '@/stores/user'
 import { useToast } from 'vue-toast-notification'
+import type { User } from '@/types/collections'
 
 const props = defineProps<{
   id: string
@@ -48,6 +60,7 @@ const props = defineProps<{
   subTitle: string
   stepsCount: number
   isBookmarked?: boolean
+  author?: User
 }>()
 
 const userStore = useUserStore()
@@ -61,22 +74,26 @@ const updateBookmark = inject<(roadmapId: string, isBookmarked: boolean) => void
 const isBookmarked = ref(!!props.isBookmarked)
 
 // Watcher pour synchroniser avec la prop parent quand elle change
-watch(() => props.isBookmarked, (newValue) => {
-  isBookmarked.value = !!newValue
-}, { immediate: true })
+watch(
+  () => props.isBookmarked,
+  (newValue) => {
+    isBookmarked.value = !!newValue
+  },
+  { immediate: true },
+)
 
 const toggleBookmark = async () => {
   if (!userStore.profile || bookmarkLoading.value) return
-  
+
   bookmarkLoading.value = true
-  
+
   try {
     // Déterminer la méthode HTTP selon l'état actuel du bookmark
     const method = isBookmarked.value ? 'DELETE' : 'PUT'
-    
+
     let requestBody = {}
     const url = `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/bookmarks`
-    
+
     // Pour DELETE, certaines APIs attendent le roadmapId dans le body
     // Pour PUT, on envoie toujours le roadmapId dans le body
     if (method === 'DELETE') {
@@ -86,7 +103,7 @@ const toggleBookmark = async () => {
       // Pour PUT (ajout), envoyer le roadmapId
       requestBody = { roadmapId: props.id }
     }
-    
+
     const response = await fetch(url, {
       method,
       headers: {
@@ -95,25 +112,23 @@ const toggleBookmark = async () => {
       },
       body: JSON.stringify(requestBody),
     })
-    
+
     if (response.ok) {
       // Inverser l'état local immédiatement pour un feedback visuel rapide
       const newState = !isBookmarked.value
-       isBookmarked.value = newState
-      
-      
+      isBookmarked.value = newState
+
       // Mettre à jour le state parent pour synchroniser avec les autres composants
       if (updateBookmark) {
         updateBookmark(props.id, newState)
       }
-      toast.success(
-      newState
-        ? 'Save in bookmarks'
-        : 'Removed from bookmarks'
-    )
+      toast.success(newState ? 'Save in bookmarks' : 'Removed from bookmarks')
     } else {
       const errorText = await response.text()
-      console.error(`Erreur lors du ${method === 'DELETE' ? 'retrait' : 'ajout'} du bookmark:`, errorText)
+      console.error(
+        `Erreur lors du ${method === 'DELETE' ? 'retrait' : 'ajout'} du bookmark:`,
+        errorText,
+      )
       toast.error('Error. Please retry.')
     }
   } catch (error) {
@@ -248,6 +263,26 @@ const toggleBookmark = async () => {
 .start-button:hover {
   background: var(--color-light-yellow);
   transform: translateY(-2px);
+}
+
+.roadmap-author {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-medium-gray);
+  margin-top: var(--spacing-xs);
+}
+
+.roadmap-author i {
+  color: var(--color-gold);
+}
+
+/* Responsive - ajuster sur mobile */
+@media (max-width: 768px) {
+  .roadmap-author {
+    font-size: var(--font-size-xs);
+  }
 }
 
 /* Responsive : stacking on smaller screens */

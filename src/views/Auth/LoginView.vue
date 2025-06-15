@@ -73,7 +73,7 @@
             <span class="checkmark"></span>
             Remember me
           </label>
-          <a href="#" class="forgot-password">Forgot password?</a>
+          <!-- <a href="#" class="forgot-password">Forgot password?</a> -->
         </div>
 
         <!-- Submit Button -->
@@ -214,7 +214,7 @@ async function handleLogin() {
 
     toast.success('Welcome back, champion!')
     router.push('/')
-  } catch (err: any) {
+  } catch (err) {
     const errorMessage = err.message || 'Login failed. Please try again.'
     toast.error(errorMessage)
     error.value = errorMessage

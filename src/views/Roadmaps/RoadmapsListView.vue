@@ -9,7 +9,7 @@ import { onMounted, reactive, computed, provide } from 'vue'
 import { useRoute } from 'vue-router'
 import HeaderGame from '@/components/layout/HeaderGame.vue'
 import RoadmapCard from '@/components/ui/RoadmapCard.vue'
-import type { Game, Roadmap } from '@/types/collections'
+import type { Game, Roadmap, User } from '@/types/collections'
 import SearchBar from '@/components/ui/SearchBar.vue'
 import { useUserStore } from '@/stores/user'
 
@@ -21,6 +21,7 @@ const state = reactive({
   game: null as Game | null,
   roadmaps: [] as Roadmap[],
   bookmarks: [] as Roadmap[],
+  authors: new Map<string, User>(),
   loading: true,
   error: '',
 })
@@ -42,7 +43,7 @@ const fetchGameAndRoadmaps = async () => {
     )
 
     if (!game) {
-      state.error = 'Jeu introuvable.'
+      state.error = 'No game available.'
       return
     }
 
@@ -59,6 +60,9 @@ const fetchGameAndRoadmaps = async () => {
     )
     const roadmaps = await resRoadmaps.json()
     state.roadmaps = roadmaps
+
+    // Récupérer les auteurs des roadmaps
+    await fetchRoadmapAuthors()
     // Si l'utilisateur est connecté, récupérer ses bookmarks
     if (userStore.profile) {
       await fetchUserBookmarks()
@@ -68,6 +72,51 @@ const fetchGameAndRoadmaps = async () => {
     console.error(err)
   } finally {
     state.loading = false
+  }
+}
+
+const fetchRoadmapAuthors = async () => {
+  try {
+    // Récupérer les IDs des auteurs uniques
+    const authorIds = [...new Set(state.roadmaps.map((rm) => rm.CreatedBy))]
+
+    // Faire les appels API pour chaque auteur
+    const authorPromises = authorIds.map(async (authorId) => {
+      try {
+        const userRes = await fetch(
+          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/${authorId}`,
+        )
+        if (userRes.ok) {
+          const user = await userRes.json()
+          state.authors.set(authorId, user)
+        }
+      } catch (err) {
+        console.error(`Erreur lors du chargement de l'utilisateur ${authorId}:`, err)
+        // En cas d'erreur, créer un utilisateur par défaut
+        state.authors.set(authorId, {
+          id: authorId,
+          username: 'Unknown User',
+          email: '',
+          password: '',
+          type: 'user',
+          profilePicture: '',
+          createdAt: '',
+          updatedAt: '',
+          lastLogin: '',
+          Bookmarks: [],
+          RoadmapsStarted: [],
+          RoadmapsCreated: [],
+          StepsCreated: [],
+          ContentsCreated: [],
+          Comments: [],
+        })
+      }
+    })
+
+    // Attendre que tous les auteurs soient chargés
+    await Promise.all(authorPromises)
+  } catch (error) {
+    console.error('Erreur lors du chargement des auteurs:', error)
   }
 }
 
@@ -157,6 +206,7 @@ const filteredRoadmaps = computed(() => {
         :subTitle="r.subTitle"
         :stepsCount="r.Steps?.length || 0"
         :isBookmarked="state.bookmarks.includes(r.id)"
+        :author="state.authors.get(r.CreatedBy)"
       />
     </div>
   </main>

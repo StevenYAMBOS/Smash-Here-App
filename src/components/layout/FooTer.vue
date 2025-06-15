@@ -36,8 +36,8 @@
       <!-- Réseaux sociaux -->
       <div class="footer-socials">
         <a href="#"><i class="pi pi-twitter" /></a>
-        <a href="#"><i class="pi pi-discord" /></a>
-        <a href="#"><i class="pi pi-reddit" /></a>
+        <!-- <a href="#"><i class="pi pi-discord" /></a>
+        <a href="#"><i class="pi pi-reddit" /></a> -->
       </div>
     </div>
   </footer>

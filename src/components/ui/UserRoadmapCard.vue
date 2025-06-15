@@ -22,6 +22,11 @@
           <i class="pi pi-star"></i>
           {{ roadmap.premium ? 'Premium' : 'Free' }}
         </span>
+        <!-- Afficher l'auteur uniquement si showAuthor est true -->
+        <span v-if="props.showAuthor" class="roadmap-author">
+          <i class="pi pi-user"></i>
+          {{ author?.username || 'Loading...' }}
+        </span>
       </div>
     </div>
     <div class="actions">
@@ -74,7 +79,7 @@
 
 <script setup lang="ts">
 import { defineProps, defineEmits, withDefaults, ref, computed, onMounted } from 'vue'
-import type { Roadmap } from '@/types/collections'
+import type { Roadmap, User } from '@/types/collections'
 import Button from 'primevue/button'
 import { useUserStore } from '@/stores/user'
 import { useToast } from 'vue-toast-notification'
@@ -82,16 +87,19 @@ import { useToast } from 'vue-toast-notification'
 const props = withDefaults(
   defineProps<{
     roadmap: Roadmap
+    author?: User
     showView?: boolean
     showStats?: boolean
     showEdit?: boolean
     showDelete?: boolean
     showPublished?: boolean
     showPremium?: boolean
+    showAuthor?: boolean
   }>(),
   {
     showPublished: true,
     showPremium: true,
+    showAuthor: false,
   },
 )
 
@@ -122,17 +130,13 @@ const toggleBookmark = async () => {
   try {
     // Utiliser l'action du store qui gère l'API et la synchronisation
     const result = await userStore.toggleBookmark(props.roadmap)
-    
+
     if (result.success) {
       // Émettre l'événement pour informer le parent du changement
       emit('bookmarkChanged', props.roadmap.id, result.isBookmarked)
-      
+
       // Afficher le message de succès
-      toast.success(
-        result.action === 'added'
-          ? 'Save in bookmarks'
-          : 'Removed from bookmarks'
-      )
+      toast.success(result.action === 'added' ? 'Save in bookmarks' : 'Removed from bookmarks')
     } else {
       console.error('Erreur lors du toggle bookmark:', result.error)
       toast.error('Error. Please retry.')
@@ -248,6 +252,19 @@ onMounted(async () => {
 .meta i {
   color: var(--color-gold);
   font-size: var(--font-size-base);
+}
+
+.roadmap-author {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-medium-gray);
+  margin-top: var(--spacing-xs);
+}
+
+.roadmap-author i {
+  color: var(--color-gold);
 }
 
 .actions {

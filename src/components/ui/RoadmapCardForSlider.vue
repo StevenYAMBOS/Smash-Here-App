@@ -1,20 +1,25 @@
-// src/components/ui/RoadmapCardForSlider.vue
+<!-- src/components/ui/RoadmapCardForSlider.vue -->
 
 <template>
   <router-link :to="`/roadmap/${roadmap.id}`" class="roadmap-card">
     <img :src="roadmap.cover" :alt="roadmap.title" class="roadmap-cover" />
     <h3 class="roadmap-title">{{ roadmap.title }}</h3>
     <span class="step-count">
+      <i class="pi pi-sitemap"></i>
       {{ (roadmap.Steps ?? []).length }} step{{ (roadmap.Steps ?? []).length > 1 ? 's' : '' }}
+    </span>
+    <span class="owner">
+      <i class="pi pi-user"></i>
+      {{ author?.username || 'Loading...' }}
     </span>
   </router-link>
 </template>
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import type { Roadmap } from '@/types/collections'
+import type { Roadmap, User } from '@/types/collections'
 
-defineProps<{ roadmap: Roadmap }>()
+defineProps<{ roadmap: Roadmap, author?: User }>()
 </script>
 
 <style scoped>
@@ -46,6 +51,17 @@ defineProps<{ roadmap: Roadmap }>()
   margin: 0;
 }
 .step-count {
+  color: var(--color-gold);
+  font-size: var(--font-size-sm);
+  margin-top: 0.25rem;
+  text-align: start;
+}
+
+.pi-user {
+color: var(--color-gold);
+}
+
+.owner {
   color: var(--color-medium-gray);
   font-size: var(--font-size-sm);
   margin-top: 0.25rem;

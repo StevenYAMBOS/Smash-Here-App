@@ -8,9 +8,28 @@
     <section class="account-content">
       <!-- Informations utilisateur -->
       <template v-if="selectedTab === 'informations'">
-        <ProfileHeader v-if="userStore.profile" :profile="userStore.profile" />
-        <ProfileDetails v-if="userStore.profile" :profile="userStore.profile" />
-        <p v-else class="status">Chargement des informations...</p>
+        <!-- Mode affichage -->
+        <template v-if="!editMode">
+          <ProfileHeader v-if="userStore.profile" :profile="userStore.profile" />
+          <ProfileDetails v-if="userStore.profile" :profile="userStore.profile" />
+
+          <!-- Bouton pour passer en mode édition -->
+          <div class="edit-profile-section">
+            <SubmitButton
+              label="Edit Profile"
+              icon="pi pi-pencil"
+              variant="primary"
+              @click="editMode = true"
+            />
+          </div>
+        </template>
+
+        <!-- Mode édition -->
+        <template v-else>
+          <UpdateProfileForm @success="handleProfileUpdateSuccess" @cancel="editMode = false" />
+        </template>
+
+        <p v-if="!userStore.profile" class="status">Chargement des informations...</p>
       </template>
 
       <!-- Liste des roadmaps -->
@@ -32,7 +51,7 @@
           />
         </div>
         <!-- Sinon -->
-        <p v-else class="status">Vous n’avez créé aucune roadmap.</p>
+        <p v-else class="status">Vous n'avez créé aucune roadmap.</p>
       </template>
 
       <!-- Liste des bookmarks -->
@@ -50,6 +69,8 @@
             :showDelete="false"
             :show-premium="false"
             :show-published="false"
+            :show-author="true"
+            :author="state.authors.get(rm.CreatedBy)"
             @view="(id) => router.push(`/roadmap/${id}`)"
             @bookmarkChanged="handleBookmarkChange"
           />
@@ -62,27 +83,92 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, reactive } from 'vue'
 import { useUserStore } from '@/stores/user'
 import AccountMenu from '@/components/ui/AccountMenu.vue'
 import ProfileHeader from '@/components/ui/ProfileHeader.vue'
 import ProfileDetails from '@/components/ui/ProfileDetails.vue'
 import UserRoadmapCard from '@/components/ui/UserRoadmapCard.vue'
+import UpdateProfileForm from '@/components/ui/UpdateProfileForm.vue'
+import SubmitButton from '@/components/ui/SubmitButton.vue'
 import { useRouter } from 'vue-router'
 import SearchBar from '@/components/ui/SearchBar.vue'
 import { computed } from 'vue'
+import type { User } from '@/types/collections'
 
 const userStore = useUserStore()
 const selectedTab = ref('informations')
 const router = useRouter()
+const editMode = ref(false)
+
+const state = reactive({
+  authors: new Map<string, User>(),
+  authorsLoading: false,
+})
+
+// Gérer le succès de la mise à jour
+const handleProfileUpdateSuccess = () => {
+  editMode.value = false // Retour au mode affichage
+}
 
 onMounted(async () => {
   await userStore.fetchProfile()
-  // Charger les bookmarks si l'utilisateur est connecté
   if (userStore.profile) {
     await userStore.fetchUserBookmarks()
+    await fetchBookmarkAuthors()
   }
 })
+
+const fetchBookmarkAuthors = async () => {
+  if (!userStore.bookmarks?.length || state.authorsLoading) return
+
+  state.authorsLoading = true
+
+  try {
+    // Récupérer les IDs des auteurs uniques des bookmarks
+    const authorIds = [...new Set(userStore.bookmarks.map((rm) => rm.CreatedBy))]
+
+    // Faire les appels API pour chaque auteur
+    const authorPromises = authorIds.map(async (authorId) => {
+      try {
+        const userRes = await fetch(
+          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/${authorId}`,
+        )
+        if (userRes.ok) {
+          const user = await userRes.json()
+          state.authors.set(authorId, user)
+        }
+      } catch (err) {
+        console.error(`Erreur lors du chargement de l'utilisateur ${authorId}:`, err)
+        // En cas d'erreur, créer un utilisateur par défaut
+        state.authors.set(authorId, {
+          id: authorId,
+          username: 'Unknown User',
+          email: '',
+          password: '',
+          type: 'user',
+          profilePicture: '',
+          createdAt: '',
+          updatedAt: '',
+          lastLogin: '',
+          Bookmarks: [],
+          RoadmapsStarted: [],
+          RoadmapsCreated: [],
+          StepsCreated: [],
+          ContentsCreated: [],
+          Comments: [],
+        })
+      }
+    })
+
+    // Attendre que tous les auteurs soient chargés
+    await Promise.all(authorPromises)
+  } catch (error) {
+    console.error('Erreur lors du chargement des auteurs des bookmarks:', error)
+  } finally {
+    state.authorsLoading = false
+  }
+}
 
 const searchText = ref('')
 
@@ -101,13 +187,15 @@ const filteredBookmarks = computed(() => {
 // Gérer les changements de bookmark pour synchroniser l'interface
 const handleBookmarkChange = async (roadmapId: string, isBookmarked: boolean) => {
   // Recharger les bookmarks pour s'assurer de la synchronisation
-  
+
   // Si on est dans l'onglet bookmarks et qu'une roadmap a été supprimée des bookmarks,
   // on peut optionnellement afficher un message ou mettre à jour l'affichage
   if (selectedTab.value === 'bookmarks' && !isBookmarked) {
+    await fetchBookmarkAuthors()
     console.log(`Roadmap ${roadmapId} supprimée des bookmarks`)
   }
-}</script>
+}
+</script>
 
 <style scoped>
 .account-container {
@@ -125,6 +213,7 @@ const handleBookmarkChange = async (roadmapId: string, isBookmarked: boolean) =>
   border-radius: var(--radius-md);
   padding: var(--spacing-lg);
 }
+
 .status {
   color: var(--color-light-gray);
   text-align: center;
@@ -138,5 +227,24 @@ const handleBookmarkChange = async (roadmapId: string, isBookmarked: boolean) =>
   justify-content: center;
   padding: var(--spacing-lg);
   gap: var(--spacing-lg);
+}
+
+.edit-profile-section {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-lg);
+}
+
+/* Responsive pour la section édition */
+@media (max-width: 768px) {
+  .edit-profile-section {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md);
+  }
+
+  .edit-profile-section button {
+    width: 100%;
+  }
 }
 </style>
