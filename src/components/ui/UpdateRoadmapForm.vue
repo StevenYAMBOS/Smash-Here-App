@@ -683,6 +683,7 @@ async function onConnect(params: { source: string; target: string }) {
   if (params.source === params.target) return
 
   const exists = edges.value.some(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
     (e: any) => e.source === params.source && e.target === params.target,
   )
   if (exists) return

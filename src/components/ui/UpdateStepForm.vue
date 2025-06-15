@@ -186,6 +186,7 @@ async function submit() {
       }
     }
 
+    await userStore.fetchProfile()
     toast.success('Step updated successfully!')
     // repasser au listing
     emit('navigate', 'list-steps')

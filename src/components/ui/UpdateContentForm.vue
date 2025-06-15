@@ -141,6 +141,7 @@ async function submit() {
       }
     }
 
+    await userStore.fetchProfile()
     toast.success('Content updated successfully!')
     // repasser au listing
     emit('navigate', 'list-contents')
