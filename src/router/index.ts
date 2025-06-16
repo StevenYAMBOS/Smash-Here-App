@@ -24,46 +24,101 @@ const routes = [
     path: '/',
     component: DefaultLayout,
     children: [
-      { path: '', name: 'home', component: HomeView },
-      { path: '/profile', name: 'profile', component: UserAccount },
-      { path: '/dashboard', name: 'dashboard', component: ContentBuilderView },
+      { 
+        path: '', 
+        name: 'home', 
+        component: HomeView,
+        meta: { title: 'Home' }
+      },
+      { 
+        path: '/profile', 
+        name: 'profile', 
+        component: UserAccount,
+        meta: { title: 'My Account' }
+      },
+      { 
+        path: '/dashboard', 
+        name: 'dashboard', 
+        component: ContentBuilderView,
+        meta: { title: 'Content Builder' }
+      },
       {
         path: '/terms-and-conditions',
         name: 'terms-and-conditions',
         component: TermsAndConditionsView,
+        meta: { title: 'Terms and Conditions' }
       },
       {
         path: '/general-terms-of-use',
         name: 'general-terms-of-use',
         component: GeneralTermsOfUseView,
+        meta: { title: 'General Terms of Use' }
       },
-      { path: '/privacy-policy', name: 'privacy-policy', component: PrivacyPolicyView },
-      { path: '/cookies-policy', name: 'cookies-policy', component: CookiePolicyView },
-      { path: '/faq', name: 'faq', component: FAQView },
-      { path: '/contact', name: 'contact', component: ContactView },
+      { 
+        path: '/privacy-policy', 
+        name: 'privacy-policy', 
+        component: PrivacyPolicyView,
+        meta: { title: 'Privacy Policy' }
+      },
+      { 
+        path: '/cookies-policy', 
+        name: 'cookies-policy', 
+        component: CookiePolicyView,
+        meta: { title: 'Cookie Policy' }
+      },
+      { 
+        path: '/faq', 
+        name: 'faq', 
+        component: FAQView,
+        meta: { title: 'FAQ' }
+      },
+      { 
+        path: '/contact', 
+        name: 'contact', 
+        component: ContactView,
+        meta: { title: 'Contact Us' }
+      },
       {
         path: '/games',
         name: 'games',
         component: GamesListView,
+        meta: { title: 'Games' }
       },
-      { path: '/game/:slug', name: 'game', component: RoadmapsListView },
-      { path: '/roadmap/:id', name: 'roadmap', component: RoadmapView },
+      { 
+        path: '/game/:slug', 
+        name: 'game', 
+        component: RoadmapsListView,
+        meta: { title: 'Game Roadmaps' }
+      },
+      { 
+        path: '/roadmap/:id', 
+        name: 'roadmap', 
+        component: RoadmapView,
+        meta: { title: 'Roadmap' }
+      },
     ],
   },
   {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: NotFoundView,
+    meta: { title: 'Page Not Found' }
   },
   {
     path: '/auth',
     component: AuthLayout,
     children: [
-      { path: 'login', name: 'login', component: LoginView },
+      { 
+        path: 'login', 
+        name: 'login', 
+        component: LoginView,
+        meta: { title: 'Login' }
+      },
       {
         path: 'register',
         name: 'register',
         component: RegisterView,
+        meta: { title: 'Register' }
       },
     ],
   },
@@ -72,6 +127,21 @@ const routes = [
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
+})
+
+// Guard de navigation pour mettre à jour le titre de la page
+router.beforeEach((to, from, next) => {
+  // Définir le titre de la page
+  const baseTitle = 'Smash Here'
+  const pageTitle = to.meta.title as string
+  
+  if (pageTitle) {
+    document.title = `${baseTitle} | ${pageTitle}`
+  } else {
+    document.title = baseTitle
+  }
+  
+  next()
 })
 
 export default router

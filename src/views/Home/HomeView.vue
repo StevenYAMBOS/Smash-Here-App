@@ -5,6 +5,17 @@ import HeaderMenu from '@/components/layout/HeaderMenu.vue'
 // import NumbersCard from '@/components/layout/NumbersCard.vue'
 import GamesSlider from '@/components/ui/GamesSlider.vue'
 import RoadmapsSlider from '@/components/ui/RoadmapsSlider.vue'
+import { usePageTitle } from '@/composables/usePageTitle'
+import { onMounted, onUnmounted } from 'vue'
+const { updateTitle, resetTitle } = usePageTitle()
+
+onMounted(async () => {
+  updateTitle('Home')
+})
+
+onUnmounted(() => {
+  resetTitle()
+})
 </script>
 
 <template>

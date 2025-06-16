@@ -126,6 +126,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toast-notification'
 import { useUserStore } from '@/stores/user'
+import { getErrorMessage } from '@/utils/errorUtils'
 
 const router = useRouter()
 const toast = useToast()
@@ -215,9 +216,9 @@ async function handleLogin() {
     toast.success('Welcome back, champion!')
     router.push('/')
   } catch (err) {
-    const errorMessage = err.message || 'Login failed. Please try again.'
-    toast.error(errorMessage)
-    error.value = errorMessage
+  const errorMessage = getErrorMessage(err) || 'Login failed. Please try again.'
+  toast.error(errorMessage)
+  error.value = errorMessage
   } finally {
     loading.value = false
   }
@@ -248,10 +249,10 @@ async function handleLogin() {
 .bg-pattern {
   position: absolute;
   inset: 0;
-  background-image:
+  /* background-image:
     radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 75% 75%, rgba(255, 166, 0, 0.1) 0%, transparent 50%);
-  animation: pulse 4s ease-in-out infinite;
+  animation: pulse 4s ease-in-out infinite; */
 }
 
 .bg-glow {

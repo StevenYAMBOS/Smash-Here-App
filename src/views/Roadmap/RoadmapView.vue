@@ -1,3 +1,4 @@
+<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <!-- src/views/Roadmap/RoadmapView.vue -->
 
 <script setup lang="ts">
@@ -307,7 +308,7 @@ async function openStep(stepId: string) {
               </div>
               <small v-if="data.subTitle">{{ data.subTitle }}</small>
               <div class="contents-badge">
-                {{ data.contents }} content{{ data.contents > 1 ? 's' : '' }}
+                <i class="pi pi-link"></i> {{ data.contents }} content{{ data.contents > 1 ? 's' : '' }}
               </div>
             </div>
           </template>
@@ -442,15 +443,45 @@ async function openStep(stepId: string) {
 }
 
 .contents-badge {
-  background: var(--color-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs);
+  background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
   color: var(--color-charcoal);
-  font-size: var(--font-size-xs);
-  padding: 0.3rem 0.6rem;
-  border-radius: var(--radius-sm);
-  margin-top: var(--spacing-sm);
-  display: inline-block;
-  font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.1px;
+}
+
+.contents-badge.full-width {
+  width: 100%;
+}
+.contents-badge.btn-primary {
+  background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
+  color: var(--color-charcoal);
+}
+.contents-badge.btn-secondary {
+  background: var(--color-charcoal);
+  color: var(--color-cream);
+  border: 1px solid var(--color-gold);
+}
+.contents-badge:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+.contents-badge:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--color-light-yellow), var(--color-gold));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
 }
 
 @media (max-width: 1024px) {

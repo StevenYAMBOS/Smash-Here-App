@@ -1,4 +1,4 @@
-// src/components/ui/GameCardForSlider.vue
+<!-- src/components/ui/GameCardForSlider.vue -->
 
 <script setup lang="ts">
 import { defineProps, computed } from 'vue'

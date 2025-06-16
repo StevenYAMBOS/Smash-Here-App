@@ -11,8 +11,8 @@
         <div class="footer-column">
           <h4>Plateforme</h4>
           <ul>
+            <li><router-link to="/">Home</router-link></li>
             <li><router-link to="/games">Games</router-link></li>
-            <li><router-link to="/roadmaps">Roadmaps</router-link></li>
           </ul>
         </div>
         <div class="footer-column">

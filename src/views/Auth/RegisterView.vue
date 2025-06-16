@@ -293,6 +293,7 @@
 </template>
 
 <script setup lang="ts">
+import { getErrorMessage } from '@/utils/errorUtils'
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toast-notification'
@@ -539,10 +540,10 @@ async function handleRegister() {
 
     toast.success('🎉 Welcome to Smash Here! Please sign in to continue.')
     router.push('/auth/login')
-  } catch (err: any) {
-    const errorMessage = err.message || 'Registration failed. Please try again.'
-    toast.error(errorMessage)
-    error.value = errorMessage
+  } catch (err) {
+  const errorMessage = getErrorMessage(err) || 'Login failed. Please try again.'
+  toast.error(errorMessage)
+  error.value = errorMessage
   } finally {
     loading.value = false
   }
@@ -571,10 +572,10 @@ async function handleRegister() {
 .bg-pattern {
   position: absolute;
   inset: 0;
-  background-image:
+  /* background-image:
     radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 75% 75%, rgba(255, 166, 0, 0.1) 0%, transparent 50%);
-  animation: pulse 4s ease-in-out infinite;
+  animation: pulse 4s ease-in-out infinite; */
 }
 
 .bg-glow {

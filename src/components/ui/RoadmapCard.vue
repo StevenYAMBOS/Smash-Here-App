@@ -42,7 +42,7 @@
       </button>
 
       <!-- Start button -->
-      <NavButton :to="`/roadmap/${id}`">Start</NavButton>
+      <NavButton icon="pi pi-play" icon-position="left" :to="`/roadmap/${id}`">Start</NavButton>
     </div>
   </div>
 </template>

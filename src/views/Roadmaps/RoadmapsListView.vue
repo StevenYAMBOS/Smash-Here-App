@@ -5,17 +5,19 @@ Composant qui affiche la liste des roadmaps d'un jeu
 -->
 
 <script setup lang="ts">
-import { onMounted, reactive, computed, provide } from 'vue'
+import { onMounted, onUnmounted ,reactive, computed, provide } from 'vue'
 import { useRoute } from 'vue-router'
 import HeaderGame from '@/components/layout/HeaderGame.vue'
 import RoadmapCard from '@/components/ui/RoadmapCard.vue'
 import type { Game, Roadmap, User } from '@/types/collections'
 import SearchBar from '@/components/ui/SearchBar.vue'
 import { useUserStore } from '@/stores/user'
+import { usePageTitle } from '@/composables/usePageTitle'
 
 const route = useRoute()
 const slug = route.params.slug as string
 const userStore = useUserStore()
+const { updateTitle, resetTitle } = usePageTitle()
 
 const state = reactive({
   game: null as Game | null,
@@ -48,6 +50,9 @@ const fetchGameAndRoadmaps = async () => {
     }
 
     state.game = game
+
+    // Mettre à jour le titre avec le nom du jeu
+    updateTitle(`${game.title} Roadmaps`)
 
     // Appel à l’API pour récupérer les roadmaps du jeu
     const resRoadmaps = await fetch(
@@ -181,6 +186,10 @@ const filteredRoadmaps = computed(() => {
   return state.roadmaps.filter((roadmap) =>
     roadmap.title.toLowerCase().includes(searchText.value.toLowerCase()),
   )
+})
+
+onUnmounted(() => {
+  resetTitle()
 })
 </script>
 

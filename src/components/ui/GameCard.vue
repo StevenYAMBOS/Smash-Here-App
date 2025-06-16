@@ -11,7 +11,7 @@
     <!-- NOUVEAU bloc -->
     <p class="game-meta">
       <i class="pi pi-sitemap"></i>
-      {{ roadmapsCount }} roadmap<span v-if="roadmapsCount > 1">s</span>
+      {{ roadmapsCount }} roadmaps
     </p>
   </div>
 </template>
