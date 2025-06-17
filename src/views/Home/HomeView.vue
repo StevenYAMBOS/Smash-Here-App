@@ -21,10 +21,13 @@ onUnmounted(() => {
 <template>
   <main>
     <HeaderMenu
-      title="Master the art of combat"
+      title="Let's begin"
       subTitle="Customized roadmaps - Structured progress - Active community"
       button-link="/games"
       button-text="Start now !"
+      button-icon="pi pi-play-circle"
+      badge-icon="pi pi-sitemap"
+      badge="SMASH HERE"
     />
     <!-- <NumbersCard /> -->
 
