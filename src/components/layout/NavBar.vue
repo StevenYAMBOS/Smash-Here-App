@@ -127,9 +127,14 @@ const userMenuStyle = computed(() => {
     right = spacing
   }
   
+  // Modification principale : positionner le menu sous la navbar
+  // au lieu de sous l'image de profil pour éviter qu'il soit coupé
+  const navbarHeight = 105 // Hauteur approximative de la navbar
+  
   return {
     position: 'fixed',
-    top: `${rect.bottom + 10}px`,
+    // Positionner le menu juste en dessous de la navbar
+    top: `${navbarHeight}px`,
     right: `${right}px`,
     zIndex: 300
   }
@@ -215,8 +220,6 @@ const closeAllMenus = () => {
 </script>
 
 <style scoped>
-/* Dans NavBar.vue - Styles à remplacer/ajouter */
-
 .navbar {
   background: rgba(26, 26, 26, 0.95);
   backdrop-filter: blur(20px);

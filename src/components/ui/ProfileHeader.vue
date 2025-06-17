@@ -12,7 +12,7 @@ import { defineProps } from 'vue'
 import type { User } from '@/types/collections'
 
 // On reçoit un objet `profile` de type `User`
-const props = defineProps<{ profile: User }>()
+defineProps<{ profile: User }>()
 </script>
 
 <style scoped>
@@ -36,5 +36,39 @@ const props = defineProps<{ profile: User }>()
   font-family: var(--font-primary);
   font-size: var(--font-size-xl);
   margin: 0;
+}
+
+@media (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--spacing-lg);
+    gap: var(--spacing-lg);
+  }
+
+  .profile-pic {
+    width: 80px;
+    height: 80px;
+  }
+
+  .username {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-header {
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  .profile-pic {
+    width: 72px;
+    height: 72px;
+  }
+
+  .username {
+    font-size: var(--font-size-xl);
+  }
 }
 </style>

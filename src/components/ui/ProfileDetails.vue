@@ -65,4 +65,59 @@ function formattedDate(iso: string) {
   color: var(--color-cream);
   font-size: var(--font-size-base);
 }
+
+@media (max-width: 1024px) {
+  .profile-details {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .profile-details {
+    grid-template-columns: 1fr;
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-md);
+    gap: var(--spacing-lg);
+  }
+
+  .detail-item {
+    padding: var(--spacing-md);
+    background: var(--color-dark-gray);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--color-gold);
+  }
+
+  .detail-item label {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .detail-item span {
+    font-size: var(--font-size-lg);
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-details {
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-sm);
+    gap: var(--spacing-md);
+  }
+
+  .detail-item {
+    padding: var(--spacing-sm);
+  }
+
+  .detail-item label {
+    font-size: var(--font-size-sm);
+  }
+
+  .detail-item span {
+    font-size: var(--font-size-base);
+  }
+}
 </style>

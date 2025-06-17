@@ -68,8 +68,8 @@ const filteredGames = computed(() => {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: var(--spacing-2xl) 0;
-  margin: var(--spacing-2xl) 0;
+  padding: var(--spacing-xl) 0;
+  margin: var(--spacing-xl) 0;
 }
 
 .games-grid {

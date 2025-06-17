@@ -22,7 +22,7 @@ const { updateTitle, resetTitle } = usePageTitle()
 const state = reactive({
   game: null as Game | null,
   roadmaps: [] as Roadmap[],
-  bookmarks: [] as Roadmap[],
+  bookmarks: [] as string[],
   authors: new Map<string, User>(),
   loading: true,
   error: '',
@@ -142,8 +142,8 @@ const fetchUserBookmarks = async () => {
       // Vérifier la structure des données et mapper correctement
       if (Array.isArray(bookmarks)) {
         // Si les bookmarks ont une propriété roadmapId
-        if (bookmarks.length > 0 && bookmarks[0].roadmapId) {
-          state.bookmarks = bookmarks.map((bookmark: Roadmap) => bookmark.roadmapId)
+        if (bookmarks.length > 0 && bookmarks[0].id) {
+          state.bookmarks = bookmarks.map((bookmark: Roadmap) => bookmark.id)
         }
         // Si les bookmarks sont directement des IDs de roadmap
         else if (bookmarks.length > 0 && typeof bookmarks[0] === 'string') {
@@ -238,8 +238,8 @@ onUnmounted(() => {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: var(--spacing-2xl) 0;
-  margin: var(--spacing-2xl) 0;
+  padding: var(--spacing-xl) 0;
+  margin: var(--spacing-xl) 0;
 }
 
 .roadmap-grid {
@@ -247,7 +247,7 @@ onUnmounted(() => {
   flex-wrap: wrap;
   gap: var(--spacing-xl);
   justify-content: center;
-  padding: var(--spacing-2xl);
+  padding: 0 var(--spacing-2xl) var(--spacing-2xl) var(--spacing-2xl);
 }
 .roadmap-card-placeholder {
   background: var(--color-charcoal);

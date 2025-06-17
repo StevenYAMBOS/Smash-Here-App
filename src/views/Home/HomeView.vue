@@ -31,7 +31,7 @@ onUnmounted(() => {
     <!-- Section "JEUX" -->
     <section id="games-section" class="games-section">
       <div class="games-section-container">
-        <h2>Games</h2>
+        <!-- <h2>Games</h2> -->
         <GamesSlider />
       </div>
     </section>
@@ -39,7 +39,7 @@ onUnmounted(() => {
     <!-- Section "ROADMAPS" -->
     <section id="roadmaps-section" class="roadmaps-section">
       <div class="roadmaps-section-container">
-        <h2>Roadmaps</h2>
+        <!-- <h2>Roadmaps</h2> -->
         <RoadmapsSlider />
       </div>
     </section>

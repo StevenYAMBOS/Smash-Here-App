@@ -369,7 +369,7 @@ onMounted(async () => {
   }
   .actions {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: var(--spacing-sm) var(--spacing-md);
     flex-wrap: wrap;
     gap: var(--spacing-xs);
@@ -378,7 +378,7 @@ onMounted(async () => {
   .actions ::v-deep(.p-button-text) {
     flex: 1;
     margin: 0 var(--spacing-xs);
-    min-width: 40px;
+    max-width: 40px;
   }
 
   /* S'assurer que le bookmark reste visible même avec beaucoup d'actions */

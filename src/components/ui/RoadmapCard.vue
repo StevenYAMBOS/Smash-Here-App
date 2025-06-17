@@ -278,13 +278,6 @@ const toggleBookmark = async () => {
   color: var(--color-gold);
 }
 
-/* Responsive - ajuster sur mobile */
-@media (max-width: 768px) {
-  .roadmap-author {
-    font-size: var(--font-size-xs);
-  }
-}
-
 /* Responsive : stacking on smaller screens */
 @media (max-width: 768px) {
   .roadmap-card {
@@ -295,9 +288,15 @@ const toggleBookmark = async () => {
     height: auto;
   }
 
+  .roadmap-author {
+    font-size: var(--font-size-xs);
+  }
+
   .roadmap-actions {
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
   }
 
   .bookmark-button {
@@ -313,8 +312,11 @@ const toggleBookmark = async () => {
 
 @media (max-width: 576px) {
   .roadmap-actions {
-    flex-direction: column;
-    gap: var(--spacing-sm);
+    flex-direction: row;
+    gap: var(--spacing-md);
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
   }
 
   .start-button {

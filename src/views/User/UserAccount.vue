@@ -38,6 +38,8 @@
         <div class="roadmaps-list-container" v-if="userStore.roadmapsCreated?.length">
           <SearchBar placeholder="Search for your roadmaps" v-model="searchText" />
 
+          <br />
+
           <UserRoadmapCard
             v-for="rm in filteredRoadmaps"
             :key="rm.id"
@@ -59,6 +61,8 @@
         <!-- Si au moins une roadmap -->
         <div class="roadmaps-list-container" v-if="userStore.bookmarks?.length">
           <SearchBar placeholder="Search for your bookmarks" v-model="searchText" />
+
+          <br />
 
           <UserRoadmapCard
             v-for="rm in filteredBookmarks"
@@ -236,8 +240,60 @@ const handleBookmarkChange = async (roadmapId: string, isBookmarked: boolean) =>
   padding: var(--spacing-lg);
 }
 
-/* Responsive pour la section édition */
+@media (max-width: 1024px) {
+  .account-container {
+    padding: var(--spacing-lg);
+    gap: var(--spacing-md);
+  }
+}
+
 @media (max-width: 768px) {
+  .account-container {
+    flex-direction: column;
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  .account-content {
+    width: 100%;
+    padding: var(--spacing-md);
+  }
+
+  .account-menu {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: var(--spacing-md);
+    background: var(--color-charcoal);
+    border-radius: var(--radius-md);
+  }
+
+  .menu-item {
+    flex: 1;
+    min-width: auto;
+    text-align: center;
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+
+  .menu-icon {
+    display: block;
+    margin: 0 auto var(--spacing-xs);
+  }
+
+  .menu-text {
+    display: block;
+    font-size: var(--font-size-xs);
+  }
+
+  .roadmaps-list-container {
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
   .edit-profile-section {
     margin-top: var(--spacing-lg);
     padding: var(--spacing-md);
@@ -245,6 +301,49 @@ const handleBookmarkChange = async (roadmapId: string, isBookmarked: boolean) =>
 
   .edit-profile-section button {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-menu {
+    padding: var(--spacing-sm);
+  }
+
+  .menu-item {
+    padding: var(--spacing-xs);
+  }
+
+  .menu-text {
+    display: none;
+  }
+
+  .menu-text {
+    font-size: 0.7rem;
+  }
+
+  .menu-item[data-tab='informations'] .menu-text::after {
+    content: 'Info';
+  }
+
+  .menu-item[data-tab='roadmaps'] .menu-text::after {
+    content: 'Maps';
+  }
+
+  .menu-item[data-tab='bookmarks'] .menu-text::after {
+    content: 'Saved';
+  }
+
+  .account-container {
+    padding: var(--spacing-sm);
+  }
+
+  .account-content {
+    padding: var(--spacing-sm);
+  }
+
+  .roadmaps-list-container {
+    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
   }
 }
 </style>
