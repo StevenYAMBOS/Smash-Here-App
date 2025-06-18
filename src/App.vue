@@ -1,10 +1,27 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router'
-</script>
-
 <template>
-  <RouterView />
+  <div id="app">
+    <!-- Votre contenu existant -->
+    <router-view />
+    
+    <!-- Bandeau de consentement des cookies -->
+    <CookieConsentBanner />
+  </div>
 </template>
+
+<script setup lang="ts">
+// Importer le composant
+import CookieConsentBanner from '@/components/ui/CookieConsentBanner.vue'
+import { useCookieConsent } from './composables/useCookieConsent';
+
+// Utiliser le composable pour vérifier les permissions dans l'app
+const { isCookieTypeAllowed } = useCookieConsent()
+
+// Exemple d'utilisation : initialiser Google Analytics seulement si autorisé
+if (isCookieTypeAllowed('analytics')) {
+  // Initialiser vos outils d'analytics
+  console.log('Analytics autorisé - initialisation des outils')
+}
+</script>
 
 <style scoped>
 header {

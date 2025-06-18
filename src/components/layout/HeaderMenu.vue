@@ -620,6 +620,7 @@ onUnmounted(() => {
 
 .button-icon {
   font-size: var(--font-size-lg);
+  font-weight: bold;
 }
 
 .button-glow {
@@ -630,6 +631,7 @@ onUnmounted(() => {
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   transition: left 0.5s ease;
+  font-weight: bold;
 }
 
 .header-button--primary:hover .button-glow {

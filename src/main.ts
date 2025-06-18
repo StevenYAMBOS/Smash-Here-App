@@ -11,6 +11,7 @@ import ToastPlugin from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
 import 'vue-multiselect/dist/vue-multiselect.css'
 import Aura from '@primeuix/themes/aura'
+import { cookieConsentPlugin } from '@/utils/cookieHelpers'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -22,6 +23,7 @@ app.use(PrimeVue, {
 })
 app.use(router)
 app.use(ToastPlugin, { position: 'top-right' })
+app.use(cookieConsentPlugin)
 
 import { useUserStore } from '@/stores/user'
 const userStore = useUserStore()
