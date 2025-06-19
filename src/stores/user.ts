@@ -1,7 +1,7 @@
 // src/stores/user.ts
 
 import { defineStore } from 'pinia'
-import type { User, Roadmap, Content, Step, Game } from '@/types/collections'
+import type { User, Roadmap, Content, Step, Game, Guide, Attachment } from '@/types/collections'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -13,6 +13,8 @@ export const useUserStore = defineStore('user', {
     bookmarks: [] as Roadmap[],
     contentsCreated: [] as Content[],
     stepsCreated: [] as Step[],
+    guidesCreated: [] as Guide[],
+    attachmentsCreated: [] as Attachment[],
   }),
   actions: {
     setToken(t: string) {
@@ -27,6 +29,8 @@ export const useUserStore = defineStore('user', {
       this.roadmapsCreated = []
       this.contentsCreated = []
       this.stepsCreated = []
+      this.guidesCreated = []
+      this.attachmentsCreated = []
       this.games = []
       localStorage.removeItem('token')
     },
@@ -46,11 +50,13 @@ export const useUserStore = defineStore('user', {
       } catch {
         this.clear()
       }
-      // après avoir chargé le profile, charger les roadmaps créées
+      // après avoir chargé le profile, charger les élément créés
       await this.fetchUserRoadmaps()
       await this.fetchUserBookmarks()
       await this.fetchUserSteps()
       await this.fetchUserContents()
+      await this.fetchUserGuides()
+      await this.fetchUserAttachments()
       await this.fetchAllGames()
     },
     // Récupère tous les jeux (GET /games)
@@ -276,6 +282,78 @@ export const useUserStore = defineStore('user', {
 
       // 3) Met à jour le state des objets chargés
       this.contentsCreated = this.contentsCreated.filter((c) => c.id !== id)
+    },
+    async fetchUserGuides() {
+      if (!this.profile?.GuidesCreated?.length) {
+        this.guidesCreated = []
+        return
+      }
+      const promises = this.profile.GuidesCreated.map((id) =>
+        fetch(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/guide/${id}`).then(
+          (res) => (res.ok ? (res.json() as Promise<Guide>) : Promise.reject()),
+        ),
+      )
+      try {
+        this.guidesCreated = await Promise.all(promises)
+      } catch {
+        this.guidesCreated = []
+      }
+    },
+    async deleteGuide(id: string) {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/guide/${id}`,
+        {
+          method: 'DELETE',
+          headers: { Authorization: `Bearer ${this.token}` },
+        },
+      )
+      if (!res.ok) {
+        throw new Error(`Suppression échouée (${res.status})`)
+      }
+
+      // 2) Met à jour le tableau d’IDs dans le profile
+      if (this.profile) {
+        this.profile.GuidesCreated = this.profile.GuidesCreated.filter((gid) => gid !== id)
+      }
+
+      // 3) Met à jour le state des objets chargés
+      this.guidesCreated = this.guidesCreated.filter((g) => g.id !== id)
+    },
+    async fetchUserAttachments() {
+      if (!this.profile?.AttachmentsCreated?.length) {
+        this.attachmentsCreated = []
+        return
+      }
+      const promises = this.profile.AttachmentsCreated.map((id) =>
+        fetch(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/attachment/${id}`).then(
+          (res) => (res.ok ? (res.json() as Promise<Attachment>) : Promise.reject()),
+        ),
+      )
+      try {
+        this.attachmentsCreated = await Promise.all(promises)
+      } catch {
+        this.attachmentsCreated = []
+      }
+    },
+    async deleteAttachment(id: string) {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/attachment/${id}`,
+        {
+          method: 'DELETE',
+          headers: { Authorization: `Bearer ${this.token}` },
+        },
+      )
+      if (!res.ok) {
+        throw new Error(`Suppression échouée (${res.status})`)
+      }
+
+      // 2) Met à jour le tableau d’IDs dans le profile
+      if (this.profile) {
+        this.profile.AttachmentsCreated = this.profile.AttachmentsCreated.filter((aid) => aid !== id)
+      }
+
+      // 3) Met à jour le state des objets chargés
+      this.attachmentsCreated = this.attachmentsCreated.filter((a) => a.id !== id)
     },
   },
 })

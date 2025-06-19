@@ -124,6 +124,71 @@
           <button class="btn-no" @click="cancelDeleteContent">No</button>
         </div>
       </div>
+
+      <!-- ***************** GUIDES ***************** -->
+      <template v-if="selectedTab === 'list-guides'">
+        <div class="cards-grid">
+          <UserGuideCard
+            v-for="g in filteredGuides"
+            :key="g.id"
+            :guide="g"
+            :show-view="true"
+            :showStats="false"
+            :showEdit="true"
+            :showDelete="true"
+            @stats="(id) => router.push(`/dashboard/guides/${id}`)"
+            @edit="onEditGuide"
+            @delete="openConfirmGuide"
+          />
+        </div>
+      </template>
+      <template v-else-if="selectedTab === 'create-guide'">
+        <CreateGuideForm />
+      </template>
+      <template v-else-if="selectedTab === 'update-guide'">
+        <UpdateGuideForm v-if="editingGuide" :guide="editingGuide" @navigate="onNavigate" />
+      </template>
+
+      <!-- confirmation modals -->
+      <div
+        v-if="confirmVisibleRoadmap"
+        class="confirm-backdrop"
+        @click="proceedDeleteRoadmap"
+      ></div>
+      <div v-if="confirmVisibleRoadmap" class="confirm-modal">
+        <p>Are you sure you want to delete this roadmap ? This action cannot be reversed.</p>
+        <div class="confirm-actions">
+          <button class="btn-yes" @click="proceedDeleteRoadmap">Yes</button>
+          <button class="btn-no" @click="cancelDeleteRoadmap">No</button>
+        </div>
+      </div>
+
+      <div v-if="confirmVisibleStep" class="confirm-backdrop" @click="cancelDeleteStep"></div>
+      <div v-if="confirmVisibleStep" class="confirm-modal">
+        <p>Are you sure you want to delete this step ? This action cannot be reversed.</p>
+        <div class="confirm-actions">
+          <button class="btn-yes" @click="proceedDeleteStep">Yes</button>
+          <button class="btn-no" @click="cancelDeleteStep">No</button>
+        </div>
+      </div>
+
+      <div v-if="confirmVisibleContent" class="confirm-backdrop" @click="cancelDeleteContent"></div>
+      <div v-if="confirmVisibleContent" class="confirm-modal">
+        <p>Are you sure you want to delete this content ? This action cannot be reversed.</p>
+        <div class="confirm-actions">
+          <button class="btn-yes" @click="proceedDeleteContent">Yes</button>
+          <button class="btn-no" @click="cancelDeleteContent">No</button>
+        </div>
+      </div>
+
+      <div v-if="confirmVisibleGuide" class="confirm-backdrop" @click="cancelDeleteGuide"></div>
+      <div v-if="confirmVisibleGuide" class="confirm-modal">
+        <p>Are you sure you want to delete this guide ? This action cannot be reversed.</p>
+        <div class="confirm-actions">
+          <button class="btn-yes" @click="proceedDeleteGuide">Yes</button>
+          <button class="btn-no" @click="cancelDeleteGuide">No</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -144,13 +209,17 @@ import { computed } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useRouter } from 'vue-router'
 import SearchBar from '@/components/ui/SearchBar.vue'
-import type { Content, Step, Roadmap } from '@/types/collections'
+import type { Content, Step, Roadmap, Guide } from '@/types/collections'
+import UserGuideCard from '@/components/ui/UserGuideCard.vue'
+import CreateGuideForm from '@/components/ui/CreateGuideForm.vue'
+import UpdateGuideForm from '@/components/ui/UpdateGuideForm.vue'
 
 const selectedTab = ref('create-roadmap')
 // nouvel état pour l’édition
 const editingContent = ref<Content | null>(null)
 const editingStep = ref<Step | null>(null)
 const editingRoadmap = ref<Roadmap | null>(null)
+const editingGuide = ref<Guide | null>(null)
 const router = useRouter()
 const userStore = useUserStore()
 
@@ -167,16 +236,20 @@ const tabLabels: Record<string, string> = {
   'create-content': 'Create Content',
   'list-contents': 'Your Contents',
   'update-content': 'Edit Content',
+  'list-guides': 'Your Guides',
+  'update-guide': 'Edit Guide',
 }
 
 // ID de contenu en attente de suppression
 const pendingDeleteRoadmapId = ref<string | null>(null)
 const pendingDeleteStepId = ref<string | null>(null)
 const pendingDeleteContentId = ref<string | null>(null)
+const pendingDeleteGuideId = ref<string | null>(null)
 // Contrôle l’affichage du modal
 const confirmVisibleRoadmap = ref(false)
 const confirmVisibleStep = ref(false)
 const confirmVisibleContent = ref(false)
+const confirmVisibleGuide = ref(false)
 
 // Ouvre la pop-up de confirmation (roadmaps)
 function openConfirmRoadmap(id: string) {
@@ -196,6 +269,12 @@ function openConfirmContent(id: string) {
   confirmVisibleContent.value = true
 }
 
+// Ouvre la pop-up de confirmation (guide)
+function openConfirmGuide(id: string) {
+  pendingDeleteGuideId.value = id
+  confirmVisibleGuide.value = true
+}
+
 // Annule la suppression (roadmaps)
 function cancelDeleteRoadmap() {
   pendingDeleteRoadmapId.value = null
@@ -212,6 +291,12 @@ function cancelDeleteStep() {
 function cancelDeleteContent() {
   pendingDeleteContentId.value = null
   confirmVisibleContent.value = false
+}
+
+// Annule la suppression (guide)
+function cancelDeleteGuide() {
+  pendingDeleteGuideId.value = null
+  confirmVisibleGuide.value = false
 }
 
 // Suppression roadmap
@@ -238,6 +323,14 @@ async function proceedDeleteContent() {
   cancelDeleteContent()
 }
 
+// Suppression guide
+async function proceedDeleteGuide() {
+  if (pendingDeleteGuideId.value) {
+    await userStore.deleteGuide(pendingDeleteGuideId.value)
+  }
+  cancelDeleteGuide()
+}
+
 const filteredRoadmaps = computed(() => {
   const listOfRoadmaps = userStore.roadmapsCreated || []
   if (!searchText.value.trim()) return listOfRoadmaps
@@ -257,6 +350,14 @@ const filteredContents = computed(() => {
   if (!searchText.value.trim()) return listOfContents
   return listOfContents.filter((rm) =>
     rm.title.toLowerCase().includes(searchText.value.toLowerCase()),
+  )
+})
+
+const filteredGuides = computed(() => {
+  const listOfGuides = userStore.guidesCreated || []
+  if (!searchText.value.trim()) return listOfGuides
+  return listOfGuides.filter((guide) =>
+    guide.title.toLowerCase().includes(searchText.value.toLowerCase()),
   )
 })
 
@@ -288,6 +389,15 @@ function onEditContent(id: string) {
   if (c) {
     editingContent.value = c
     selectedTab.value = 'update-content'
+  }
+}
+
+// appelé par le <UserContentCard @edit>
+function onEditGuide(id: string) {
+  const g = userStore.guidesCreated.find((g) => g.id === id)
+  if (g) {
+    editingGuide.value = g
+    selectedTab.value = 'update-guide'
   }
 }
 

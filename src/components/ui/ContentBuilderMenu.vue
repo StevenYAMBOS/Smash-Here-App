@@ -34,6 +34,16 @@
           <li @click="select('list-contents')">Your contents</li>
         </ul>
       </li>
+      <li>
+        <div class="menu-header" @click="toggle('guides')">
+          Guides
+          <i :class="openSection === 'guides' ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+        </div>
+        <ul v-if="openSection === 'guides'" class="submenu">
+          <li @click="select('create-guide')">Create a new guide</li>
+          <li @click="select('list-guides')">Your guides</li>
+        </ul>
+      </li>
     </ul>
   </nav>
 </template>

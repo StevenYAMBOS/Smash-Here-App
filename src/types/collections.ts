@@ -2,7 +2,7 @@
 
 export type UserType = 'superadmin' | 'coach' | 'user'
 export type StepStatus = 'pending' | 'inProgress' | 'done' | 'skipped'
-export type ContentType = 'video' | 'article' | 'page' | 'roadmap' | 'link'
+export type ContentType = 'video' | 'article' | 'page' | 'roadmap' | 'link' | 'guide'
 
 // -----------------------
 // Collection: user
@@ -22,6 +22,8 @@ export type User = {
   RoadmapsCreated: string[]
   StepsCreated: string[]
   ContentsCreated: string[]
+  GuidesCreated: string[]
+  AttachmentsCreated: string[]
   Comments: string[]
 }
 
@@ -138,6 +140,52 @@ export type Comment = {
   Responses: string[]
   Roadmap: string
   User: string
+  CreatedBy: string
+  UpdatedBy: string
+}
+
+// -----------------------
+// Collection: guide
+// -----------------------
+export type Guide = {
+  id: string
+  Attachments: string[]
+  Tags: string[]
+  Comments: string[]
+  Likes: string[]
+  Views: string[]
+  Game: string
+  title: string
+  subTitle: string
+  description: string
+  content: string
+  cover: string
+  difficulty: string
+  estimatedReadTime: number
+  published: boolean
+  premium: boolean
+  version: string
+  language: string
+  viewsCount: number
+  likesCount: number
+  commentsCount: number
+  lastViewedAt: string
+  publishedAt: string
+  CreatedBy: string
+  UpdatedBy: string
+}
+
+// -----------------------
+// Collection: attachment
+// -----------------------
+export type Attachment = {
+  id: string
+  Guides: string[]
+  fileName: string
+  url: string
+  alt: string
+  caption: string
+  type: string
   CreatedBy: string
   UpdatedBy: string
 }

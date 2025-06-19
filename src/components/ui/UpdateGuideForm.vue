@@ -1,0 +1,2223 @@
+<!-- src/components/ui/UpdateGuideForm.vue -->
+<template>
+  <div class="update-guide-container">
+    <!-- Onglets -->
+    <div class="tabs">
+      <button
+        :class="{ active: currentTab === 'info' }"
+        @click="currentTab = 'info'"
+        class="tab-button"
+      >
+        Informations
+      </button>
+      <button
+        :class="{ active: currentTab === 'contentOfGuide' }"
+        @click="currentTab = 'contentOfGuide'"
+        class="tab-button"
+      >
+        Steps
+      </button>
+    </div>
+
+    <!-- **************** Onglet “Informations de base” **************** -->
+    <div v-if="currentTab === 'info'" class="tab-content">
+      <form @submit.prevent="submitInfo" class="update-guide-form">
+        <h2>Informations</h2>
+
+        <div class="form-section">
+          <div class="field">
+            <label for="title">Title</label>
+            <input id="title" v-model="title" type="text" />
+          </div>
+
+          <div class="field">
+            <label for="subTitle">Subtitle</label>
+            <input id="subTitle" v-model="subTitle" type="text" />
+          </div>
+
+          <div class="field">
+            <label for="description">Description</label>
+            <textarea id="description" v-model="description" rows="3"></textarea>
+          </div>
+
+          <!-- Champ Difficulté -->
+          <div class="field">
+            <label for="difficulty">Difficulty</label>
+            <select id="difficulty" v-model="difficulty">
+              <option value="" disabled>Select a difficulty</option>
+              <option value="video">beginner</option>
+              <option value="article">mid-level</option>
+              <option value="page">high-level</option>
+              <option value="roadmap">top-level</option>
+            </select>
+          </div>
+
+          <!-- Champ Langage -->
+          <div class="field">
+            <label for="language">Language</label>
+            <select id="language" v-model="language">
+              <option value="" disabled>Select a language</option>
+              <option value="af">Afrikaans</option>
+              <option value="sq">Albanian - (Shqip)</option>
+              <option value="am">Amharic - (አማርኛ)</option>
+              <option value="ar">Arabic - (العربية)</option>
+              <option value="an">Aragonese - (Aragonés)</option>
+              <option value="hy">Armenian - (Հայերեն)</option>
+              <option value="ast">Asturian - (Asturianu)</option>
+              <option value="ay">Aymara - (Aymar aru)</option>
+              <option value="az">Azerbaijani - (Azərbaycan dili)</option>
+              <option value="eu">Basque - (Euskara)</option>
+              <option value="be">Belarusian - (Беларуская)</option>
+              <option value="bn">Bengali - (বাংলা)</option>
+              <option value="brx">Bodo - (बर')</option>
+              <option value="bs">Bosnian - (Bosanski)</option>
+              <option value="br">Breton - (Brezhoneg)</option>
+              <option value="bg">Bulgarian - (Български)</option>
+              <option value="ca">Catalan - (Català)</option>
+              <option value="ckb">Central - Kurdish (کوردی)</option>
+              <option value="ce">Chechen (Нохчийн мотт)</option>
+              <option value="zh">Chinese (中文)</option>
+              <option value="zh-HK">Chinese Hong Kong - (中文 - 香港)</option>
+              <option value="zh-CN">Chinese Simplified - (中文简体)</option>
+              <option value="zh-TW">Chinese Traditional - (中文繁體)</option>
+              <option value="co">Corsican - (Corsu)</option>
+              <option value="hr">Croatian - (Hrvatski)</option>
+              <option value="cs">Czech - (Čeština)</option>
+              <option value="da">Danish - (Dansk)</option>
+              <option value="dv">Dhivehi - (ދިވެހި)</option>
+              <option value="nl">Dutch (Nederlands)</option>
+              <option value="dz">Dzongkha (རྫོང་ཁ)</option>
+              <option value="en">English</option>
+              <option value="en-AU">English (Australia)</option>
+              <option value="en-CA">English (Canada)</option>
+              <option value="en-IN">English (India)</option>
+              <option value="en-NZ">English (New Zealand)</option>
+              <option value="en-ZA">English (South Africa)</option>
+              <option value="en-GB">English (United Kingdom)</option>
+              <option value="en-US">English (United States)</option>
+              <option value="eo">Esperanto</option>
+              <option value="et">Estonian (Eesti)</option>
+              <option value="ee">Ewe (Eʋegbe)</option>
+              <option value="fo">Faroese - (Føroyskt)</option>
+              <option value="fil">Filipino (Wikang Filipino)</option>
+              <option value="fi">Finnish (Suomi)</option>
+              <option value="fr">French (Français)</option>
+              <option value="fr-CA">French Canada - (Français Canada)</option>
+              <option value="fr-FR">French France - (Français France)</option>
+              <option value="fr-CH">French Switzerland - (Français Suisse)</option>
+              <option value="gl">Galician - (Galego)</option>
+              <option value="ka">Georgian - (ქართული)</option>
+              <option value="de">German - (Deutsch)</option>
+              <option value="de-AT">German Austria - (Deutsch Österreich)</option>
+              <option value="de-DE">German Germany - (Deutsch Deutschland)</option>
+              <option value="de-LI">German Liechtenstein - (Deutsch Liechtenstein)</option>
+              <option value="de-CH">German Switzerland - (Deutsch Schweiz)</option>
+              <option value="el">Greek - (Ελληνικά)</option>
+              <option value="gn">Guarani - (Avañe'ẽ)</option>
+              <option value="gu">Gujarati - (ગુજરાતી)</option>
+              <option value="ha">Hausa - (هَوُسَ)</option>
+              <option value="haw">Hawaiian - (ʻŌlelo Hawaiʻi)</option>
+              <option value="he">Hebrew - (עברית)</option>
+              <option value="hi">Hindi - (हिन्दी)</option>
+              <option value="hu">Hungarian - (Magyar)</option>
+              <option value="is">Icelandic - (Íslenska)</option>
+              <option value="id">Indonesian - (Bahasa Indonesia)</option>
+              <option value="ia">Interlingua</option>
+              <option value="iu">Inuktitut - (ᐃᓄᒃᑎᑐᑦ)</option>
+              <option value="ga">Irish - (Gaeilge)</option>
+              <option value="it">Italian - (Italiano)</option>
+              <option value="it-IT">Italian Italy - (Italiano Italia)</option>
+              <option value="it-CH">Italian Switzerland - (Italiano - Svizzera)</option>
+              <option value="ja">Japanese - (日本語)</option>
+              <option value="kl">Kalaallisut - (Kalaallisut)</option>
+              <option value="kn">Kannada - (ಕನ್ನಡ)</option>
+              <option value="ks">Kashmiri - (कॉशुर / كٲشُر)</option>
+              <option value="kk">Kazakh - (Қазақ тілі)</option>
+              <option value="km">Khmer - (ខ្មែរ)</option>
+              <option value="rw">Kinyarwanda - (Ikinyarwanda)</option>
+              <option value="ko">Korean - (한국어)</option>
+              <option value="ku">Kurdish - (Kurdî)</option>
+              <option value="ky">Kyrgyz - (Кыргызча)</option>
+              <option value="lo">Lao - (ລາວ)</option>
+              <option value="la">Latin - (Latina)</option>
+              <option value="lv">Latvian - (Latviešu)</option>
+              <option value="ln">Lingala - (Lingála)</option>
+              <option value="lt">Lithuanian - (Lietuvių)</option>
+              <option value="lg">Luganda - (Luganda)</option>
+              <option value="lb">Luxembourgish - (Lëtzebuergesch)</option>
+              <option value="mk">Macedonian - (Македонски)</option>
+              <option value="mai">Maithili - (मैथिली)</option>
+              <option value="ms">Malay - (Bahasa Melayu)</option>
+              <option value="ml">Malayalam - (മലയാളം)</option>
+              <option value="mt">Maltese - (Malti)</option>
+              <option value="mni">Manipuri - (ꯃꯅꯤꯄꯨꯔꯤ)</option>
+              <option value="mr">Marathi - (मराठी)</option>
+              <option value="mn">Mongolian - (Монгол)</option>
+              <option value="ne">Nepali - (नेपाली)</option>
+              <option value="nso">Northern Sotho - (Sesotho sa Leboa)</option>
+              <option value="no">Norwegian (Norsk)</option>
+              <option value="nb">Norwegian Bokmål - (Norsk bokmål)</option>
+              <option value="nn">Norwegian Nynorsk - (Nynorsk)</option>
+              <option value="oc">Occitan</option>
+              <option value="or">Oriya - (ଓଡ଼ିଆ)</option>
+              <option value="om">Oromo - (Afaan Oromoo)</option>
+              <option value="os">Ossetian - (Ирон æвзаг)</option>
+              <option value="ps">Pashto - (پښتو)</option>
+              <option value="fa">Persian - (فارسی)</option>
+              <option value="pl">Polish - (Polski)</option>
+              <option value="pt">Portuguese - (Português)</option>
+              <option value="pt-BR">Portuguese Brazil - (Português Brasil)</option>
+              <option value="pt-PT">Portuguese Portugal - (Português Portugal)</option>
+              <option value="pa">Punjabi - (ਪੰਜਾਬੀ)</option>
+              <option value="qu">Quechua - (Runa Simi)</option>
+              <option value="ro">Romanian - (Română)</option>
+              <option value="mo">Romanian Moldova - (Română Moldova)</option>
+              <option value="rm">Romansh - (Rumantsch)</option>
+              <option value="ru">Russian - (Русский)</option>
+              <option value="sm">Samoan - (Gagana Samoa)</option>
+              <option value="sat">Santali - (ᱥᱟᱱᱛᱟᱲᱤ)</option>
+              <option value="sc">Sardinian - (Sardu)</option>
+              <option value="gd">Scottish Gaelic - (Gàidhlig)</option>
+              <option value="sr">Serbian - (Српски)</option>
+              <option value="sh">Serbo_Croatian - (Srpskohrvatski)</option>
+              <option value="sn">Shona - (ChiShona)</option>
+              <option value="sd">Sindhi - (سنڌي)</option>
+              <option value="si">Sinhala - (සිංහල)</option>
+              <option value="sk">Slovak - (Slovenčina)</option>
+              <option value="sl">Slovenian - (Slovenščina)</option>
+              <option value="so">Somali - (Soomaali)</option>
+              <option value="st">Southern - Sotho (Sesotho)</option>
+              <option value="es">Spanish - (Español)</option>
+              <option value="es-AR">Spanish Argentina - (Español Argentina)</option>
+              <option value="es-419">Spanish Latin America - (Español Latinoamérica)</option>
+              <option value="es-MX">Spanish Mexico - (Español México)</option>
+              <option value="es-ES">Spanish Spain - (Español España)</option>
+              <option value="es-US">Spanish United States - (Español Estados Unidos)</option>
+              <option value="su">Sundanese - (Basa Sunda)</option>
+              <option value="sw">Swahili - (Kiswahili)</option>
+              <option value="sv">Swedish - (Svenska)</option>
+              <option value="tg">Tajik - (Тоҷикӣ)</option>
+              <option value="ta">Tamil - (தமிழ்)</option>
+              <option value="tt">Tatar - (Татар)</option>
+              <option value="te">Telugu - (తెలుగు)</option>
+              <option value="th">Thai - (ไทย)</option>
+              <option value="ti">Tigrinya - (ትግርኛ)</option>
+              <option value="to">Tongan - (Lea fakatonga)</option>
+              <option value="tn">Tswana - (Setswana)</option>
+              <option value="tr">Turkish - (Türkçe)</option>
+              <option value="tk">Turkmen - (Türkmençe)</option>
+              <option value="tw">Twi - (Twi)</option>
+              <option value="udm">Udmurt - (Удмурт кыл)</option>
+              <option value="uk">Ukrainian - (Українська)</option>
+              <option value="ur">Urdu - (اردو)</option>
+              <option value="ug">Uyghur - (ئۇيغۇرچە)</option>
+              <option value="uz">Uzbek - (O'zbek)</option>
+              <option value="ve">Venda - (Tshivenḓa)</option>
+              <option value="vi">Vietnamese - (Tiếng Việt)</option>
+              <option value="wa">Walloon - (Walon)</option>
+              <option value="cy">Welsh - (Cymraeg)</option>
+              <option value="fy">Western Frisian - (Frysk)</option>
+              <option value="wo">Wolof - (Wollof)</option>
+              <option value="xh">Xhosa - (isiXhosa)</option>
+              <option value="yi">Yiddish - (ייִדיש)</option>
+              <option value="yo">Yoruba - (Èdè Yorùbá)</option>
+              <option value="za">Zhuang - (Saɯ cueŋƅ)</option>
+              <option value="zu">Zulu - (isiZulu)</option>
+            </select>
+          </div>
+
+          <!-- Champ version -->
+          <div class="field">
+            <label for="version">Version</label>
+            <select id="version" v-model="version">
+              <option value="" disabled>Select a version</option>
+              <option value="0.0">0.0</option>
+              <option value="1.0">1.0</option>
+              <option value="1.1">1.1</option>
+              <option value="1.2">1.2</option>
+              <option value="1.3">1.3</option>
+              <option value="1.4">1.4</option>
+              <option value="1.5">1.5</option>
+              <option value="1.6">1.6</option>
+              <option value="1.7">1.7</option>
+              <option value="1.8">1.8</option>
+              <option value="1.9">1.9</option>
+              <option value="2.0">2.0</option>
+              <option value="2.1">2.1</option>
+              <option value="2.2">2.2</option>
+              <option value="2.3">2.3</option>
+              <option value="2.4">2.4</option>
+              <option value="2.5">2.5</option>
+              <option value="2.6">2.6</option>
+              <option value="2.7">2.7</option>
+              <option value="2.8">2.8</option>
+              <option value="2.9">2.9</option>
+              <option value="3.0">3.0</option>
+              <option value="3.1">3.1</option>
+              <option value="3.2">3.2</option>
+              <option value="3.3">3.3</option>
+              <option value="3.4">3.4</option>
+              <option value="3.5">3.5</option>
+              <option value="3.6">3.6</option>
+              <option value="3.7">3.7</option>
+              <option value="3.8">3.8</option>
+              <option value="3.9">3.9</option>
+              <option value="4.0">4.0</option>
+              <option value="4.1">4.1</option>
+              <option value="4.2">4.2</option>
+              <option value="4.3">4.3</option>
+              <option value="4.4">4.4</option>
+              <option value="4.5">4.5</option>
+              <option value="4.6">4.6</option>
+              <option value="4.7">4.7</option>
+              <option value="4.8">4.8</option>
+              <option value="4.9">4.9</option>
+              <option value="5.0">5.0</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <div class="switch-field">
+              <label for="published-switch">Published</label>
+              <button
+                id="published-switch"
+                type="button"
+                class="switch-button"
+                :class="{ active: published }"
+                @click="published = !published"
+                role="switch"
+                :aria-checked="published"
+              >
+                <span class="switch-handle"></span>
+              </button>
+            </div>
+
+            <!-- <div class="switch-field">
+              <label for="premium-switch">Premium</label>
+              <button
+                id="premium-switch"
+                type="button"
+                class="switch-button"
+                :class="{ active: premium }"
+                @click="premium = !premium"
+                role="switch"
+                :aria-checked="premium"
+              >
+                <span class="switch-handle"></span>
+              </button>
+            </div> -->
+          </div>
+
+          <!-- <div class="field">
+            <label>Guide's games</label>
+            <MultiSelect
+              id="games_label"
+              v-model="selectedGameIds"
+              :options="availableGames"
+              optionLabel="title"
+              optionValue="id"
+              display="chip"
+              placeholder="Select games"
+              :showClear="true"
+              class="p-multiselect-field"
+            >
+              <template #option="slotProps">
+                <div class="game-option">
+                  <i class="pi pi-gamepad2"></i>
+                  <span>{{ slotProps.option.title }}</span>
+                </div>
+              </template>
+            </MultiSelect>
+          </div> -->
+
+          <div class="field">
+            <label for="cover">Cover image</label>
+
+            <!-- Zone de prévisualisation (cliquable) -->
+            <div class="cover-preview-wrapper" @click="triggerFileInput">
+              <img
+                v-if="coverPreview"
+                :src="coverPreview"
+                alt="Cover Preview"
+                class="cover-preview-img"
+              />
+              <div v-else class="cover-placeholder">
+                <i class="pi pi-image"></i>
+                <span>Nouvelle couverture...</span>
+              </div>
+            </div>
+
+            <!-- Input file (caché) -->
+            <input
+              id="cover"
+              type="file"
+              accept="image/webp,image/png,image/jpeg/pdf"
+              @change="handleFileChange"
+              class="file-input"
+            />
+
+            <p class="file-hint">Accepted format : WEBP, PNG, JPEG, PDF (max 10 MB)</p>
+          </div>
+        </div>
+
+        <div class="actions-row">
+          <SubmitButton
+            label="Cancel"
+            icon="pi pi-times"
+            variant="secondary"
+            type="button"
+            @click="emit('navigate', 'list-guides')"
+          />
+          <SubmitButton
+            id="btn-save-info"
+            :label="infoLoading ? 'Saving...' : 'Save'"
+            :disabled="infoLoading"
+            icon="pi pi-save"
+            variant="primary"
+            type="submit"
+          />
+        </div>
+      </form>
+    </div>
+
+    <!-- **************** Onglet "Contenu du guide **************** -->
+    <div v-if="currentTab === 'contentOfGuide'" class="tab-content">
+      <form @submit.prevent="submitContent" class="content-guide-form">
+        <h2>Content</h2>
+
+        <!-- Message pour mobile/tablette -->
+        <div class="mobile-steps-message">
+          <div class="mobile-message-card">
+            <i class="pi pi-desktop"></i>
+            <h3>Desktop Required</h3>
+            <p>
+              The guide content editor is only available on desktop devices for optimal user
+              experience. Please use a computer to edit your guide content.
+            </p>
+            <div class="mobile-message-actions">
+              <button @click="currentTab = 'info'" class="mobile-back-button">
+                <i class="pi pi-arrow-left"></i>
+                Back to Informations
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenu desktop -->
+        <div class="desktop-steps-content">
+          <!-- Sélecteur de pièces jointes -->
+          <div class="attachments-section">
+            <h3>Available Attachments</h3>
+            <div class="attachments-selector">
+              <MultiSelect
+                v-model="selectedAttachments"
+                :options="userStore.attachmentsCreated"
+                optionLabel="fileName"
+                optionValue="id"
+                display="chip"
+                placeholder="Select attachments to insert"
+                :showClear="true"
+                class="attachments-multiselect"
+              >
+                <template #option="slotProps">
+                  <div class="attachment-option">
+                    <i :class="getAttachmentIcon(slotProps.option.type)"></i>
+                    <div class="attachment-info">
+                      <span class="attachment-name">{{ slotProps.option.fileName }}</span>
+                      <small class="attachment-type">{{ slotProps.option.type }}</small>
+                    </div>
+                  </div>
+                </template>
+                <template #chip="slotProps">
+                  <div class="attachment-chip">
+                    <i :class="getAttachmentIcon(getAttachmentById(slotProps.value)?.type)"></i>
+                    <span>{{ getAttachmentById(slotProps.value)?.fileName }}</span>
+                  </div>
+                </template>
+              </MultiSelect>
+
+              <button
+                type="button"
+                @click="insertSelectedAttachments"
+                :disabled="!selectedAttachments.length"
+                class="insert-attachments-btn"
+              >
+                <i class="pi pi-plus"></i>
+                Insert Selected ({{ selectedAttachments.length }})
+              </button>
+            </div>
+          </div>
+
+          <!-- Éditeur TipTap -->
+          <div class="editor-section">
+            <h3>Guide Content</h3>
+
+            <!-- Barre d'outils -->
+            <!-- Barre d'outils améliorée -->
+            <div v-if="editor" class="editor-toolbar">
+              <!-- Groupe Undo/Redo -->
+              <button
+                type="button"
+                @click="editor.chain().focus().undo().run()"
+                :disabled="!editor.can().undo()"
+                class="toolbar-btn"
+                title="Undo"
+              >
+                <i class="pi pi-undo"></i>
+              </button>
+
+              <button
+                type="button"
+                @click="editor.chain().focus().redo().run()"
+                :disabled="!editor.can().redo()"
+                class="toolbar-btn"
+                title="Redo"
+              >
+                <i class="pi pi-redo"></i>
+              </button>
+
+              <div class="toolbar-divider"></div>
+
+              <!-- Groupe Formatage de base -->
+              <button
+                type="button"
+                @click="editor.chain().focus().toggleBold().run()"
+                :class="{ 'is-active': editor.isActive('bold') }"
+                class="toolbar-btn"
+                title="Bold"
+              >
+                <i class="pi pi-bold"></i>
+              </button>
+
+              <button
+                type="button"
+                @click="editor.chain().focus().toggleItalic().run()"
+                :class="{ 'is-active': editor.isActive('italic') }"
+                class="toolbar-btn"
+                title="Italic"
+              >
+                <i class="pi pi-italic"></i>
+              </button>
+
+              <button
+                type="button"
+                @click="editor.chain().focus().toggleStrike().run()"
+                :class="{ 'is-active': editor.isActive('strike') }"
+                class="toolbar-btn"
+                title="Strike"
+              >
+                <i class="pi pi-minus"></i>
+              </button>
+
+              <div class="toolbar-divider"></div>
+
+              <!-- Sélecteur de police -->
+              <select @change="changeFontFamily($event)" class="toolbar-select" title="Font Family">
+                <option value="">Font Family</option>
+                <option value="Inter">Inter</option>
+                <option value="'Comic Sans MS'">Comic Sans</option>
+                <option value="serif">Serif</option>
+                <option value="monospace">Monospace</option>
+                <option value="cursive">Cursive</option>
+                <option value="'Times New Roman'">Times New Roman</option>
+                <option value="'Arial'">Arial</option>
+              </select>
+
+              <!-- Sélecteur de couleur -->
+              <input
+                type="color"
+                @input="editor.chain().focus().setColor($event.target.value).run()"
+                :value="editor.getAttributes('textStyle').color || '#fef9e7'"
+                class="toolbar-color"
+                title="Text Color"
+              />
+
+              <div class="toolbar-divider"></div>
+
+              <!-- Groupe Titres -->
+              <button
+                type="button"
+                @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+                :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+                class="toolbar-btn"
+                title="Heading 1"
+              >
+                H1
+              </button>
+
+              <button
+                type="button"
+                @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+                :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+                class="toolbar-btn"
+                title="Heading 2"
+              >
+                H2
+              </button>
+
+              <button
+                type="button"
+                @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+                :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
+                class="toolbar-btn"
+                title="Heading 3"
+              >
+                H3
+              </button>
+
+              <div class="toolbar-divider"></div>
+
+              <!-- Groupe Alignement -->
+              <button
+                type="button"
+                @click="editor.chain().focus().setTextAlign('left').run()"
+                :class="{ 'is-active': editor.isActive({ textAlign: 'left' }) }"
+                class="toolbar-btn"
+                title="Align Left"
+              >
+                <i class="pi pi-align-left"></i>
+              </button>
+
+              <button
+                type="button"
+                @click="editor.chain().focus().setTextAlign('center').run()"
+                :class="{ 'is-active': editor.isActive({ textAlign: 'center' }) }"
+                class="toolbar-btn"
+                title="Align Center"
+              >
+                <i class="pi pi-align-center"></i>
+              </button>
+
+              <button
+                type="button"
+                @click="editor.chain().focus().setTextAlign('right').run()"
+                :class="{ 'is-active': editor.isActive({ textAlign: 'right' }) }"
+                class="toolbar-btn"
+                title="Align Right"
+              >
+                <i class="pi pi-align-right"></i>
+              </button>
+
+              <button
+                type="button"
+                @click="editor.chain().focus().setTextAlign('justify').run()"
+                :class="{ 'is-active': editor.isActive({ textAlign: 'justify' }) }"
+                class="toolbar-btn"
+                title="Justify"
+              >
+                <i class="pi pi-align-justify"></i>
+              </button>
+
+              <div class="toolbar-divider"></div>
+
+              <!-- Groupe Listes -->
+              <button
+                type="button"
+                @click="editor.chain().focus().toggleBulletList().run()"
+                :class="{ 'is-active': editor.isActive('bulletList') }"
+                class="toolbar-btn"
+                title="Bullet List"
+              >
+                <i class="pi pi-list"></i>
+              </button>
+
+              <button
+                type="button"
+                @click="editor.chain().focus().toggleOrderedList().run()"
+                :class="{ 'is-active': editor.isActive('orderedList') }"
+                class="toolbar-btn"
+                title="Ordered List"
+              >
+                <i class="pi pi-sort-numeric-up"></i>
+              </button>
+            </div>
+
+            <!-- Zone d'édition avec menus contextuels -->
+            <div class="editor-wrapper">
+              <!-- Bubble Menu (menu contextuel au survol de sélection) -->
+              <BubbleMenu
+                :editor="editor"
+                :tippy-options="{ duration: 100 }"
+                v-if="editor"
+                class="bubble-menu"
+              >
+                <button
+                  @click="editor.chain().focus().toggleBold().run()"
+                  :class="{ 'is-active': editor.isActive('bold') }"
+                  class="bubble-btn"
+                >
+                  <i class="pi pi-bold"></i>
+                </button>
+                <button
+                  @click="editor.chain().focus().toggleItalic().run()"
+                  :class="{ 'is-active': editor.isActive('italic') }"
+                  class="bubble-btn"
+                >
+                  <i class="pi pi-italic"></i>
+                </button>
+                <button
+                  @click="editor.chain().focus().toggleStrike().run()"
+                  :class="{ 'is-active': editor.isActive('strike') }"
+                  class="bubble-btn"
+                >
+                  <i class="pi pi-minus"></i>
+                </button>
+              </BubbleMenu>
+
+              <!-- Floating Menu (menu flottant sur ligne vide) -->
+              <FloatingMenu
+                :editor="editor"
+                :tippy-options="{ duration: 100 }"
+                v-if="editor"
+                class="floating-menu"
+              >
+                <button
+                  @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+                  :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+                  class="floating-btn"
+                >
+                  H1
+                </button>
+                <button
+                  @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+                  :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+                  class="floating-btn"
+                >
+                  H2
+                </button>
+                <button
+                  @click="editor.chain().focus().toggleBulletList().run()"
+                  :class="{ 'is-active': editor.isActive('bulletList') }"
+                  class="floating-btn"
+                >
+                  <i class="pi pi-list"></i>
+                </button>
+              </FloatingMenu>
+
+              <EditorContent :editor="editor" class="editor-content" />
+            </div>
+
+            <!-- Zone d'édition -->
+            <div class="editor-wrapper">
+              <EditorContent :editor="editor" class="editor-content" />
+            </div>
+
+            <!-- Compteur de mots -->
+            <div class="editor-stats">
+              <span class="word-count">{{ wordCount }} words</span>
+              <span class="read-time">≈ {{ estimatedReadTime }} min read</span>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="content-actions">
+            <SubmitButton
+              label="Cancel"
+              icon="pi pi-times"
+              variant="secondary"
+              type="button"
+              @click="currentTab = 'info'"
+            />
+            <SubmitButton
+              :label="contentOfGuideLoading ? 'Saving...' : 'Save Content'"
+              :disabled="contentOfGuideLoading"
+              icon="pi pi-save"
+              variant="primary"
+              type="submit"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useUserStore } from '@/stores/user'
+import { useToast } from 'vue-toast-notification'
+import SubmitButton from './SubmitButton.vue'
+import type { Guide } from '@/types/collections'
+import MultiSelect from 'primevue/multiselect'
+import { useEditor, EditorContent, BubbleMenu, FloatingMenu } from '@tiptap/vue-3'
+import StarterKit from '@tiptap/starter-kit'
+import Image from '@tiptap/extension-image'
+import Placeholder from '@tiptap/extension-placeholder'
+import FontFamily from '@tiptap/extension-font-family'
+import TextStyle from '@tiptap/extension-text-style'
+import TextAlign from '@tiptap/extension-text-align'
+import Typography from '@tiptap/extension-typography'
+import Color from '@tiptap/extension-color'
+import Gapcursor from '@tiptap/extension-gapcursor'
+import History from '@tiptap/extension-history'
+
+const toast = useToast()
+const userStore = useUserStore()
+
+// Props & Événements
+const props = defineProps<{
+  guide: Guide
+}>()
+const emit = defineEmits<{
+  (e: 'navigate', tab: string): void
+}>()
+
+// Onglets
+const currentTab = ref<'info' | 'contentOfGuide'>('info')
+
+/* +++++++++++++++++++++++++++++ INFOS DE BASE +++++++++++++++++++++++++++++ */
+
+const infoLoading = ref(false)
+const title = ref(props.guide.title)
+const subTitle = ref(props.guide.subTitle || '')
+const description = ref(props.guide.description)
+const difficulty = ref(props.guide.difficulty)
+const language = ref(props.guide.language)
+const version = ref(props.guide.version)
+const coverFile = ref<File | null>(null)
+const published = ref(props.guide.published || false)
+// const premium = ref(props.guide.premium || false)
+const selectedGameIds = ref<string[]>([])
+// const availableGames = computed(() => userStore.games || [])
+
+// Récupération de données
+onMounted(async () => {
+  coverPreview.value = props.guide.cover || null
+
+  // if (!userStore.games?.length) {
+  //   await userStore.fetchAllGames()
+  // }
+  // if (props.guide.Games?.length) {
+  //   selectedGameIds.value = props.guide.Games
+  // }
+})
+
+// URL de prévisualisation de la couverture
+const coverPreview = ref<string | null>(null)
+
+// Gestion de l'image
+function handleFileChange(event: Event) {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+  if (!file) return
+
+  // Validation taille et type
+  if (file.size > 10 * 1024 * 1024) {
+    toast.error('The size must be < 10 MB.')
+    return
+  }
+  const validTypes = ['image/webp', 'image/png', 'image/jpeg', 'image/jpg']
+  if (!validTypes.includes(file.type)) {
+    toast.error('Invalide format (WEBP, PNG, JPEG).')
+    return
+  }
+
+  // Enregistrer le fichier sélectionné
+  coverFile.value = file
+
+  // Générer une URL locale pour affichage de prévisualisation
+  coverPreview.value = URL.createObjectURL(file)
+}
+
+// Changement de l'image
+function triggerFileInput() {
+  const fileInput = document.getElementById('cover') as HTMLInputElement
+  fileInput?.click()
+}
+
+// Validation formulaire (informations de bases)
+async function submitInfo() {
+  if (infoLoading.value) return
+  infoLoading.value = true
+
+  try {
+    const formData = new FormData()
+    formData.append('title', title.value)
+    formData.append('subTitle', subTitle.value)
+    formData.append('description', description.value)
+    formData.append('published', published.value.toString())
+    // formData.append('premium', premium.value.toString())
+    // Ne pas inclure Games dans FormData car le backend les gère séparément
+
+    if (coverFile.value) {
+      formData.append('cover', coverFile.value)
+    }
+
+    const infoResponse = await fetch(
+      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/guide/${props.guide.id}/info`,
+      {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${userStore.token}`,
+        },
+        body: formData,
+      },
+    )
+
+    if (!infoResponse.ok) {
+      throw new Error(`HTTP error! status: ${infoResponse.status}`)
+    }
+
+    // Mettre à jour les jeux avec un call API séparé
+    const gamesResponse = await fetch(
+      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/guide/${props.guide.id}/games`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userStore.token}`,
+        },
+        body: JSON.stringify({
+          Games: selectedGameIds.value,
+        }),
+      },
+    )
+
+    if (!gamesResponse.ok) {
+      throw new Error(`Failed to update games association`)
+    }
+
+    toast.success('Guide updated successfully!')
+    await userStore.fetchUserGuides()
+    emit('navigate', 'list-guides')
+  } catch (err) {
+    console.error(err)
+    toast.error(err instanceof Error ? err.message : 'Error during update')
+  } finally {
+    infoLoading.value = false
+  }
+}
+
+/* +++++++++++++++++++++++++++++ CONTENU DU GUIDE +++++++++++++++++++++++++++++ */
+
+const contentOfGuideLoading = ref(false)
+const selectedAttachments = ref<string[]>([])
+const wordCount = ref(0)
+const estimatedReadTime = ref(1)
+
+// Configuration de l'éditeur TipTap
+const editor = useEditor({
+  content: props.guide.content || '<p>Start writing your guide content...</p>',
+  extensions: [
+    StarterKit.configure({
+      // Désactiver History du StarterKit car on utilisera l'extension séparée
+      history: false,
+    }),
+    Image.configure({
+      inline: true,
+      allowBase64: false,
+    }),
+    Placeholder.configure({
+      placeholder: 'Start writing your guide content...',
+    }),
+    FontFamily.configure({
+      types: ['textStyle'],
+    }),
+    TextStyle,
+    Color.configure({
+      types: ['textStyle'],
+    }),
+    TextAlign.configure({
+      types: ['heading', 'paragraph'],
+    }),
+    Typography,
+    Gapcursor,
+    History.configure({
+      depth: 10, // Nombre d'étapes d'annulation maximum
+    }),
+  ],
+  onUpdate: ({ editor }) => {
+    // Calculer le nombre de mots et le temps de lecture
+    const text = editor.getText()
+    const words = text
+      .trim()
+      .split(/\s+/)
+      .filter((word) => word.length > 0)
+    wordCount.value = words.length
+    estimatedReadTime.value = Math.max(1, Math.ceil(words.length / 200))
+  },
+})
+
+// Fonction pour obtenir l'icône selon le type d'attachment
+function getAttachmentIcon(type: string | undefined): string {
+  switch (type) {
+    case 'image':
+      return 'pi pi-image'
+    case 'document':
+      return 'pi pi-file'
+    case 'video':
+      return 'pi pi-video'
+    default:
+      return 'pi pi-file'
+  }
+}
+
+// Fonction pour récupérer un attachment par son ID
+function getAttachmentById(id: string) {
+  return userStore.attachmentsCreated.find((attachment) => attachment.id === id)
+}
+
+// Fonction pour insérer les attachments sélectionnés dans l'éditeur
+function insertSelectedAttachments() {
+  if (!editor.value || !selectedAttachments.value.length) return
+
+  selectedAttachments.value.forEach((attachmentId) => {
+    const attachment = getAttachmentById(attachmentId)
+    if (!attachment) return
+
+    if (attachment.type === 'image') {
+      // Insérer une image
+      editor.value
+        ?.chain()
+        .focus()
+        .setImage({
+          src: attachment.url,
+          alt: attachment.alt || attachment.fileName,
+          title: attachment.caption || attachment.fileName,
+        })
+        .run()
+    } else {
+      // Insérer un lien pour les documents/vidéos
+      const linkText = attachment.fileName
+      editor.value
+        ?.chain()
+        .focus()
+        .insertContent(
+          `<p><a href="${attachment.url}" target="_blank" rel="noopener">${linkText}</a></p>`,
+        )
+        .run()
+    }
+  })
+
+  // Vider la sélection après insertion
+  selectedAttachments.value = []
+}
+
+// Ajouter cette fonction après les autres fonctions
+function changeFontFamily(event: Event) {
+  const target = event.target as HTMLSelectElement
+  const fontFamily = target.value
+
+  if (fontFamily && editor.value) {
+    editor.value.chain().focus().setFontFamily(fontFamily).run()
+  } else if (editor.value) {
+    editor.value.chain().focus().unsetFontFamily().run()
+  }
+}
+
+// Fonction de soumission du contenu
+async function submitContent() {
+  if (contentOfGuideLoading.value || !editor.value) return
+  contentOfGuideLoading.value = true
+
+  try {
+    const content = editor.value.getHTML()
+
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/guide/${props.guide.id}/content`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userStore.token}`,
+        },
+        body: JSON.stringify({ content }),
+      },
+    )
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    toast.success('Guide content updated successfully!')
+    await userStore.fetchUserGuides()
+    emit('navigate', 'list-guides')
+  } catch (err) {
+    console.error(err)
+    toast.error(err instanceof Error ? err.message : 'Error updating content')
+  } finally {
+    contentOfGuideLoading.value = false
+  }
+}
+
+// Nettoyer l'éditeur au démontage du composant
+onUnmounted(() => {
+  editor.value?.destroy()
+})
+</script>
+
+<style scoped>
+.update-guide-container {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Onglets */
+.tabs {
+  display: flex;
+  border-bottom: 2px solid var(--color-medium-gray);
+  margin-bottom: var(--spacing-xl);
+  background: var(--color-darker-charcoal);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  padding: 0 var(--spacing-md);
+}
+
+.tab-button {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: none;
+  border: none;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  font-weight: bold;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  color: var(--color-light-gray);
+  transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+  color: var(--color-cream);
+}
+
+.tab-button.active {
+  border-bottom-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+/* Améliorer le titre de l'onglet étapes */
+.tab-content h2 {
+  color: var(--color-gold);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Contenu */
+.tab-content {
+  margin-top: 1rem;
+}
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-lg);
+}
+.field-row {
+  display: flex;
+  gap: 2rem;
+}
+.switch-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.switch-button {
+  width: 40px;
+  height: 20px;
+  background: #ccc;
+  border-radius: 10px;
+  position: relative;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.switch-button.active {
+  background: var(--color-gold);
+}
+.switch-handle {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  top: 1px;
+  left: 1px;
+  transition: transform 0.2s;
+}
+.switch-button.active .switch-handle {
+  transform: translateX(20px);
+}
+.file-input-wrapper {
+  position: relative;
+}
+.file-input {
+  display: none;
+}
+.file-input-button {
+  padding: 0.5rem 1rem;
+  border: 1px dashed #aaa;
+  background: none;
+  cursor: pointer;
+}
+.file-hint {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.actions-row,
+.contentOfGuide-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+.contentOfGuide-actions {
+  margin-bottom: 1rem;
+}
+.contentOfGuide-save {
+  margin-left: auto;
+}
+
+.add-icon {
+  color: var(--color-gold);
+}
+
+/* Conteneur général */
+.update-guide-form {
+  background: var(--color-darker-charcoal);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Titres de section */
+.update-guide-form h2 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-2xl);
+  color: var(--color-gold);
+  font-weight: bold;
+}
+
+/* Groupe de champs (label + input/textarea) */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+.field label {
+  display: block;
+  color: var(--color-cream);
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  margin-bottom: var(--spacing-md);
+}
+.field input,
+.field textarea {
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-medium-gray);
+  border-radius: var(--radius-md);
+  background: var(--color-dark-gray);
+  font-size: var(--font-size-base);
+  font-family: var(--font-secondary);
+  color: var(--color-cream);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+.field input,
+.field select {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-medium-gray);
+  background: var(--color-charcoal);
+  color: var(--color-cream);
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  background: var(--color-dark-gray);
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+/* Rangée de toggles */
+.field-row {
+  display: flex;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+.switch-field {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+.switch-field label {
+  font-size: var(--font-size-base);
+  color: var(--color-darker-gray);
+}
+.switch-button {
+  width: 48px;
+  height: 24px;
+  background: var(--color-medium-gray);
+  border-radius: var(--radius-full);
+  position: relative;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.switch-button.active {
+  background: var(--color-gold);
+}
+.switch-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: var(--color-white);
+  border-radius: var(--radius-full);
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+}
+.switch-button.active .switch-handle {
+  transform: translateX(24px);
+}
+
+/* Override Multiselect styles */
+.multiselect-field {
+  width: 100%;
+}
+
+/* Supprimer les puces de liste */
+.multiselect-field ul,
+.multiselect-field li,
+.p-multiselect ul,
+.p-multiselect li {
+  list-style: none !important;
+  list-style-type: none !important;
+}
+
+.multiselect-field .multiselect__content-wrapper {
+  background: var(--color-charcoal);
+  border: 1px solid var(--color-medium-gray);
+}
+
+.multiselect-field .multiselect__option {
+  background: var(--color-charcoal);
+  color: var(--color-cream);
+  border: none;
+  list-style: none;
+}
+
+.multiselect-field .multiselect__option--highlight {
+  background: var(--color-dark-gray);
+  color: var(--color-gold);
+}
+
+/* Upload d’image */
+.file-input-wrapper {
+  position: relative;
+}
+.file-input {
+  display: none;
+}
+.file-input-button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 2px dashed var(--color-gold);
+  background: var(--color-dark-gray);
+  border-radius: var(--radius-md);
+  font-family: var(--font-secondary);
+  color: var(--color-white);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+.file-input-button:hover {
+  background: var(--color-cream);
+  color: var(--color-darker-charcoal);
+  border: 2px solid var(--color-dark-gray);
+}
+.file-hint {
+  font-size: var(--font-size-sm);
+  color: var(--color-medium-gray);
+  margin-top: var(--spacing-xs);
+}
+
+/* Boutons d’action */
+.actions-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+.actions-row button {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+}
+
+/* Bouton Annuler */
+.actions-row .pi-times {
+  margin-right: var(--spacing-xs);
+}
+.actions-row button[variant='secondary'] {
+  background: var(--color-off-white);
+  color: var(--color-medium-gray);
+  padding: var(--spacing-md) var(--spacing-xl);
+}
+.actions-row button[variant='secondary']:hover {
+  background: var(--color-light-gray);
+}
+
+/* Bouton Enregistrer */
+.actions-row #btn-save-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
+  color: var(--color-charcoal);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.actions-row #btn-save-info:hover {
+  background: linear-gradient(135deg, var(--color-light-yellow), var(--color-gold));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+}
+.actions-row #btn-save-info:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Par défaut, masquer le message mobile et afficher le contenu desktop */
+.mobile-steps-message {
+  display: none;
+}
+
+.desktop-steps-content {
+  display: block;
+}
+
+/* Styles du message mobile */
+.mobile-message-card {
+  background: var(--color-charcoal);
+  border: 2px solid var(--color-gold);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2xl);
+  text-align: center;
+  margin: var(--spacing-xl) auto;
+  max-width: 500px;
+}
+
+.mobile-message-card i {
+  font-size: 3rem;
+  color: var(--color-gold);
+  margin-bottom: var(--spacing-lg);
+}
+
+.mobile-message-card h3 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xl);
+  color: var(--color-gold);
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.mobile-message-card p {
+  color: var(--color-cream);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  margin: 0 0 var(--spacing-lg) 0;
+}
+
+.mobile-message-actions {
+  margin-top: var(--spacing-lg);
+}
+
+.mobile-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--color-gold);
+  color: var(--color-charcoal);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-family: var(--font-primary);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-back-button:hover {
+  background: var(--color-light-yellow);
+  transform: translateY(-2px);
+}
+
+/* === Styles pour la prévisualisation de la couverture === */
+.cover-preview-wrapper {
+  width: 200px;
+  height: 120px;
+  border: 2px dashed var(--color-medium-gray);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  background: var(--color-off-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cover-preview-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s;
+}
+
+.cover-placeholder {
+  text-align: center;
+  color: var(--color-medium-gray);
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-sm);
+}
+.cover-placeholder i {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-xs);
+  display: block;
+}
+
+/* === CONTENU DU GUIDE === */
+.content-guide-form {
+  background: var(--color-darker-charcoal);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.content-guide-form h2 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-2xl);
+  color: var(--color-gold);
+  font-weight: bold;
+  margin-bottom: var(--spacing-xl);
+}
+
+/* === SECTION ATTACHMENTS === */
+.attachments-section {
+  margin-bottom: var(--spacing-2xl);
+  padding: var(--spacing-lg);
+  background: var(--color-charcoal);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-medium-gray);
+}
+
+.attachments-section h3 {
+  color: var(--color-gold);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.attachments-selector {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-end;
+}
+
+.attachments-multiselect {
+  flex: 1;
+  min-width: 0;
+}
+
+.attachment-option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+}
+
+.attachment-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.attachment-name {
+  font-weight: bold;
+  color: var(--color-cream);
+}
+
+.attachment-type {
+  color: var(--color-medium-gray);
+  text-transform: uppercase;
+  font-size: var(--font-size-xs);
+}
+
+.attachment-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  background: var(--color-gold);
+  color: var(--color-charcoal);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+}
+
+.insert-attachments-btn {
+  background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
+  color: var(--color-charcoal);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-primary);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  white-space: nowrap;
+}
+
+.insert-attachments-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--color-light-yellow), var(--color-gold));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+.insert-attachments-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* === SECTION ÉDITEUR === */
+.editor-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.editor-section h3 {
+  color: var(--color-gold);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Barre d'outils */
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm);
+  background: var(--color-charcoal);
+  border: 1px solid var(--color-medium-gray);
+  border-bottom: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  flex-wrap: wrap;
+}
+
+.toolbar-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  color: var(--color-cream);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-primary);
+  font-weight: bold;
+  font-size: var(--font-size-sm);
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toolbar-btn:hover {
+  background: var(--color-dark-gray);
+  border-color: var(--color-gold);
+}
+
+.toolbar-btn.is-active {
+  background: var(--color-gold);
+  color: var(--color-charcoal);
+  border-color: var(--color-gold);
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--color-medium-gray);
+  margin: 0 var(--spacing-xs);
+}
+
+/* Zone d'édition */
+.editor-wrapper {
+  border: 1px solid var(--color-medium-gray);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  background: var(--color-dark-gray);
+  min-height: 400px;
+  overflow: hidden;
+  padding: 0 var(--spacing-xl);
+}
+
+.editor-content {
+  min-height: 400px;
+}
+
+/* Styles pour le contenu de l'éditeur */
+.editor-content .ProseMirror {
+  padding: var(--spacing-lg);
+  outline: none;
+  color: var(--color-cream);
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  min-height: 350px;
+}
+
+.editor-content .ProseMirror p {
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.editor-content .ProseMirror h1,
+.editor-content .ProseMirror h2,
+.editor-content .ProseMirror h3 {
+  color: var(--color-gold);
+  font-family: var(--font-primary);
+  font-weight: bold;
+  margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+}
+
+.editor-content .ProseMirror h1 {
+  font-size: var(--font-size-2xl);
+}
+
+.editor-content .ProseMirror h2 {
+  font-size: var(--font-size-xl);
+}
+
+.editor-content .ProseMirror h3 {
+  font-size: var(--font-size-lg);
+}
+
+.editor-content .ProseMirror strong {
+  color: var(--color-gold);
+  font-weight: bold;
+}
+
+.editor-content .ProseMirror em {
+  color: var(--color-light-yellow);
+  font-style: italic;
+}
+
+.editor-content .ProseMirror ul,
+.editor-content .ProseMirror ol {
+  margin: var(--spacing-md) 0;
+  padding-left: var(--spacing-xl);
+}
+
+.editor-content .ProseMirror li {
+  margin: var(--spacing-xs) 0;
+}
+
+.editor-content .ProseMirror img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: var(--spacing-md) 0;
+  display: block;
+}
+
+.editor-content .ProseMirror a {
+  color: var(--color-gold);
+  text-decoration: underline;
+}
+
+.editor-content .ProseMirror a:hover {
+  color: var(--color-light-yellow);
+}
+
+.editor-content .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--color-medium-gray);
+  pointer-events: none;
+  height: 0;
+}
+
+/* Statistiques de l'éditeur */
+.editor-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-charcoal);
+  border: 1px solid var(--color-medium-gray);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-medium-gray);
+}
+
+.word-count,
+.read-time {
+  font-family: var(--font-primary);
+  font-weight: bold;
+}
+
+/* Actions */
+.content-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.toolbar-select {
+  background: var(--color-charcoal);
+  color: var(--color-cream);
+  border: 1px solid var(--color-medium-gray);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.toolbar-select:hover {
+  border-color: var(--color-gold);
+}
+
+.toolbar-color {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-medium-gray);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.toolbar-color:hover {
+  border-color: var(--color-gold);
+}
+
+/* Styles pour les boutons disabled */
+.toolbar-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toolbar-btn:disabled:hover {
+  background: transparent;
+  border-color: transparent;
+}
+
+/* Bubble Menu (menu contextuel) */
+.bubble-menu {
+  display: flex;
+  background: var(--color-darker-charcoal);
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  padding: var(--spacing-xs);
+  gap: var(--spacing-xs);
+  z-index: 1000;
+}
+
+.bubble-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs);
+  color: var(--color-cream);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-primary);
+  font-weight: bold;
+  font-size: var(--font-size-sm);
+}
+
+.bubble-btn:hover {
+  background: var(--color-charcoal);
+  border-color: var(--color-gold);
+}
+
+.bubble-btn.is-active {
+  background: var(--color-gold);
+  color: var(--color-charcoal);
+  border-color: var(--color-gold);
+}
+
+/* Floating Menu (menu flottant) */
+.floating-menu {
+  display: flex;
+  background: var(--color-charcoal);
+  border: 1px solid var(--color-medium-gray);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: var(--spacing-xs);
+  gap: var(--spacing-xs);
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.floating-menu:hover {
+  opacity: 1;
+}
+
+.floating-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs);
+  color: var(--color-cream);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-primary);
+  font-weight: bold;
+  font-size: var(--font-size-sm);
+}
+
+.floating-btn:hover {
+  background: var(--color-dark-gray);
+  border-color: var(--color-gold);
+}
+
+.floating-btn.is-active {
+  background: var(--color-gold);
+  color: var(--color-charcoal);
+  border-color: var(--color-gold);
+}
+
+/* Amélioration des styles du contenu de l'éditeur */
+.editor-content .ProseMirror[contenteditable='true'] {
+  outline: none;
+}
+
+/* Styles pour l'alignement du texte */
+.editor-content .ProseMirror .has-focus {
+  border-radius: var(--radius-sm);
+}
+
+.editor-content .ProseMirror p[style*='text-align: center'] {
+  text-align: center;
+}
+
+.editor-content .ProseMirror p[style*='text-align: right'] {
+  text-align: right;
+}
+
+.editor-content .ProseMirror p[style*='text-align: justify'] {
+  text-align: justify;
+}
+
+/* Styles pour les différentes polices */
+.editor-content .ProseMirror [style*='font-family: Inter'] {
+  font-family: Inter, sans-serif;
+}
+
+.editor-content .ProseMirror [style*="font-family: 'Comic Sans MS'"] {
+  font-family: 'Comic Sans MS', cursive;
+}
+
+.editor-content .ProseMirror [style*='font-family: serif'] {
+  font-family: serif;
+}
+
+.editor-content .ProseMirror [style*='font-family: monospace'] {
+  font-family: monospace;
+}
+
+.editor-content .ProseMirror [style*='font-family: cursive'] {
+  font-family: cursive;
+}
+
+/* Responsive général */
+@media (max-width: 1024px) {
+  .update-guide-container {
+    padding: var(--spacing-md);
+  }
+
+  .tabs {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .tab-button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+  }
+
+  /* Sur tablette et mobile, masquer le contenu desktop et afficher le message */
+  .mobile-steps-message {
+    display: block;
+  }
+
+  .desktop-steps-content {
+    display: none;
+  }
+
+  .attachments-selector {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .insert-attachments-btn {
+    justify-content: center;
+  }
+
+  .editor-toolbar {
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+
+  .toolbar-select {
+    min-width: 100px;
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (max-width: 768px) {
+  .update-guide-container {
+    padding: var(--spacing-sm);
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  /* Onglet Informations - Responsive */
+  .update-guide-form {
+    padding: var(--spacing-lg);
+    margin: 0;
+    width: 100%;
+  }
+
+  .form-section {
+    gap: var(--spacing-md);
+  }
+
+  .field {
+    gap: var(--spacing-xs);
+  }
+
+  .update-guide-form h2 {
+    font-size: var(--font-size-xl);
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+  }
+
+  /* Réorganiser les switchs en colonne sur mobile */
+  .field-row {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  /* Adapter la prévisualisation de couverture */
+  .cover-preview-wrapper {
+    width: 100%;
+    max-width: 300px;
+    height: 180px;
+    margin: 0 auto;
+  }
+
+  /* Réorganiser les boutons d'action */
+  .actions-row {
+    flex-direction: column-reverse;
+    gap: var(--spacing-md);
+  }
+
+  .actions-row button {
+    width: 100%;
+    padding: var(--spacing-md);
+    font-size: var(--font-size-base);
+  }
+
+  .mobile-message-card {
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-xl);
+  }
+
+  .mobile-message-card i {
+    font-size: 2.5rem;
+  }
+
+  .mobile-message-card h3 {
+    font-size: var(--font-size-lg);
+  }
+
+  .mobile-message-card p {
+    font-size: var(--font-size-sm);
+  }
+
+  .content-guide-form {
+    padding: var(--spacing-lg);
+  }
+
+  .attachments-section {
+    padding: var(--spacing-md);
+  }
+
+  .editor-content .ProseMirror {
+    padding: var(--spacing-md);
+    min-height: 300px;
+  }
+
+  .editor-wrapper {
+    min-height: 300px;
+  }
+
+  .content-actions {
+    flex-direction: column-reverse;
+  }
+
+  .content-actions button {
+    width: 100%;
+  }
+
+  .editor-toolbar {
+    padding: var(--spacing-xs);
+    justify-content: center;
+  }
+
+  .toolbar-btn {
+    min-width: 28px;
+    height: 28px;
+    padding: var(--spacing-xs);
+  }
+
+  .toolbar-select {
+    min-width: 80px;
+  }
+
+  /* Masquer certains éléments sur mobile pour économiser l'espace */
+  .toolbar-divider:nth-of-type(n + 3) {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .tabs {
+    padding: 0;
+  }
+
+  .tab-button {
+    flex: 1;
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+
+  .update-guide-container {
+    padding: var(--spacing-xs);
+  }
+
+  .update-guide-form {
+    padding: var(--spacing-md);
+  }
+
+  .update-guide-form h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  /* Adapter les champs pour très petits écrans */
+  .field input,
+  .field textarea {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+
+  .field label {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  /* Adapter la taille des switchs */
+  .switch-button {
+    width: 40px;
+    height: 20px;
+  }
+
+  .switch-handle {
+    width: 16px;
+    height: 16px;
+  }
+
+  .switch-button.active .switch-handle {
+    transform: translateX(20px);
+  }
+
+  /* Couverture plus petite sur très petits écrans */
+  .cover-preview-wrapper {
+    width: 100%;
+    height: 150px;
+  }
+
+  .mobile-message-card {
+    margin: var(--spacing-md);
+    padding: var(--spacing-lg);
+  }
+
+  .mobile-back-button {
+    width: 100%;
+    justify-content: center;
+    padding: var(--spacing-md);
+  }
+}
+</style>

@@ -82,6 +82,32 @@
         <!-- Sinon -->
         <p v-else class="status">No bookmarks.</p>
       </template>
+
+      <!-- Liste des guides -->
+      <template v-if="selectedTab === 'guides'">
+        <!-- Si au moins une roadmap -->
+        <div class="roadmaps-list-container" v-if="userStore.guidesCreated?.length">
+          <SearchBar placeholder="Search for your guides" v-model="searchText" />
+
+          <br />
+
+          <UserGuideCard
+            v-for="guide in filteredGuides"
+            :key="guide.id"
+            :guide="guide"
+            :showView="true"
+            :showEdit="false"
+            :showDelete="false"
+            :show-premium="false"
+            :show-published="true"
+            :show-author="true"
+            :author="state.authors.get(guide.CreatedBy)"
+            @view="(id) => router.push(`/guide/${id}`)"
+          />
+        </div>
+        <!-- Sinon -->
+        <p v-else class="status">No guides.</p>
+      </template>
     </section>
   </div>
 </template>
@@ -93,6 +119,7 @@ import AccountMenu from '@/components/ui/AccountMenu.vue'
 import ProfileHeader from '@/components/ui/ProfileHeader.vue'
 import ProfileDetails from '@/components/ui/ProfileDetails.vue'
 import UserRoadmapCard from '@/components/ui/UserRoadmapCard.vue'
+import UserGuideCard from '@/components/ui/UserGuideCard.vue'
 import UpdateProfileForm from '@/components/ui/UpdateProfileForm.vue'
 import SubmitButton from '@/components/ui/SubmitButton.vue'
 import { useRouter } from 'vue-router'
@@ -161,6 +188,8 @@ const fetchBookmarkAuthors = async () => {
           StepsCreated: [],
           ContentsCreated: [],
           Comments: [],
+          GuidesCreated: [],
+          AttachmentsCreated: []
         })
       }
     })
@@ -186,6 +215,12 @@ const filteredBookmarks = computed(() => {
   const list = userStore.bookmarks || []
   if (!searchText.value.trim()) return list
   return list.filter((rm) => rm.title.toLowerCase().includes(searchText.value.toLowerCase()))
+})
+
+const filteredGuides = computed(() => {
+  const list = userStore.guidesCreated || []
+  if (!searchText.value.trim()) return list
+  return list.filter((guide) => guide.title.toLowerCase().includes(searchText.value.toLowerCase()))
 })
 
 // Gérer les changements de bookmark pour synchroniser l'interface
@@ -331,6 +366,10 @@ const handleBookmarkChange = async (roadmapId: string, isBookmarked: boolean) =>
 
   .menu-item[data-tab='bookmarks'] .menu-text::after {
     content: 'Saved';
+  }
+
+  .menu-item[data-tab='guides'] .menu-text::after {
+    content: 'À changer';
   }
 
   .account-container {

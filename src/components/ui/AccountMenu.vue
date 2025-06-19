@@ -25,6 +25,8 @@ const items = [
   { key: 'informations', label: 'Informations' },
   { key: 'roadmaps', label: 'My roadmaps' },
   { key: 'bookmarks', label: 'Bookmarks' },
+  { key: 'guides', label: 'My guides' },
+  // { key: 'attachments', label: 'My attachments' },
   // { key: 'chats', label: 'Chats' },
 ]
 
