@@ -114,6 +114,7 @@
             :showDelete="true"
             :show-author="false"
             :author="state.authors.get(g.CreatedBy)"
+            @view="(id) => router.push(`/guide/${id}`)"
             @stats="(id) => router.push(`/dashboard/guides/${id}`)"
             @edit="onEditGuide"
             @delete="openConfirmGuide"

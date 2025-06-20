@@ -18,83 +18,90 @@ import PrivacyPolicyView from '@/views/Legal/PrivacyPolicyView.vue'
 import CookiePolicyView from '@/views/Legal/CookiePolicyView.vue'
 import FAQView from '@/views/Support/FAQView.vue'
 import ContactView from '@/views/Support/ContactView.vue'
+import GuideView from '@/views/Guide/GuideView.vue'
 
 const routes = [
   {
     path: '/',
     component: DefaultLayout,
     children: [
-      { 
-        path: '', 
-        name: 'home', 
+      {
+        path: '',
+        name: 'home',
         component: HomeView,
-        meta: { title: 'Home' }
+        meta: { title: 'Home' },
       },
-      { 
-        path: '/profile', 
-        name: 'profile', 
+      {
+        path: '/profile',
+        name: 'profile',
         component: UserAccount,
-        meta: { title: 'My Account' }
+        meta: { title: 'My Account' },
       },
-      { 
-        path: '/dashboard', 
-        name: 'dashboard', 
+      {
+        path: '/dashboard',
+        name: 'dashboard',
         component: ContentBuilderView,
-        meta: { title: 'Content Builder' }
+        meta: { title: 'Content Builder' },
       },
       {
         path: '/terms-and-conditions',
         name: 'terms-and-conditions',
         component: TermsAndConditionsView,
-        meta: { title: 'Terms and Conditions' }
+        meta: { title: 'Terms and Conditions' },
       },
       {
         path: '/general-terms-of-use',
         name: 'general-terms-of-use',
         component: GeneralTermsOfUseView,
-        meta: { title: 'General Terms of Use' }
+        meta: { title: 'General Terms of Use' },
       },
-      { 
-        path: '/privacy-policy', 
-        name: 'privacy-policy', 
+      {
+        path: '/privacy-policy',
+        name: 'privacy-policy',
         component: PrivacyPolicyView,
-        meta: { title: 'Privacy Policy' }
+        meta: { title: 'Privacy Policy' },
       },
-      { 
-        path: '/cookies-policy', 
-        name: 'cookies-policy', 
+      {
+        path: '/cookies-policy',
+        name: 'cookies-policy',
         component: CookiePolicyView,
-        meta: { title: 'Cookie Policy' }
+        meta: { title: 'Cookie Policy' },
       },
-      { 
-        path: '/faq', 
-        name: 'faq', 
+      {
+        path: '/faq',
+        name: 'faq',
         component: FAQView,
-        meta: { title: 'FAQ' }
+        meta: { title: 'FAQ' },
       },
-      { 
-        path: '/contact', 
-        name: 'contact', 
+      {
+        path: '/contact',
+        name: 'contact',
         component: ContactView,
-        meta: { title: 'Contact Us' }
+        meta: { title: 'Contact Us' },
       },
       {
         path: '/games',
         name: 'games',
         component: GamesListView,
-        meta: { title: 'Games' }
+        meta: { title: 'Games' },
       },
-      { 
-        path: '/game/:slug', 
-        name: 'game', 
+      {
+        path: '/game/:slug',
+        name: 'game',
         component: RoadmapsListView,
-        meta: { title: 'Game Roadmaps' }
+        meta: { title: 'Game Roadmaps' },
       },
-      { 
-        path: '/roadmap/:id', 
-        name: 'roadmap', 
+      {
+        path: '/roadmap/:id',
+        name: 'roadmap',
         component: RoadmapView,
-        meta: { title: 'Roadmap' }
+        meta: { title: 'Roadmap' },
+      },
+      {
+        path: '/guide/:id',
+        name: 'guide',
+        component: GuideView,
+        meta: { title: 'Guide' },
       },
     ],
   },
@@ -102,23 +109,23 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: NotFoundView,
-    meta: { title: 'Page Not Found' }
+    meta: { title: 'Page Not Found' },
   },
   {
     path: '/auth',
     component: AuthLayout,
     children: [
-      { 
-        path: 'login', 
-        name: 'login', 
+      {
+        path: 'login',
+        name: 'login',
         component: LoginView,
-        meta: { title: 'Login' }
+        meta: { title: 'Login' },
       },
       {
         path: 'register',
         name: 'register',
         component: RegisterView,
-        meta: { title: 'Register' }
+        meta: { title: 'Register' },
       },
     ],
   },
@@ -134,13 +141,13 @@ router.beforeEach((to, from, next) => {
   // Définir le titre de la page
   const baseTitle = 'Smash Here'
   const pageTitle = to.meta.title as string
-  
+
   if (pageTitle) {
     document.title = `${baseTitle} | ${pageTitle}`
   } else {
     document.title = baseTitle
   }
-  
+
   next()
 })
 

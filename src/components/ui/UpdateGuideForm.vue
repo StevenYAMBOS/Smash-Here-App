@@ -15,7 +15,7 @@
         @click="currentTab = 'contentOfGuide'"
         class="tab-button"
       >
-        Steps
+        Guide content
       </button>
     </div>
 
@@ -1744,23 +1744,21 @@ onUnmounted(() => {
   min-height: 400px;
 }
 
-.editor-content .ProseMirror img.guide-image {
-  max-width: 100%;
-  width: auto;
-  height: auto;
-  max-height: 400px;
-  object-fit: contain; /* Préserve les proportions */
-  border-radius: var(--radius-md);
-  margin: var(--spacing-lg) auto;
+.editor-content .ProseMirror img {
+  max-width: 400px !important;
+  max-height: 400px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  margin: var(--spacing-sm) 0;
   display: block;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-  border: 3px solid var(--color-medium-gray);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background: var(--color-white); /* Fond blanc pour les images avec transparence */
-  padding: var(--spacing-xs);
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.editor-content .ProseMirror img.guide-image:hover {
+.editor-content .ProseMirror img:hover {
   border-color: var(--color-gold);
   transform: scale(1.02) translateY(-2px);
   box-shadow: 0 12px 35px rgba(255, 215, 0, 0.25);
@@ -1864,15 +1862,28 @@ onUnmounted(() => {
 
 .editor-content .ProseMirror img {
   max-width: 100%;
+  width: auto;
   height: auto;
-  max-height: 400px; /* Hauteur maximum pour éviter les débordements */
+  max-height: 400px;
+  object-fit: contain; /* Préserve les proportions */
+  border-radius: var(--radius-md);
+  margin: var(--spacing-lg) auto;
+  display: block;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border: 3px solid var(--color-medium-gray);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--color-white); /* Fond blanc pour les images avec transparence */
+  padding: var(--spacing-xs);
+  /* max-width: 100%;
+  height: auto;
+  max-height: 400px; // Hauteur maximum pour éviter les débordements
   border-radius: var(--radius-md);
   margin: var(--spacing-md) 0;
   display: block;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border: 2px solid var(--color-medium-gray);
   transition: all 0.3s ease;
-  cursor: pointer;
+  cursor: pointer; */
 }
 
 .editor-content .ProseMirror img:hover {
@@ -2329,8 +2340,8 @@ onUnmounted(() => {
   }
 
   .editor-content .ProseMirror img {
-    max-height: 250px;
-    margin: var(--spacing-sm) 0;
+    max-width: 300px !important;
+    max-height: 300px !important;
   }
 }
 
@@ -2404,8 +2415,8 @@ onUnmounted(() => {
 
 @media (max-width: 480px) {
   .editor-content .ProseMirror img {
-    max-height: 200px;
-    border-radius: var(--radius-sm);
+    max-width: 250px !important;
+    max-height: 250px !important;
   }
 
   .editor-content .ProseMirror a {

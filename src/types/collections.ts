@@ -171,6 +171,8 @@ export type Guide = {
   commentsCount: number
   lastViewedAt: string
   publishedAt: string
+  createdAt: string
+  updatedAt: string
   CreatedBy: string
   UpdatedBy: string
 }
