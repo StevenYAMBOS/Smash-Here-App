@@ -325,9 +325,9 @@ export const useUserStore = defineStore('user', {
         return
       }
       const promises = this.profile.AttachmentsCreated.map((id) =>
-        fetch(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/attachment/${id}`).then(
-          (res) => (res.ok ? (res.json() as Promise<Attachment>) : Promise.reject()),
-        ),
+        fetch(
+          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/attachment/${id}`,
+        ).then((res) => (res.ok ? (res.json() as Promise<Attachment>) : Promise.reject())),
       )
       try {
         this.attachmentsCreated = await Promise.all(promises)
@@ -349,7 +349,9 @@ export const useUserStore = defineStore('user', {
 
       // 2) Met à jour le tableau d’IDs dans le profile
       if (this.profile) {
-        this.profile.AttachmentsCreated = this.profile.AttachmentsCreated.filter((aid) => aid !== id)
+        this.profile.AttachmentsCreated = this.profile.AttachmentsCreated.filter(
+          (aid) => aid !== id,
+        )
       }
 
       // 3) Met à jour le state des objets chargés

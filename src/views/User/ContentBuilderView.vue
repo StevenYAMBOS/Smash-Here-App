@@ -15,7 +15,15 @@
           {{ tabLabels[selectedTab] }}
         </h2>
         <SearchBar
-          v-if="['list-roadmaps', 'list-steps', 'list-contents'].includes(selectedTab)"
+          v-if="
+            [
+              'list-roadmaps',
+              'list-steps',
+              'list-contents',
+              'list-guides',
+              'list-attachments',
+            ].includes(selectedTab)
+          "
           placeholder="Search…"
           v-model="searchText"
           class="builder-search"
@@ -93,38 +101,6 @@
         <UpdateContentForm v-if="editingContent" :content="editingContent" @navigate="onNavigate" />
       </template>
 
-      <!-- confirmation modals -->
-      <div
-        v-if="confirmVisibleRoadmap"
-        class="confirm-backdrop"
-        @click="proceedDeleteRoadmap"
-      ></div>
-      <div v-if="confirmVisibleRoadmap" class="confirm-modal">
-        <p>Are you sure you want to delete this roadmap ? This action cannot be reversed.</p>
-        <div class="confirm-actions">
-          <button class="btn-yes" @click="proceedDeleteRoadmap">Yes</button>
-          <button class="btn-no" @click="cancelDeleteRoadmap">No</button>
-        </div>
-      </div>
-
-      <div v-if="confirmVisibleStep" class="confirm-backdrop" @click="cancelDeleteStep"></div>
-      <div v-if="confirmVisibleStep" class="confirm-modal">
-        <p>Are you sure you want to delete this step ? This action cannot be reversed.</p>
-        <div class="confirm-actions">
-          <button class="btn-yes" @click="proceedDeleteStep">Yes</button>
-          <button class="btn-no" @click="cancelDeleteStep">No</button>
-        </div>
-      </div>
-
-      <div v-if="confirmVisibleContent" class="confirm-backdrop" @click="cancelDeleteContent"></div>
-      <div v-if="confirmVisibleContent" class="confirm-modal">
-        <p>Are you sure you want to delete this content ? This action cannot be reversed.</p>
-        <div class="confirm-actions">
-          <button class="btn-yes" @click="proceedDeleteContent">Yes</button>
-          <button class="btn-no" @click="cancelDeleteContent">No</button>
-        </div>
-      </div>
-
       <!-- ***************** GUIDES ***************** -->
       <template v-if="selectedTab === 'list-guides'">
         <div class="cards-grid">
@@ -136,6 +112,8 @@
             :showStats="false"
             :showEdit="true"
             :showDelete="true"
+            :show-author="false"
+            :author="state.authors.get(g.CreatedBy)"
             @stats="(id) => router.push(`/dashboard/guides/${id}`)"
             @edit="onEditGuide"
             @delete="openConfirmGuide"
@@ -147,6 +125,34 @@
       </template>
       <template v-else-if="selectedTab === 'update-guide'">
         <UpdateGuideForm v-if="editingGuide" :guide="editingGuide" @navigate="onNavigate" />
+      </template>
+
+      <!-- ***************** ATTACHMENT ***************** -->
+      <template v-if="selectedTab === 'list-attachments'">
+        <div class="cards-grid">
+          <UserAttachmentCard
+            v-for="a in filteredAttachments"
+            :key="a.id"
+            :attachment="a"
+            :show-view="true"
+            :showStats="false"
+            :showEdit="true"
+            :showDelete="true"
+            @stats="(id: string) => router.push(`/dashboard/attachments/${id}`)"
+            @edit="onEditAttachment"
+            @delete="openConfirmAttachment"
+          />
+        </div>
+      </template>
+      <template v-else-if="selectedTab === 'create-attachment'">
+        <CreateAttachmentForm />
+      </template>
+      <template v-else-if="selectedTab === 'update-attachment'">
+        <UpdateAttachmentForm
+          v-if="editingAttachment"
+          :attachment="editingAttachment"
+          @navigate="onNavigate"
+        />
       </template>
 
       <!-- confirmation modals -->
@@ -189,12 +195,25 @@
           <button class="btn-no" @click="cancelDeleteGuide">No</button>
         </div>
       </div>
+
+      <div
+        v-if="confirmVisibleAttachment"
+        class="confirm-backdrop"
+        @click="proceedDeleteAttachment"
+      ></div>
+      <div v-if="confirmVisibleAttachment" class="confirm-modal">
+        <p>Are you sure you want to delete this attachment ? This action cannot be reversed.</p>
+        <div class="confirm-actions">
+          <button class="btn-yes" @click="proceedDeleteAttachment">Yes</button>
+          <button class="btn-no" @click="cancelDeleteAttachment">No</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive, computed } from 'vue'
 import ContentBuilderMenu from '@/components/ui/ContentBuilderMenu.vue'
 import CreateRoadmapForm from '@/components/ui/CreateRoadmapForm.vue'
 import UserRoadmapCard from '@/components/ui/UserRoadmapCard.vue'
@@ -205,25 +224,31 @@ import UserStepCard from '@/components/ui/UserStepCard.vue'
 import UpdateContentForm from '@/components/ui/UpdateContentForm.vue'
 import UpdateRoadmapForm from '@/components/ui/UpdateRoadmapForm.vue'
 import UpdateStepForm from '@/components/ui/UpdateStepForm.vue'
-import { computed } from 'vue'
-import { useUserStore } from '@/stores/user'
-import { useRouter } from 'vue-router'
-import SearchBar from '@/components/ui/SearchBar.vue'
-import type { Content, Step, Roadmap, Guide } from '@/types/collections'
 import UserGuideCard from '@/components/ui/UserGuideCard.vue'
 import CreateGuideForm from '@/components/ui/CreateGuideForm.vue'
 import UpdateGuideForm from '@/components/ui/UpdateGuideForm.vue'
+import UserAttachmentCard from '@/components/ui/UserAttachmentCard.vue'
+import CreateAttachmentForm from '@/components/ui/CreateAttachmentForm.vue'
+import UpdateAttachmentForm from '@/components/ui/UpdateAttachmentForm.vue'
+import { useUserStore } from '@/stores/user'
+import { useRouter } from 'vue-router'
+import SearchBar from '@/components/ui/SearchBar.vue'
+import type { Content, Step, Roadmap, Guide, User, Attachment } from '@/types/collections'
 
 const selectedTab = ref('create-roadmap')
-// nouvel état pour l’édition
 const editingContent = ref<Content | null>(null)
 const editingStep = ref<Step | null>(null)
 const editingRoadmap = ref<Roadmap | null>(null)
 const editingGuide = ref<Guide | null>(null)
+const editingAttachment = ref<Attachment | null>(null)
 const router = useRouter()
 const userStore = useUserStore()
-
 const searchText = ref('')
+
+const state = reactive({
+  authors: new Map<string, User>(),
+  authorsLoading: false,
+})
 
 // Libellés pour le header
 const tabLabels: Record<string, string> = {
@@ -238,6 +263,8 @@ const tabLabels: Record<string, string> = {
   'update-content': 'Edit Content',
   'list-guides': 'Your Guides',
   'update-guide': 'Edit Guide',
+  'list-attachments': 'Your Attachments',
+  'update-attachment': 'Edit Attachment',
 }
 
 // ID de contenu en attente de suppression
@@ -245,11 +272,13 @@ const pendingDeleteRoadmapId = ref<string | null>(null)
 const pendingDeleteStepId = ref<string | null>(null)
 const pendingDeleteContentId = ref<string | null>(null)
 const pendingDeleteGuideId = ref<string | null>(null)
+const pendingDeleteAttachmentId = ref<string | null>(null)
 // Contrôle l’affichage du modal
 const confirmVisibleRoadmap = ref(false)
 const confirmVisibleStep = ref(false)
 const confirmVisibleContent = ref(false)
 const confirmVisibleGuide = ref(false)
+const confirmVisibleAttachment = ref(false)
 
 // Ouvre la pop-up de confirmation (roadmaps)
 function openConfirmRoadmap(id: string) {
@@ -275,6 +304,12 @@ function openConfirmGuide(id: string) {
   confirmVisibleGuide.value = true
 }
 
+// Ouvre la pop-up de confirmation (attachment)
+function openConfirmAttachment(id: string) {
+  pendingDeleteAttachmentId.value = id
+  confirmVisibleAttachment.value = true
+}
+
 // Annule la suppression (roadmaps)
 function cancelDeleteRoadmap() {
   pendingDeleteRoadmapId.value = null
@@ -297,6 +332,12 @@ function cancelDeleteContent() {
 function cancelDeleteGuide() {
   pendingDeleteGuideId.value = null
   confirmVisibleGuide.value = false
+}
+
+// Annule la suppression (attachment)
+function cancelDeleteAttachment() {
+  pendingDeleteAttachmentId.value = null
+  confirmVisibleAttachment.value = false
 }
 
 // Suppression roadmap
@@ -331,6 +372,14 @@ async function proceedDeleteGuide() {
   cancelDeleteGuide()
 }
 
+// Suppression pièce jointes
+async function proceedDeleteAttachment() {
+  if (pendingDeleteAttachmentId.value) {
+    await userStore.deleteAttachment(pendingDeleteAttachmentId.value)
+  }
+  cancelDeleteAttachment()
+}
+
 const filteredRoadmaps = computed(() => {
   const listOfRoadmaps = userStore.roadmapsCreated || []
   if (!searchText.value.trim()) return listOfRoadmaps
@@ -358,6 +407,14 @@ const filteredGuides = computed(() => {
   if (!searchText.value.trim()) return listOfGuides
   return listOfGuides.filter((guide) =>
     guide.title.toLowerCase().includes(searchText.value.toLowerCase()),
+  )
+})
+
+const filteredAttachments = computed(() => {
+  const listOfAttachments = userStore.attachmentsCreated || []
+  if (!searchText.value.trim()) return listOfAttachments
+  return listOfAttachments.filter((attachment) =>
+    attachment.fileName.toLowerCase().includes(searchText.value.toLowerCase()),
   )
 })
 
@@ -401,6 +458,15 @@ function onEditGuide(id: string) {
   }
 }
 
+// appelé par le <UserAttachmentCard @edit>
+function onEditAttachment(id: string) {
+  const a = userStore.attachmentsCreated.find((a) => a.id === id)
+  if (a) {
+    editingAttachment.value = a
+    selectedTab.value = 'update-attachment'
+  }
+}
+
 onMounted(async () => {
   await userStore.fetchProfile()
 })
@@ -410,7 +476,7 @@ onMounted(async () => {
 .builder-page {
   display: flex;
   background: var(--color-darker-charcoal);
-    max-width: 1200px;
+  max-width: 1200px;
   margin: 0 auto;
   /* display: flex;
   gap: var(--spacing-lg);

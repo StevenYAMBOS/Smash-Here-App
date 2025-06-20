@@ -45,10 +45,10 @@
             <label for="difficulty">Difficulty</label>
             <select id="difficulty" v-model="difficulty">
               <option value="" disabled>Select a difficulty</option>
-              <option value="video">beginner</option>
-              <option value="article">mid-level</option>
-              <option value="page">high-level</option>
-              <option value="roadmap">top-level</option>
+              <option value="beginner">beginner</option>
+              <option value="mid-level">mid-level</option>
+              <option value="high-level">high-level</option>
+              <option value="top-level">top-level</option>
             </select>
           </div>
 
@@ -57,172 +57,172 @@
             <label for="language">Language</label>
             <select id="language" v-model="language">
               <option value="" disabled>Select a language</option>
-              <option value="af">Afrikaans</option>
-              <option value="sq">Albanian - (Shqip)</option>
-              <option value="am">Amharic - (አማርኛ)</option>
-              <option value="ar">Arabic - (العربية)</option>
-              <option value="an">Aragonese - (Aragonés)</option>
-              <option value="hy">Armenian - (Հայերեն)</option>
-              <option value="ast">Asturian - (Asturianu)</option>
-              <option value="ay">Aymara - (Aymar aru)</option>
-              <option value="az">Azerbaijani - (Azərbaycan dili)</option>
-              <option value="eu">Basque - (Euskara)</option>
-              <option value="be">Belarusian - (Беларуская)</option>
-              <option value="bn">Bengali - (বাংলা)</option>
-              <option value="brx">Bodo - (बर')</option>
-              <option value="bs">Bosnian - (Bosanski)</option>
-              <option value="br">Breton - (Brezhoneg)</option>
-              <option value="bg">Bulgarian - (Български)</option>
-              <option value="ca">Catalan - (Català)</option>
-              <option value="ckb">Central - Kurdish (کوردی)</option>
-              <option value="ce">Chechen (Нохчийн мотт)</option>
-              <option value="zh">Chinese (中文)</option>
-              <option value="zh-HK">Chinese Hong Kong - (中文 - 香港)</option>
-              <option value="zh-CN">Chinese Simplified - (中文简体)</option>
-              <option value="zh-TW">Chinese Traditional - (中文繁體)</option>
-              <option value="co">Corsican - (Corsu)</option>
-              <option value="hr">Croatian - (Hrvatski)</option>
-              <option value="cs">Czech - (Čeština)</option>
-              <option value="da">Danish - (Dansk)</option>
-              <option value="dv">Dhivehi - (ދިވެހި)</option>
-              <option value="nl">Dutch (Nederlands)</option>
-              <option value="dz">Dzongkha (རྫོང་ཁ)</option>
-              <option value="en">English</option>
-              <option value="en-AU">English (Australia)</option>
-              <option value="en-CA">English (Canada)</option>
-              <option value="en-IN">English (India)</option>
-              <option value="en-NZ">English (New Zealand)</option>
-              <option value="en-ZA">English (South Africa)</option>
-              <option value="en-GB">English (United Kingdom)</option>
-              <option value="en-US">English (United States)</option>
-              <option value="eo">Esperanto</option>
-              <option value="et">Estonian (Eesti)</option>
-              <option value="ee">Ewe (Eʋegbe)</option>
-              <option value="fo">Faroese - (Føroyskt)</option>
-              <option value="fil">Filipino (Wikang Filipino)</option>
-              <option value="fi">Finnish (Suomi)</option>
-              <option value="fr">French (Français)</option>
-              <option value="fr-CA">French Canada - (Français Canada)</option>
-              <option value="fr-FR">French France - (Français France)</option>
-              <option value="fr-CH">French Switzerland - (Français Suisse)</option>
-              <option value="gl">Galician - (Galego)</option>
-              <option value="ka">Georgian - (ქართული)</option>
-              <option value="de">German - (Deutsch)</option>
-              <option value="de-AT">German Austria - (Deutsch Österreich)</option>
-              <option value="de-DE">German Germany - (Deutsch Deutschland)</option>
-              <option value="de-LI">German Liechtenstein - (Deutsch Liechtenstein)</option>
-              <option value="de-CH">German Switzerland - (Deutsch Schweiz)</option>
-              <option value="el">Greek - (Ελληνικά)</option>
-              <option value="gn">Guarani - (Avañe'ẽ)</option>
-              <option value="gu">Gujarati - (ગુજરાતી)</option>
-              <option value="ha">Hausa - (هَوُسَ)</option>
-              <option value="haw">Hawaiian - (ʻŌlelo Hawaiʻi)</option>
-              <option value="he">Hebrew - (עברית)</option>
-              <option value="hi">Hindi - (हिन्दी)</option>
-              <option value="hu">Hungarian - (Magyar)</option>
-              <option value="is">Icelandic - (Íslenska)</option>
-              <option value="id">Indonesian - (Bahasa Indonesia)</option>
-              <option value="ia">Interlingua</option>
-              <option value="iu">Inuktitut - (ᐃᓄᒃᑎᑐᑦ)</option>
-              <option value="ga">Irish - (Gaeilge)</option>
-              <option value="it">Italian - (Italiano)</option>
-              <option value="it-IT">Italian Italy - (Italiano Italia)</option>
-              <option value="it-CH">Italian Switzerland - (Italiano - Svizzera)</option>
-              <option value="ja">Japanese - (日本語)</option>
-              <option value="kl">Kalaallisut - (Kalaallisut)</option>
-              <option value="kn">Kannada - (ಕನ್ನಡ)</option>
-              <option value="ks">Kashmiri - (कॉशुर / كٲشُر)</option>
-              <option value="kk">Kazakh - (Қазақ тілі)</option>
-              <option value="km">Khmer - (ខ្មែរ)</option>
-              <option value="rw">Kinyarwanda - (Ikinyarwanda)</option>
-              <option value="ko">Korean - (한국어)</option>
-              <option value="ku">Kurdish - (Kurdî)</option>
-              <option value="ky">Kyrgyz - (Кыргызча)</option>
-              <option value="lo">Lao - (ລາວ)</option>
-              <option value="la">Latin - (Latina)</option>
-              <option value="lv">Latvian - (Latviešu)</option>
-              <option value="ln">Lingala - (Lingála)</option>
-              <option value="lt">Lithuanian - (Lietuvių)</option>
-              <option value="lg">Luganda - (Luganda)</option>
-              <option value="lb">Luxembourgish - (Lëtzebuergesch)</option>
-              <option value="mk">Macedonian - (Македонски)</option>
-              <option value="mai">Maithili - (मैथिली)</option>
-              <option value="ms">Malay - (Bahasa Melayu)</option>
-              <option value="ml">Malayalam - (മലയാളം)</option>
-              <option value="mt">Maltese - (Malti)</option>
-              <option value="mni">Manipuri - (ꯃꯅꯤꯄꯨꯔꯤ)</option>
-              <option value="mr">Marathi - (मराठी)</option>
-              <option value="mn">Mongolian - (Монгол)</option>
-              <option value="ne">Nepali - (नेपाली)</option>
-              <option value="nso">Northern Sotho - (Sesotho sa Leboa)</option>
-              <option value="no">Norwegian (Norsk)</option>
-              <option value="nb">Norwegian Bokmål - (Norsk bokmål)</option>
-              <option value="nn">Norwegian Nynorsk - (Nynorsk)</option>
-              <option value="oc">Occitan</option>
-              <option value="or">Oriya - (ଓଡ଼ିଆ)</option>
-              <option value="om">Oromo - (Afaan Oromoo)</option>
-              <option value="os">Ossetian - (Ирон æвзаг)</option>
-              <option value="ps">Pashto - (پښتو)</option>
-              <option value="fa">Persian - (فارسی)</option>
-              <option value="pl">Polish - (Polski)</option>
-              <option value="pt">Portuguese - (Português)</option>
-              <option value="pt-BR">Portuguese Brazil - (Português Brasil)</option>
-              <option value="pt-PT">Portuguese Portugal - (Português Portugal)</option>
-              <option value="pa">Punjabi - (ਪੰਜਾਬੀ)</option>
-              <option value="qu">Quechua - (Runa Simi)</option>
-              <option value="ro">Romanian - (Română)</option>
-              <option value="mo">Romanian Moldova - (Română Moldova)</option>
-              <option value="rm">Romansh - (Rumantsch)</option>
-              <option value="ru">Russian - (Русский)</option>
-              <option value="sm">Samoan - (Gagana Samoa)</option>
-              <option value="sat">Santali - (ᱥᱟᱱᱛᱟᱲᱤ)</option>
-              <option value="sc">Sardinian - (Sardu)</option>
-              <option value="gd">Scottish Gaelic - (Gàidhlig)</option>
-              <option value="sr">Serbian - (Српски)</option>
-              <option value="sh">Serbo_Croatian - (Srpskohrvatski)</option>
-              <option value="sn">Shona - (ChiShona)</option>
-              <option value="sd">Sindhi - (سنڌي)</option>
-              <option value="si">Sinhala - (සිංහල)</option>
-              <option value="sk">Slovak - (Slovenčina)</option>
-              <option value="sl">Slovenian - (Slovenščina)</option>
-              <option value="so">Somali - (Soomaali)</option>
-              <option value="st">Southern - Sotho (Sesotho)</option>
-              <option value="es">Spanish - (Español)</option>
-              <option value="es-AR">Spanish Argentina - (Español Argentina)</option>
-              <option value="es-419">Spanish Latin America - (Español Latinoamérica)</option>
-              <option value="es-MX">Spanish Mexico - (Español México)</option>
-              <option value="es-ES">Spanish Spain - (Español España)</option>
-              <option value="es-US">Spanish United States - (Español Estados Unidos)</option>
-              <option value="su">Sundanese - (Basa Sunda)</option>
-              <option value="sw">Swahili - (Kiswahili)</option>
-              <option value="sv">Swedish - (Svenska)</option>
-              <option value="tg">Tajik - (Тоҷикӣ)</option>
-              <option value="ta">Tamil - (தமிழ்)</option>
-              <option value="tt">Tatar - (Татар)</option>
-              <option value="te">Telugu - (తెలుగు)</option>
-              <option value="th">Thai - (ไทย)</option>
-              <option value="ti">Tigrinya - (ትግርኛ)</option>
-              <option value="to">Tongan - (Lea fakatonga)</option>
-              <option value="tn">Tswana - (Setswana)</option>
-              <option value="tr">Turkish - (Türkçe)</option>
-              <option value="tk">Turkmen - (Türkmençe)</option>
-              <option value="tw">Twi - (Twi)</option>
-              <option value="udm">Udmurt - (Удмурт кыл)</option>
-              <option value="uk">Ukrainian - (Українська)</option>
-              <option value="ur">Urdu - (اردو)</option>
-              <option value="ug">Uyghur - (ئۇيغۇرچە)</option>
-              <option value="uz">Uzbek - (O'zbek)</option>
-              <option value="ve">Venda - (Tshivenḓa)</option>
-              <option value="vi">Vietnamese - (Tiếng Việt)</option>
-              <option value="wa">Walloon - (Walon)</option>
-              <option value="cy">Welsh - (Cymraeg)</option>
-              <option value="fy">Western Frisian - (Frysk)</option>
-              <option value="wo">Wolof - (Wollof)</option>
-              <option value="xh">Xhosa - (isiXhosa)</option>
-              <option value="yi">Yiddish - (ייִדיש)</option>
-              <option value="yo">Yoruba - (Èdè Yorùbá)</option>
-              <option value="za">Zhuang - (Saɯ cueŋƅ)</option>
-              <option value="zu">Zulu - (isiZulu)</option>
+              <option value="AF">Afrikaans</option>
+              <option value="SQ">Albanian - (Shqip)</option>
+              <option value="AM">Amharic - (አማርኛ)</option>
+              <option value="AR">Arabic - (العربية)</option>
+              <option value="AN">Aragonese - (Aragonés)</option>
+              <option value="HY">Armenian - (Հայերեն)</option>
+              <option value="AST">Asturian - (Asturianu)</option>
+              <option value="AY">Aymara - (Aymar aru)</option>
+              <option value="AZ">Azerbaijani - (Azərbaycan dili)</option>
+              <option value="EU">Basque - (Euskara)</option>
+              <option value="BE">Belarusian - (Беларуская)</option>
+              <option value="BN">Bengali - (বাংলা)</option>
+              <option value="BRX">Bodo - (बर')</option>
+              <option value="BS">Bosnian - (Bosanski)</option>
+              <option value="BR">Breton - (Brezhoneg)</option>
+              <option value="BG">Bulgarian - (Български)</option>
+              <option value="CA">Catalan - (Català)</option>
+              <option value="CKB">Central - Kurdish (کوردی)</option>
+              <option value="CE">Chechen (Нохчийн мотт)</option>
+              <option value="ZH">Chinese (中文)</option>
+              <option value="ZH-HK">Chinese Hong Kong - (中文 - 香港)</option>
+              <option value="ZH-CN">Chinese Simplified - (中文简体)</option>
+              <option value="ZH-TW">Chinese Traditional - (中文繁體)</option>
+              <option value="CO">Corsican - (Corsu)</option>
+              <option value="HR">Croatian - (Hrvatski)</option>
+              <option value="CS">Czech - (Čeština)</option>
+              <option value="DA">Danish - (Dansk)</option>
+              <option value="DV">Dhivehi - (ދިވެހި)</option>
+              <option value="NL">Dutch (Nederlands)</option>
+              <option value="DZ">Dzongkha (རྫོང་ཁ)</option>
+              <option value="EN">English</option>
+              <option value="EN-AU">English (Australia)</option>
+              <option value="EN-CA">English (Canada)</option>
+              <option value="EN-IN">English (India)</option>
+              <option value="EN-NZ">English (New Zealand)</option>
+              <option value="EN-ZA">English (South Africa)</option>
+              <option value="EN-GB">English (United Kingdom)</option>
+              <option value="EN-US">English (United States)</option>
+              <option value="EO">Esperanto</option>
+              <option value="ET">Estonian (Eesti)</option>
+              <option value="EE">Ewe (Eʋegbe)</option>
+              <option value="FO">Faroese - (Føroyskt)</option>
+              <option value="FIL">Filipino (Wikang Filipino)</option>
+              <option value="FI">Finnish (Suomi)</option>
+              <option value="FR">French (Français)</option>
+              <option value="FR-CA">French Canada - (Français Canada)</option>
+              <option value="FR-FR">French France - (Français France)</option>
+              <option value="FR-CH">French Switzerland - (Français Suisse)</option>
+              <option value="GL">Galician - (Galego)</option>
+              <option value="KA">Georgian - (ქართული)</option>
+              <option value="DE">German - (Deutsch)</option>
+              <option value="DE-AT">German Austria - (Deutsch Österreich)</option>
+              <option value="DE-DE">German Germany - (Deutsch Deutschland)</option>
+              <option value="DE-LI">German Liechtenstein - (Deutsch Liechtenstein)</option>
+              <option value="DE-CH">German Switzerland - (Deutsch Schweiz)</option>
+              <option value="EL">Greek - (Ελληνικά)</option>
+              <option value="GN">Guarani - (Avañe'ẽ)</option>
+              <option value="GU">Gujarati - (ગુજરાતી)</option>
+              <option value="HA">Hausa - (هَوُسَ)</option>
+              <option value="HAW">Hawaiian - (ʻŌlelo Hawaiʻi)</option>
+              <option value="HE">Hebrew - (עברית)</option>
+              <option value="HI">Hindi - (हिन्दी)</option>
+              <option value="HU">Hungarian - (Magyar)</option>
+              <option value="IS">Icelandic - (Íslenska)</option>
+              <option value="ID">Indonesian - (Bahasa Indonesia)</option>
+              <option value="IA">Interlingua</option>
+              <option value="IU">Inuktitut - (ᐃᓄᒃᑎᑐᑦ)</option>
+              <option value="GA">Irish - (Gaeilge)</option>
+              <option value="IT">Italian - (Italiano)</option>
+              <option value="IT-IT">Italian Italy - (Italiano Italia)</option>
+              <option value="IT-CH">Italian Switzerland - (Italiano - Svizzera)</option>
+              <option value="JA">Japanese - (日本語)</option>
+              <option value="KL">Kalaallisut - (Kalaallisut)</option>
+              <option value="KN">Kannada - (ಕನ್ನಡ)</option>
+              <option value="KS">Kashmiri - (कॉशुर / كٲشُر)</option>
+              <option value="KK">Kazakh - (Қазақ тілі)</option>
+              <option value="KM">Khmer - (ខ្មែរ)</option>
+              <option value="RW">Kinyarwanda - (Ikinyarwanda)</option>
+              <option value="KO">Korean - (한국어)</option>
+              <option value="KU">Kurdish - (Kurdî)</option>
+              <option value="KY">Kyrgyz - (Кыргызча)</option>
+              <option value="LO">Lao - (ລາວ)</option>
+              <option value="LA">Latin - (Latina)</option>
+              <option value="LV">Latvian - (Latviešu)</option>
+              <option value="LN">Lingala - (Lingála)</option>
+              <option value="LT">Lithuanian - (Lietuvių)</option>
+              <option value="LG">Luganda - (Luganda)</option>
+              <option value="LB">Luxembourgish - (Lëtzebuergesch)</option>
+              <option value="MK">Macedonian - (Македонски)</option>
+              <option value="MAI">Maithili - (मैथिली)</option>
+              <option value="MS">Malay - (Bahasa Melayu)</option>
+              <option value="ML">Malayalam - (മലയാളം)</option>
+              <option value="MT">Maltese - (Malti)</option>
+              <option value="MNI">Manipuri - (ꯃꯅꯤꯄꯨꯔꯤ)</option>
+              <option value="MR">Marathi - (मराठी)</option>
+              <option value="MN">Mongolian - (Монгол)</option>
+              <option value="NE">Nepali - (नेपाली)</option>
+              <option value="NSO">Northern Sotho - (Sesotho sa Leboa)</option>
+              <option value="NO">Norwegian (Norsk)</option>
+              <option value="NB">Norwegian Bokmål - (Norsk bokmål)</option>
+              <option value="NN">Norwegian Nynorsk - (Nynorsk)</option>
+              <option value="OC">Occitan</option>
+              <option value="OR">Oriya - (ଓଡ଼ିଆ)</option>
+              <option value="OM">Oromo - (Afaan Oromoo)</option>
+              <option value="OS">Ossetian - (Ирон æвзаг)</option>
+              <option value="PS">Pashto - (پښتو)</option>
+              <option value="FA">Persian - (فارسی)</option>
+              <option value="PL">Polish - (Polski)</option>
+              <option value="PT">Portuguese - (Português)</option>
+              <option value="PT-BR">Portuguese Brazil - (Português Brasil)</option>
+              <option value="PT-PT">Portuguese Portugal - (Português Portugal)</option>
+              <option value="PA">Punjabi - (ਪੰਜਾਬੀ)</option>
+              <option value="QU">Quechua - (Runa Simi)</option>
+              <option value="RO">Romanian - (Română)</option>
+              <option value="MO">Romanian Moldova - (Română Moldova)</option>
+              <option value="RM">Romansh - (Rumantsch)</option>
+              <option value="RU">Russian - (Русский)</option>
+              <option value="SM">Samoan - (Gagana Samoa)</option>
+              <option value="SAT">Santali - (ᱥᱟᱱᱛᱟᱲᱤ)</option>
+              <option value="SC">Sardinian - (Sardu)</option>
+              <option value="GD">Scottish Gaelic - (Gàidhlig)</option>
+              <option value="SR">Serbian - (Српски)</option>
+              <option value="SH">Serbo_Croatian - (Srpskohrvatski)</option>
+              <option value="SN">Shona - (ChiShona)</option>
+              <option value="SD">Sindhi - (سنڌي)</option>
+              <option value="SI">Sinhala - (සිංහල)</option>
+              <option value="SK">Slovak - (Slovenčina)</option>
+              <option value="SL">Slovenian - (Slovenščina)</option>
+              <option value="SO">Somali - (Soomaali)</option>
+              <option value="ST">Southern - Sotho (Sesotho)</option>
+              <option value="ES">Spanish - (Español)</option>
+              <option value="ES-AR">Spanish Argentina - (Español Argentina)</option>
+              <option value="ES-419">Spanish Latin America - (Español Latinoamérica)</option>
+              <option value="ES-MX">Spanish Mexico - (Español México)</option>
+              <option value="ES-ES">Spanish Spain - (Español España)</option>
+              <option value="ES-US">Spanish United States - (Español Estados Unidos)</option>
+              <option value="SU">Sundanese - (Basa Sunda)</option>
+              <option value="SW">Swahili - (Kiswahili)</option>
+              <option value="SV">Swedish - (Svenska)</option>
+              <option value="TG">Tajik - (Тоҷикӣ)</option>
+              <option value="TA">Tamil - (தமிழ்)</option>
+              <option value="TT">Tatar - (Татар)</option>
+              <option value="TE">Telugu - (తెలుగు)</option>
+              <option value="TH">Thai - (ไทย)</option>
+              <option value="TI">Tigrinya - (ትግርኛ)</option>
+              <option value="TO">Tongan - (Lea fakatonga)</option>
+              <option value="TN">Tswana - (Setswana)</option>
+              <option value="TR">Turkish - (Türkçe)</option>
+              <option value="TK">Turkmen - (Türkmençe)</option>
+              <option value="TW">Twi - (Twi)</option>
+              <option value="UDM">Udmurt - (Удмурт кыл)</option>
+              <option value="UK">Ukrainian - (Українська)</option>
+              <option value="UR">Urdu - (اردو)</option>
+              <option value="UG">Uyghur - (ئۇيغۇرچە)</option>
+              <option value="UZ">Uzbek - (O'zbek)</option>
+              <option value="VE">Venda - (Tshivenḓa)</option>
+              <option value="VI">Vietnamese - (Tiếng Việt)</option>
+              <option value="WA">Walloon - (Walon)</option>
+              <option value="CY">Welsh - (Cymraeg)</option>
+              <option value="FY">Western Frisian - (Frysk)</option>
+              <option value="WO">Wolof - (Wollof)</option>
+              <option value="XH">Xhosa - (isiXhosa)</option>
+              <option value="YI">Yiddish - (ייִדיש)</option>
+              <option value="YO">Yoruba - (Èdè Yorùbá)</option>
+              <option value="ZA">Zhuang - (Saɯ cueŋƅ)</option>
+              <option value="ZU">Zulu - (isiZulu)</option>
             </select>
           </div>
 
@@ -343,7 +343,7 @@
               />
               <div v-else class="cover-placeholder">
                 <i class="pi pi-image"></i>
-                <span>Nouvelle couverture...</span>
+                <span>New file...</span>
               </div>
             </div>
 
@@ -453,7 +453,6 @@
             <h3>Guide Content</h3>
 
             <!-- Barre d'outils -->
-            <!-- Barre d'outils améliorée -->
             <div v-if="editor" class="editor-toolbar">
               <!-- Groupe Undo/Redo -->
               <button
@@ -463,7 +462,7 @@
                 class="toolbar-btn"
                 title="Undo"
               >
-                <i class="pi pi-undo"></i>
+                <i class="pi pi-times"></i>
               </button>
 
               <button
@@ -473,7 +472,7 @@
                 class="toolbar-btn"
                 title="Redo"
               >
-                <i class="pi pi-redo"></i>
+                <i class="pi pi-check"></i>
               </button>
 
               <div class="toolbar-divider"></div>
@@ -486,7 +485,7 @@
                 class="toolbar-btn"
                 title="Bold"
               >
-                <i class="pi pi-bold"></i>
+                <strong>B</strong>
               </button>
 
               <button
@@ -496,7 +495,8 @@
                 class="toolbar-btn"
                 title="Italic"
               >
-                <i class="pi pi-italic"></i>
+                <strong>I</strong>
+                <!-- <i class="pi pi-italic"></i> -->
               </button>
 
               <button
@@ -642,25 +642,28 @@
                 class="bubble-menu"
               >
                 <button
+                  type="button"
                   @click="editor.chain().focus().toggleBold().run()"
                   :class="{ 'is-active': editor.isActive('bold') }"
                   class="bubble-btn"
                 >
-                  <i class="pi pi-bold"></i>
+                  <strong>B</strong>
                 </button>
                 <button
+                  type="button"
                   @click="editor.chain().focus().toggleItalic().run()"
                   :class="{ 'is-active': editor.isActive('italic') }"
                   class="bubble-btn"
                 >
-                  <i class="pi pi-italic"></i>
+                  <em>I</em>
                 </button>
                 <button
+                  type="button"
                   @click="editor.chain().focus().toggleStrike().run()"
                   :class="{ 'is-active': editor.isActive('strike') }"
                   class="bubble-btn"
                 >
-                  <i class="pi pi-minus"></i>
+                  <span style="text-decoration: line-through">S</span>
                 </button>
               </BubbleMenu>
 
@@ -672,6 +675,7 @@
                 class="floating-menu"
               >
                 <button
+                  type="button"
                   @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
                   :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
                   class="floating-btn"
@@ -679,6 +683,7 @@
                   H1
                 </button>
                 <button
+                  type="button"
                   @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
                   :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
                   class="floating-btn"
@@ -686,6 +691,7 @@
                   H2
                 </button>
                 <button
+                  type="button"
                   @click="editor.chain().focus().toggleBulletList().run()"
                   :class="{ 'is-active': editor.isActive('bulletList') }"
                   class="floating-btn"
@@ -698,9 +704,9 @@
             </div>
 
             <!-- Zone d'édition -->
-            <div class="editor-wrapper">
+            <!-- <div class="editor-wrapper">
               <EditorContent :editor="editor" class="editor-content" />
-            </div>
+            </div> -->
 
             <!-- Compteur de mots -->
             <div class="editor-stats">
@@ -835,6 +841,9 @@ async function submitInfo() {
     formData.append('title', title.value)
     formData.append('subTitle', subTitle.value)
     formData.append('description', description.value)
+    formData.append('difficulty', difficulty.value)
+    formData.append('language', language.value)
+    formData.append('version', version.value)
     formData.append('published', published.value.toString())
     // formData.append('premium', premium.value.toString())
     // Ne pas inclure Games dans FormData car le backend les gère séparément
@@ -966,7 +975,7 @@ function insertSelectedAttachments() {
     if (!attachment) return
 
     if (attachment.type === 'image') {
-      // Insérer une image
+      // Insérer une image avec attributs optimisés
       editor.value
         ?.chain()
         .focus()
@@ -977,13 +986,35 @@ function insertSelectedAttachments() {
         })
         .run()
     } else {
-      // Insérer un lien pour les documents/vidéos
+      // Créer un lien stylisé pour les documents/vidéos
       const linkText = attachment.fileName
+      const fileExtension = attachment.fileName.split('.').pop()?.toLowerCase()
+
+      let icon = ''
+      switch (fileExtension) {
+        case 'pdf':
+          icon = '📄 '
+          break
+        case 'doc':
+        case 'docx':
+          icon = '📝 '
+          break
+        case 'txt':
+          icon = '📄 '
+          break
+        case 'mp4':
+        case 'webm':
+          icon = '🎥 '
+          break
+        default:
+          icon = '📎 '
+      }
+
       editor.value
         ?.chain()
         .focus()
         .insertContent(
-          `<p><a href="${attachment.url}" target="_blank" rel="noopener">${linkText}</a></p>`,
+          `<p><a href="${attachment.url}" target="_blank" rel="noopener" class="attachment-link">${icon}${linkText}</a></p>`,
         )
         .run()
     }
@@ -991,6 +1022,9 @@ function insertSelectedAttachments() {
 
   // Vider la sélection après insertion
   selectedAttachments.value = []
+
+  // Message de confirmation
+  toast.success(`${selectedAttachments.value.length} attachment(s) inserted successfully!`)
 }
 
 // Ajouter cette fonction après les autres fonctions
@@ -1109,7 +1143,7 @@ onUnmounted(() => {
 .field {
   display: flex;
   flex-direction: column;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
 }
 .field-row {
   display: flex;
@@ -1220,7 +1254,7 @@ onUnmounted(() => {
   color: var(--color-cream);
   font-size: var(--font-size-sm);
   font-weight: bold;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
 }
 .field input,
 .field textarea {
@@ -1710,6 +1744,68 @@ onUnmounted(() => {
   min-height: 400px;
 }
 
+.editor-content .ProseMirror img.guide-image {
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain; /* Préserve les proportions */
+  border-radius: var(--radius-md);
+  margin: var(--spacing-lg) auto;
+  display: block;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border: 3px solid var(--color-medium-gray);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--color-white); /* Fond blanc pour les images avec transparence */
+  padding: var(--spacing-xs);
+}
+
+.editor-content .ProseMirror img.guide-image:hover {
+  border-color: var(--color-gold);
+  transform: scale(1.02) translateY(-2px);
+  box-shadow: 0 12px 35px rgba(255, 215, 0, 0.25);
+}
+
+.editor-content .ProseMirror a.attachment-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--color-gold);
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+  border: 2px solid var(--color-gold);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  margin: var(--spacing-md) 0;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: var(--font-primary);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.editor-content .ProseMirror a.attachment-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.editor-content .ProseMirror a.attachment-link:hover::before {
+  left: 100%;
+}
+
+.editor-content .ProseMirror a.attachment-link:hover {
+  background: var(--color-gold);
+  color: var(--color-charcoal);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+}
+
 /* Styles pour le contenu de l'éditeur */
 .editor-content .ProseMirror {
   padding: var(--spacing-lg);
@@ -1769,18 +1865,67 @@ onUnmounted(() => {
 .editor-content .ProseMirror img {
   max-width: 100%;
   height: auto;
+  max-height: 400px; /* Hauteur maximum pour éviter les débordements */
   border-radius: var(--radius-md);
   margin: var(--spacing-md) 0;
   display: block;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 2px solid var(--color-medium-gray);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.editor-content .ProseMirror img:hover {
+  border-color: var(--color-gold);
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.2);
 }
 
 .editor-content .ProseMirror a {
   color: var(--color-gold);
-  text-decoration: underline;
+  text-decoration: none;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: rgba(255, 215, 0, 0.1);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-gold);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin: var(--spacing-xs) var(--spacing-xs) var(--spacing-xs) 0;
+  transition: all 0.2s ease;
+  font-weight: 500;
 }
 
 .editor-content .ProseMirror a:hover {
-  color: var(--color-light-yellow);
+  background: var(--color-gold);
+  color: var(--color-charcoal);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
+}
+
+/* Ajouter une icône aux liens automatiquement */
+.editor-content .ProseMirror a[href*='pdf']::before,
+.editor-content .ProseMirror a[href*='doc']::before,
+.editor-content .ProseMirror a[href*='txt']::before {
+  content: '📄';
+  margin-right: var(--spacing-xs);
+}
+
+.editor-content .ProseMirror a[href*='mp4']::before,
+.editor-content .ProseMirror a[href*='webm']::before {
+  content: '🎥';
+  margin-right: var(--spacing-xs);
+}
+
+/* Styles pour les images sélectionnées */
+.editor-content .ProseMirror img.ProseMirror-selectednode {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+}
+
+/* Conteneur pour centrer les images si nécessaire */
+.editor-content .ProseMirror p:has(img) {
+  text-align: center;
 }
 
 .editor-content .ProseMirror p.is-editor-empty:first-child::before {
@@ -1788,7 +1933,7 @@ onUnmounted(() => {
   float: left;
   color: var(--color-medium-gray);
   pointer-events: none;
-  height: 0;
+  height: 100px;
 }
 
 /* Statistiques de l'éditeur */
@@ -1990,6 +2135,37 @@ onUnmounted(() => {
   font-family: cursive;
 }
 
+.toolbar-btn strong,
+.bubble-btn strong,
+.floating-btn strong {
+  font-family: var(--font-primary);
+  font-weight: 900;
+  font-size: var(--font-size-sm);
+}
+
+.toolbar-btn em,
+.bubble-btn em {
+  font-family: var(--font-primary);
+  font-style: italic;
+  font-size: var(--font-size-sm);
+}
+
+.toolbar-btn span,
+.bubble-btn span {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+}
+
+/* Améliorer la visibilité des boutons actifs avec icônes textuelles */
+.toolbar-btn.is-active strong,
+.bubble-btn.is-active strong,
+.toolbar-btn.is-active em,
+.bubble-btn.is-active em,
+.toolbar-btn.is-active span,
+.bubble-btn.is-active span {
+  color: inherit;
+}
+
 /* Responsive général */
 @media (max-width: 1024px) {
   .update-guide-container {
@@ -2151,6 +2327,11 @@ onUnmounted(() => {
   .toolbar-divider:nth-of-type(n + 3) {
     display: none;
   }
+
+  .editor-content .ProseMirror img {
+    max-height: 250px;
+    margin: var(--spacing-sm) 0;
+  }
 }
 
 @media (max-width: 576px) {
@@ -2218,6 +2399,18 @@ onUnmounted(() => {
     width: 100%;
     justify-content: center;
     padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .editor-content .ProseMirror img {
+    max-height: 200px;
+    border-radius: var(--radius-sm);
+  }
+
+  .editor-content .ProseMirror a {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-xs);
   }
 }
 </style>

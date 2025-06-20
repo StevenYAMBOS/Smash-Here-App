@@ -44,6 +44,18 @@
           <li @click="select('list-guides')">Your guides</li>
         </ul>
       </li>
+      <li>
+        <div class="menu-header" @click="toggle('attachments')">
+          Attachments
+          <i
+            :class="openSection === 'attachments' ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+          />
+        </div>
+        <ul v-if="openSection === 'attachments'" class="submenu">
+          <li @click="select('create-attachment')">Create a new attachment</li>
+          <li @click="select('list-attachments')">Your attachments</li>
+        </ul>
+      </li>
     </ul>
   </nav>
 </template>

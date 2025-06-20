@@ -14,6 +14,22 @@
           <i class="pi pi-check-circle"></i>
           {{ guide.published ? 'Published' : 'Draft' }}
         </span>
+        <span v-if="props.showEstimatedReadTime">
+          <i class="pi pi-clock"></i>
+          {{ guide.estimatedReadTime ? guide.estimatedReadTime : 0 }} mins
+        </span>
+        <span v-if="props.showDifficulty">
+          <i class="pi pi-graduation-cap"></i>
+          {{ guide.difficulty ? guide.difficulty : 'easy' }}
+        </span>
+        <span v-if="props.showVersion">
+          <i class="pi pi-sync"></i>
+          {{ guide.version ? guide.version : '0.0' }}
+        </span>
+        <span v-if="props.showLanguage">
+          <i class="pi pi-language"></i>
+          {{ guide.language ? guide.language : 'No specified' }}
+        </span>
         <!-- Afficher l'auteur uniquement si showAuthor est true -->
         <span v-if="props.showAuthor" class="guide-author">
           <i class="pi pi-user"></i>
@@ -70,13 +86,21 @@ const props = withDefaults(
     showEdit?: boolean
     showDelete?: boolean
     showPublished?: boolean
+    showEstimatedReadTime?: boolean
     showPremium?: boolean
     showAuthor?: boolean
+    showDifficulty?: boolean
+    showVersion?: boolean
+    showLanguage?: boolean
   }>(),
   {
     showPublished: true,
     showPremium: true,
     showAuthor: false,
+    showEstimatedReadTime: true,
+    showDifficulty: true,
+    showVersion: true,
+    showLanguage: true,
   },
 )
 

@@ -186,6 +186,7 @@ export type Attachment = {
   alt: string
   caption: string
   type: string
+  createdAt: string
   CreatedBy: string
   UpdatedBy: string
 }
