@@ -45,7 +45,7 @@
             :showEdit="true"
             :showDelete="true"
             @view="(id) => router.push(`/roadmap/${id}`)"
-            @stats="(id) => router.push(`/dashboard/roadmpas/${id}`)"
+            @stats="(id) => router.push(`/content-builder/roadmpas/${id}`)"
             @edit="onEditRoadmap"
             @delete="openConfirmRoadmap"
           />
@@ -65,7 +65,7 @@
             :showStats="false"
             :showEdit="true"
             :showDelete="true"
-            @stats="(id) => router.push(`/dashboard/steps/${id}`)"
+            @stats="(id) => router.push(`/content-builder/steps/${id}`)"
             @edit="onEditStep"
             @delete="openConfirmStep"
           />
@@ -88,7 +88,7 @@
             :showStats="false"
             :showEdit="true"
             :showDelete="true"
-            @stats="(id) => router.push(`/dashboard/contents/${id}`)"
+            @stats="(id) => router.push(`/content-builder/contents/${id}`)"
             @edit="onEditContent"
             @delete="openConfirmContent"
           />
@@ -115,7 +115,7 @@
             :show-author="false"
             :author="state.authors.get(g.CreatedBy)"
             @view="(id) => router.push(`/guide/${id}`)"
-            @stats="(id) => router.push(`/dashboard/guides/${id}`)"
+            @stats="(id) => router.push(`/content-builder/guides/${id}`)"
             @edit="onEditGuide"
             @delete="openConfirmGuide"
           />
@@ -139,7 +139,7 @@
             :showStats="false"
             :showEdit="true"
             :showDelete="true"
-            @stats="(id: string) => router.push(`/dashboard/attachments/${id}`)"
+            @stats="(id: string) => router.push(`/content-builder/attachments/${id}`)"
             @edit="onEditAttachment"
             @delete="openConfirmAttachment"
           />

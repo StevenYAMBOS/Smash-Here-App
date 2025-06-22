@@ -25,7 +25,7 @@ const userStore = useUserStore()
 function goTo(page: 'account' | 'content-builder') {
   emit('close')
   if (page === 'account') router.push('/profile')
-  else router.push('/dashboard')
+  else router.push('/content-builder')
 }
 
 function logout() {

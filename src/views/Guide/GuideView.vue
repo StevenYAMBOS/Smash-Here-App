@@ -44,7 +44,7 @@
               Home
             </router-link>
             <i class="pi pi-angle-right breadcrumb-separator"></i>
-            <router-link to="/dashboard" class="breadcrumb-link">Content Builder</router-link>
+            <router-link to="/content-builder" class="breadcrumb-link">Content Builder</router-link>
             <i class="pi pi-angle-right breadcrumb-separator"></i>
             <span class="breadcrumb-current">{{ guide.title }}</span>
           </nav>
@@ -77,7 +77,7 @@
             </div>
 
             <!-- Footer du guide -->
-            <footer class="guide-footer">
+            <!-- <footer class="guide-footer">
               <div class="footer-info">
                 <p class="last-updated">Last updated: {{ formatDate(guide.updatedAt) }}</p>
                 <p v-if="guide.version" class="version-info">Version: {{ guide.version }}</p>
@@ -103,7 +103,7 @@
                   Share
                 </button>
               </div>
-            </footer>
+            </footer> -->
           </article>
         </div>
       </main>

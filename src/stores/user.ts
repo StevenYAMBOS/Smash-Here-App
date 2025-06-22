@@ -1,6 +1,7 @@
 // src/stores/user.ts
 
 import { defineStore } from 'pinia'
+import { useRouter } from 'vue-router'
 import type { User, Roadmap, Content, Step, Game, Guide, Attachment } from '@/types/collections'
 
 export const useUserStore = defineStore('user', {
@@ -16,12 +17,41 @@ export const useUserStore = defineStore('user', {
     guidesCreated: [] as Guide[],
     attachmentsCreated: [] as Attachment[],
   }),
+  getters: {
+    // Vérifie si l'utilisateur est connecté
+    isAuthenticated: (state) => {
+      return !!state.token && !!state.profile
+    },
+
+    // Récupère l'utilisateur actuel
+    user: (state) => state.profile,
+
+    // Vérifie si l'utilisateur a un rôle spécifique
+    hasRole: (state) => (role: string) => {
+      return state.profile?.type === role
+    },
+
+    // Vérifie si l'utilisateur est admin
+    isAdmin: (state) => {
+      return state.profile?.type === 'superadmin'
+    },
+
+    // Vérifie si l'utilisateur est coach ou admin
+    // isCoach: (state) => {
+    //   return state.profile?.type === 'coach' || state.profile?.type === 'superadmin'
+    // },
+
+    // Vérifie si l'utilisateur est un utilisateur standard
+    isUser: (state) => {
+      return state.profile?.type === 'user'
+    },
+  },
   actions: {
     setToken(t: string) {
       this.token = t
       localStorage.setItem('token', t)
     },
-    clear() {
+    logout() {
       this.token = ''
       this.profile = null
       this.games = []
@@ -33,6 +63,23 @@ export const useUserStore = defineStore('user', {
       this.attachmentsCreated = []
       this.games = []
       localStorage.removeItem('token')
+
+      // Redirection vers la page d'accueil
+      const router = useRouter()
+      router.push('/')
+    },
+    clear() {
+      this.logout()
+    },
+    setUser(userData: User) {
+      this.profile = userData
+    },
+    async login(token: string, userData: User) {
+      this.setToken(token)
+      this.setUser(userData)
+
+      // Charger les données utilisateur
+      await this.fetchProfile()
     },
     async fetchProfile() {
       if (!this.token) return
@@ -45,10 +92,10 @@ export const useUserStore = defineStore('user', {
           this.profile = await res.json()
         } else {
           // token invalide, on efface
-          this.clear()
+          this.logout()
         }
       } catch {
-        this.clear()
+        this.logout()
       }
       // après avoir chargé le profile, charger les élément créés
       await this.fetchUserRoadmaps()

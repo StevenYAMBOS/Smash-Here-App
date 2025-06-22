@@ -54,7 +54,7 @@
       </div>
 
       <!-- Statistiques -->
-      <div class="guide-stats">
+      <!-- <div class="guide-stats">
         <div class="stat-item">
           <i class="pi pi-eye stat-icon"></i>
           <span>{{ formatNumber(guide.viewsCount || 0) }} views</span>
@@ -69,11 +69,11 @@
           <i class="pi pi-comment stat-icon"></i>
           <span>{{ formatNumber(guide.commentsCount || 0) }} comments</span>
         </div>
-      </div>
+      </div> -->
 
       <!-- Actions -->
       <div class="guide-actions">
-        <button class="action-btn action-btn--primary" @click="likeGuide">
+        <!-- <button class="action-btn action-btn--primary" @click="likeGuide">
           <i class="pi pi-heart"></i>
           <span>Like</span>
         </button>
@@ -81,7 +81,7 @@
         <button class="action-btn action-btn--secondary" @click="bookmarkGuide">
           <i class="pi pi-bookmark"></i>
           <span>Bookmark</span>
-        </button>
+        </button> -->
 
         <button class="action-btn action-btn--secondary" @click="shareGuide">
           <i class="pi pi-share-alt"></i>

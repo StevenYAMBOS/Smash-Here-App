@@ -19,6 +19,7 @@ import CookiePolicyView from '@/views/Legal/CookiePolicyView.vue'
 import FAQView from '@/views/Support/FAQView.vue'
 import ContactView from '@/views/Support/ContactView.vue'
 import GuideView from '@/views/Guide/GuideView.vue'
+import { requireAuth, redirectIfAuthenticated } from './guards.ts'
 
 const routes = [
   {
@@ -35,13 +36,21 @@ const routes = [
         path: '/profile',
         name: 'profile',
         component: UserAccount,
-        meta: { title: 'My Account' },
+        meta: {
+          title: 'My Account',
+          requiresAuth: true,
+        },
+        beforeEnter: requireAuth,
       },
       {
-        path: '/dashboard',
-        name: 'dashboard',
+        path: '/content-builder',
+        name: 'content-builder',
         component: ContentBuilderView,
-        meta: { title: 'Content Builder' },
+        meta: {
+          title: 'Content Builder',
+          requiresAuth: true,
+        },
+        beforeEnter: requireAuth,
       },
       {
         path: '/terms-and-conditions',
@@ -120,12 +129,14 @@ const routes = [
         name: 'login',
         component: LoginView,
         meta: { title: 'Login' },
+        beforeEnter: redirectIfAuthenticated,
       },
       {
         path: 'register',
         name: 'register',
         component: RegisterView,
         meta: { title: 'Register' },
+        beforeEnter: redirectIfAuthenticated,
       },
     ],
   },
@@ -136,7 +147,7 @@ export const router = createRouter({
   routes,
 })
 
-// Guard de navigation pour mettre à jour le titre de la page
+// Guard global pour mettre à jour le titre et vérifier l'auth
 router.beforeEach((to, from, next) => {
   // Définir le titre de la page
   const baseTitle = 'Smash Here'

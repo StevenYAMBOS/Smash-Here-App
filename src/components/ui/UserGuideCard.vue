@@ -23,11 +23,11 @@
           {{ guide.difficulty ? guide.difficulty : 'easy' }}
         </span>
         <span v-if="props.showVersion">
-          <i class="pi pi-sync"></i>
+          <i class="pi pi-tag meta-icon"></i>
           {{ guide.version ? guide.version : '0.0' }}
         </span>
         <span v-if="props.showLanguage">
-          <i class="pi pi-language"></i>
+          <i class="pi pi-globe meta-icon"></i>
           {{ guide.language ? guide.language : 'No specified' }}
         </span>
         <!-- Afficher l'auteur uniquement si showAuthor est true -->
