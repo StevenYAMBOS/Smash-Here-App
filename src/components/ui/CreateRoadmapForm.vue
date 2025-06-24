@@ -162,9 +162,15 @@ async function submit() {
   formData.append('title', title.value)
   formData.append('subTitle', subTitle.value)
   formData.append('description', description.value)
-  formData.append('cover', coverFile.value)
-  formData.append('published', published.value.toString())
-  // formData.append('premium', premium.value.toString())
+  if (coverFile.value) {
+    formData.append('cover', coverFile.value)
+  }
+  if (published.value) {
+    formData.append('published', published.value.toString())
+  }
+  // if (premium.value) {
+  //   formData.append('premium', premium.value.toString())
+  // }
 
   try {
     const res = await fetch(

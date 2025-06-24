@@ -132,8 +132,8 @@ const toggleBookmark = async () => {
     const result = await userStore.toggleBookmark(props.roadmap)
 
     if (result.success) {
-      // Émettre l'événement pour informer le parent du changement
-      emit('bookmarkChanged', props.roadmap.id, result.isBookmarked)
+      const bookmarkStatus = result.isBookmarked !== undefined ? result.isBookmarked : false
+      emit('bookmarkChanged', props.roadmap.id, bookmarkStatus)
 
       // Afficher le message de succès
       toast.success(result.action === 'added' ? 'Save in bookmarks' : 'Removed from bookmarks')

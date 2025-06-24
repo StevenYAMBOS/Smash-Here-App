@@ -169,7 +169,7 @@
           </div>
 
           <div v-else class="file-preview">
-            <img :src="imagePreview" alt="Preview" class="preview-image" />
+            <img :src="imagePreview || ''" alt="Preview" class="preview-image" />
             <div class="file-info">
               <p class="file-name">{{ formData.image.name }}</p>
               <p class="file-size">{{ formatFileSize(formData.image.size) }}</p>
@@ -495,18 +495,22 @@ async function submitForm() {
 }
 
 function resetForm() {
-  Object.keys(formData).forEach((key) => {
-    if (key === 'priority') {
-      formData[key as keyof typeof formData] = 'medium'
-    } else if (key === 'agreeToPrivacy') {
-      formData[key as keyof typeof formData] = false
-    } else if (key === 'image') {
-      formData[key as keyof typeof formData] = null
-    } else {
-      formData[key as keyof typeof formData] = ''
-    }
-  })
+  // Objet avec les valeurs par défaut
+  const defaultFormData = {
+    email: '',
+    name: '',
+    category: '',
+    priority: 'medium' as const,
+    subject: '',
+    message: '',
+    image: null as File | null,
+    agreeToPrivacy: false,
+  }
 
+  // Réassigner toutes les propriétés d'un coup
+  Object.assign(formData, defaultFormData)
+
+  // Nettoyer l'aperçu et l'input file
   removeFile()
   showSuccess.value = false
 }

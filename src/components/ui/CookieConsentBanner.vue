@@ -13,7 +13,7 @@
         <!-- Message principal -->
         <div class="banner-message">
           <p>
-            We use cookies to enhance your gaming experience, analyze site traffic, and provide 
+            We use cookies to enhance your gaming experience, analyze site traffic, and provide
             personalized content. By clicking "Accept All", you consent to our use of cookies.
           </p>
           <router-link to="/legal/cookies" class="privacy-link">
@@ -23,26 +23,26 @@
 
         <!-- Boutons d'action -->
         <div class="banner-actions">
-          <button 
-            class="btn btn--secondary" 
+          <button
+            class="btn btn--secondary"
             @click="rejectNonEssentialCookies"
             aria-label="Reject non-essential cookies"
           >
             <i class="pi pi-times"></i>
             Reject All
           </button>
-          
-          <button 
-            class="btn btn--outline" 
+
+          <button
+            class="btn btn--outline"
             @click="showCustomizeModal = true"
             aria-label="Customize cookie preferences"
           >
             <i class="pi pi-cog"></i>
             Customize
           </button>
-          
-          <button 
-            class="btn btn--primary" 
+
+          <button
+            class="btn btn--primary"
             @click="acceptAllCookies"
             aria-label="Accept all cookies"
           >
@@ -58,8 +58,8 @@
           <div class="customize-modal" @click.stop role="dialog" aria-labelledby="customize-modal-title">
             <div class="modal-header">
               <h3 id="customize-modal-title" class="modal-title">Cookie Preferences</h3>
-              <button 
-                class="modal-close" 
+              <button
+                class="modal-close"
                 @click="closeCustomizeModal"
                 aria-label="Close preferences modal"
               >
@@ -78,9 +78,9 @@
                 <div class="cookie-option">
                   <div class="option-header">
                     <label class="option-label">
-                      <input 
-                        type="checkbox" 
-                        v-model="tempPreferences.necessary" 
+                      <input
+                        type="checkbox"
+                        v-model="tempPreferences.necessary"
                         disabled
                         class="option-checkbox"
                       >
@@ -90,7 +90,7 @@
                     </label>
                   </div>
                   <p class="option-description">
-                    These cookies are essential for the website to function properly. 
+                    These cookies are essential for the website to function properly.
                     They include authentication and session management.
                   </p>
                 </div>
@@ -99,8 +99,8 @@
                 <div class="cookie-option">
                   <div class="option-header">
                     <label class="option-label">
-                      <input 
-                        type="checkbox" 
+                      <input
+                        type="checkbox"
                         v-model="tempPreferences.functional"
                         class="option-checkbox"
                       >
@@ -117,8 +117,8 @@
                 <div class="cookie-option">
                   <div class="option-header">
                     <label class="option-label">
-                      <input 
-                        type="checkbox" 
+                      <input
+                        type="checkbox"
                         v-model="tempPreferences.analytics"
                         class="option-checkbox"
                       >
@@ -135,8 +135,8 @@
                 <div class="cookie-option">
                   <div class="option-header">
                     <label class="option-label">
-                      <input 
-                        type="checkbox" 
+                      <input
+                        type="checkbox"
                         v-model="tempPreferences.thirdParty"
                         class="option-checkbox"
                       >
@@ -173,7 +173,7 @@ import { useCookieConsent, type CookiePreferences } from '@/composables/useCooki
 // Utilisation du composable
 const {
   showBanner,
-  cookiePreferences,
+  // cookiePreferences,
   acceptAllCookies,
   rejectNonEssentialCookies,
   saveCustomPreferences: savePreferences,
@@ -190,11 +190,11 @@ const tempPreferences = ref<CookiePreferences>({
 })
 
 // Ouvrir le modal de personnalisation
-const openCustomizeModal = () => {
-  // Copier les préférences actuelles
-  tempPreferences.value = { ...cookiePreferences.value }
-  showCustomizeModal.value = true
-}
+// const openCustomizeModal = () => {
+//   // Copier les préférences actuelles
+//   tempPreferences.value = { ...cookiePreferences.value }
+//   showCustomizeModal.value = true
+// }
 
 // Fermer le modal de personnalisation
 const closeCustomizeModal = () => {

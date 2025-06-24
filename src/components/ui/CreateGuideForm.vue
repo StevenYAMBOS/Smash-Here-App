@@ -401,7 +401,23 @@ async function submit() {
   formData.append('title', title.value)
   formData.append('subTitle', subTitle.value)
   formData.append('description', description.value)
-  formData.append('cover', coverFile.value)
+
+  // Ajouter les champs optionnels seulement s'ils ont une valeur
+  if (difficulty.value) {
+    formData.append('difficulty', difficulty.value)
+  }
+  if (language.value) {
+    formData.append('language', language.value)
+  }
+  if (version.value) {
+    formData.append('version', version.value)
+  }
+
+  // Vérifier que le fichier existe avant de l'ajouter
+  if (coverFile.value) {
+    formData.append('cover', coverFile.value)
+  }
+
   formData.append('published', published.value.toString())
   // formData.append('premium', premium.value.toString())
 

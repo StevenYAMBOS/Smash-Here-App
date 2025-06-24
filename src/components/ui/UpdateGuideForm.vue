@@ -528,7 +528,7 @@
               <!-- Sélecteur de couleur -->
               <input
                 type="color"
-                @input="editor.chain().focus().setColor($event.target.value).run()"
+                @input="handleColorChange"
                 :value="editor.getAttributes('textStyle').color || '#fef9e7'"
                 class="toolbar-color"
                 title="Text Color"
@@ -1027,6 +1027,15 @@ function insertSelectedAttachments() {
 
   // Message de confirmation
   toast.success(`${selectedAttachments.value.length} attachment(s) inserted successfully!`)
+}
+
+function handleColorChange(event: Event) {
+  const target = event.target as HTMLInputElement
+
+  // Vérifier que l'éditeur existe et que la valeur est disponible
+  if (editor.value && target?.value) {
+    editor.value.chain().focus().setColor(target.value).run()
+  }
 }
 
 // Ajouter cette fonction après les autres fonctions

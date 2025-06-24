@@ -304,7 +304,7 @@ import type { Roadmap, Step } from '@/types/collections'
 
 const toast = useToast()
 const userStore = useUserStore()
-const { fitView, addEdges, applyNodeChanges, applyEdgeChanges } = useVueFlow()
+const { fitView, applyNodeChanges, applyEdgeChanges } = useVueFlow()
 
 // Props & Événements
 const props = defineProps<{
@@ -677,7 +677,7 @@ function onDrop(event: DragEvent) {
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function onNodesChange(changes: any[]) {
-  nodes.value = applyNodeChanges(changes, nodes.value)
+  nodes.value = applyNodeChanges(changes)
 }
 
 // Relier les étapes entre-elles
@@ -697,7 +697,7 @@ async function onConnect(params: { source: string; target: string }) {
     deletable: true,
     ...defaultEdgeOptions,
   }
-  edges.value = addEdges([newEdge], edges.value)
+  edges.value = [...edges.value, newEdge]
 
   const sourceStep = selectedSteps.value.find((s) => s.id === params.source)
   const targetStep = selectedSteps.value.find((s) => s.id === params.target)
@@ -822,7 +822,7 @@ async function onEdgesChange(changes: any[]) {
   }
 
   // Appliquer visuel
-  edges.value = applyEdgeChanges(changes, edges.value)
+  edges.value = applyEdgeChanges(changes)
 }
 
 async function submitStructure() {

@@ -42,7 +42,7 @@ import { defineProps, defineEmits, withDefaults } from 'vue'
 import type { Step } from '@/types/collections'
 import Button from 'primevue/button'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     step: Step
     showStats?: boolean
@@ -52,7 +52,7 @@ const props = withDefaults(
   {},
 )
 
-const emit = defineEmits<{
+defineEmits<{
   (e: 'stats', id: string): void
   (e: 'edit', id: string): void
   (e: 'delete', id: string): void

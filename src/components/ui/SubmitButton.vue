@@ -49,8 +49,8 @@ const emit = defineEmits<{
   (e: 'click'): void
 }>()
 
-function handleClick(e: MouseEvent) {
-  if (!props.disabled && !props.loading) emit('click', e)
+function handleClick() {
+  if (!props.disabled && !props.loading) emit('click')
 }
 
 // Calcul de la classe en fonction de la variante

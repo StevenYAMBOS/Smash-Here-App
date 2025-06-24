@@ -309,7 +309,8 @@ const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const file = ref<File | null>(null)
-const avatarPreview = ref<string | null>(null)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const avatarPreview = ref<string | any>(null)
 const agreeToTerms = ref(false)
 const loading = ref(false)
 const error = ref('')
@@ -346,7 +347,8 @@ const passwordStrength = computed(() => {
   if (/[!@#$%^&*(),.?":{}|<>]/.test(pass)) score++
   else feedback.push('special character')
 
-  const strength = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const strength: any = {
     0: { class: 'very-weak', width: '20%', text: 'Very Weak' },
     1: { class: 'weak', width: '40%', text: 'Weak' },
     2: { class: 'fair', width: '60%', text: 'Fair' },

@@ -48,7 +48,7 @@ export const useUserStore = defineStore('user', {
     },
   },
   actions: {
-        // Méthode pour initialiser le store depuis localStorage
+    // Méthode pour initialiser le store depuis localStorage
     initializeFromStorage() {
       const token = localStorage.getItem('token')
       if (token && token.trim() !== '') {

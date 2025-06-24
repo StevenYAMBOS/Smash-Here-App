@@ -4,7 +4,7 @@
   <nav class="navbar">
     <!-- Barre de progression de défilement -->
     <div class="scroll-progress" :style="{ width: scrollProgress + '%' }"></div>
-    
+
     <div class="navbar-container">
       <!-- Logo avec effet hover amélioré -->
       <router-link to="/" class="navbar-logo" @click="closeAllMenus">
@@ -16,20 +16,18 @@
 
       <!-- Desktop Navigation Menu avec indicateur actif -->
       <div class="navbar-menu" :class="{ active: isMobileMenuOpen }">
-        <router-link 
-          to="/" 
-          class="navbar-link" 
-          :class="{ 'router-link-active': $route.path === '/' }"
+        <router-link
+          to="/"
+          class="navbar-link"
           @click="closeAllMenus"
         >
           <i class="pi pi-home link-icon"></i>
           <span>Home</span>
           <div class="link-indicator"></div>
         </router-link>
-        <router-link 
-          to="/games" 
+        <router-link
+          to="/games"
           class="navbar-link"
-          :class="{ 'router-link-active': $route.path.startsWith('/game') }"
           @click="closeAllMenus"
         >
           <i class="pi pi-gamepad2 link-icon"></i>
@@ -53,7 +51,7 @@
           <div class="notification-badge" v-if="hasNotifications">
             <span>{{ notificationCount }}</span>
           </div>
-          
+
           <div class="profile-wrapper" @click="toggleUserMenu">
             <div class="profile-ring"></div>
             <img :src="userStore.profile.profilePicture" alt="Profile" class="profile-pic" />
@@ -64,9 +62,9 @@
 
           <!-- Menu utilisateur avec positionnement dynamique -->
           <Transition name="user-menu" appear>
-            <UserMenu 
-              v-if="isUserMenuOpen" 
-              @close="closeUserMenu" 
+            <UserMenu
+              v-if="isUserMenuOpen"
+              @close="closeUserMenu"
               class="user-menu-positioned"
               :style="userMenuStyle"
             />
@@ -113,24 +111,24 @@ const userMenuStyle = computed(() => {
   if (!profileContainer.value || !isUserMenuOpen.value) {
     return {}
   }
-  
+
   const rect = profileContainer.value.getBoundingClientRect()
   const menuWidth = 280 // Largeur approximative du menu utilisateur
   const windowWidth = window.innerWidth
   const spacing = 16 // Espacement depuis le bord
-  
+
   // Calculer la position horizontale
   let right = windowWidth - rect.right
-  
+
   // Si le menu dépasserait à gauche, l'ajuster
   if (rect.right - menuWidth < spacing) {
     right = spacing
   }
-  
+
   // Modification principale : positionner le menu sous la navbar
   // au lieu de sous l'image de profil pour éviter qu'il soit coupé
   const navbarHeight = 105 // Hauteur approximative de la navbar
-  
+
   return {
     position: 'fixed',
     // Positionner le menu juste en dessous de la navbar
@@ -150,7 +148,7 @@ const updateScrollProgress = () => {
 // Fonction pour gérer les clics en dehors du menu utilisateur
 const handleClickOutside = (event: Event) => {
   const target = event.target as Element
-  
+
   // Si le clic est en dehors du conteneur du profil, fermer le menu utilisateur
   if (isUserMenuOpen.value && profileContainer.value && !profileContainer.value.contains(target)) {
     isUserMenuOpen.value = false
@@ -200,7 +198,7 @@ const toggleUserMenu = async (event?: Event) => {
   if (isMobileMenuOpen.value) {
     isMobileMenuOpen.value = false
   }
-  
+
   // Attendre le prochain tick pour que le DOM soit mis à jour
   if (isUserMenuOpen.value) {
     await nextTick()

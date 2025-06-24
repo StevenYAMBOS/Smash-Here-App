@@ -114,6 +114,8 @@ const fetchRoadmapAuthors = async () => {
           StepsCreated: [],
           ContentsCreated: [],
           Comments: [],
+          GuidesCreated: [],
+          AttachmentsCreated: []
         })
       }
     })
