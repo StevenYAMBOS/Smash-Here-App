@@ -5,8 +5,7 @@ import type { User, Roadmap, Content, Step, Game, Guide, Attachment } from '@/ty
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    // Si un token existe dans localStorage, on l'utilise
-    token: (localStorage.getItem('token') ?? '') as string,
+    token: (localStorage.getItem('token') ?? '') as string, // Si un token existe dans localStorage, on l'utilise
     profile: null as User | null,
     games: [] as Game[],
     roadmapsCreated: [] as Roadmap[],
@@ -19,7 +18,10 @@ export const useUserStore = defineStore('user', {
   getters: {
     // Vérifie si l'utilisateur est connecté
     isAuthenticated: (state) => {
-      return !!state.token && !!state.profile
+      // Vérifier le token dans le state ET dans localStorage
+      const storeToken = state.token
+      const localToken = localStorage.getItem('token')
+      return !!(storeToken || localToken) && !!state.profile
     },
 
     // Récupère l'utilisateur actuel
@@ -46,6 +48,20 @@ export const useUserStore = defineStore('user', {
     },
   },
   actions: {
+        // Méthode pour initialiser le store depuis localStorage
+    initializeFromStorage() {
+      const token = localStorage.getItem('token')
+      if (token && token.trim() !== '') {
+        this.token = token
+        // récupérer le profil si nécessaire
+        if (!this.profile) {
+          this.fetchProfile().catch(() => {
+            // Si la récupération du profil échoue, nettoyer le token
+            this.logout()
+          })
+        }
+      }
+    },
     setToken(t: string) {
       this.token = t
       localStorage.setItem('token', t)

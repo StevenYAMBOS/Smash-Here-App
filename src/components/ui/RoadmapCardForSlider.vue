@@ -87,10 +87,10 @@
         </span>
 
         <!-- Indicateur premium si applicable -->
-        <span v-if="hasPremiumContent" class="premium-badge">
+        <!-- <span v-if="hasPremiumContent" class="premium-badge">
           <i class="pi pi-star"></i>
           Premium
-        </span>
+        </span> -->
       </div>
 
       <!-- Barre de progression des vues (effet visuel) -->
@@ -122,9 +122,9 @@ const isTrending = computed(() => {
   return props.roadmap.viewsPerMonth > 1000
 })
 
-const hasPremiumContent = computed(() => {
-  return stepsCount.value > 5
-})
+// const hasPremiumContent = computed(() => {
+//   return stepsCount.value > 5
+// })
 
 const popularityPercentage = computed(() => {
   const maxViews = 10000

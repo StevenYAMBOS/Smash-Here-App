@@ -11,6 +11,7 @@
 
       <div class="attachment-actions">
         <button
+          v-if="showEdit"
           @click="$emit('edit', attachment.id)"
           class="action-btn edit-btn"
           title="Edit attachment"
@@ -18,6 +19,7 @@
           <i class="pi pi-pencil"></i>
         </button>
         <button
+          v-if="showDelete"
           @click="$emit('delete', attachment.id)"
           class="action-btn delete-btn"
           title="Delete attachment"
@@ -102,6 +104,8 @@ import type { Attachment } from '@/types/collections'
 
 const props = defineProps<{
   attachment: Attachment
+  showEdit?: boolean
+  showDelete?: boolean
 }>()
 
 defineEmits<{
@@ -148,7 +152,7 @@ function getFileExtension(fileName: string): string {
 // Fonction pour formater la date
 function formatDate(dateString: string): string {
   const date = new Date(dateString)
-  return new Intl.DateTimeFormat('fr-FR', {
+  return new Intl.DateTimeFormat('en-US', {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',
@@ -164,9 +168,9 @@ function openPreview() {
 async function copyUrl() {
   try {
     await navigator.clipboard.writeText(props.attachment.url)
-    toast.success('URL copiée dans le presse-papiers')
+    toast.success('Copy')
   } catch {
-    toast.error("Impossible de copier l'URL")
+    toast.error('Error copy')
   }
 }
 

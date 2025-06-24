@@ -311,6 +311,7 @@
           <!-- <div class="field">
             <label>Guide's games</label>
             <MultiSelect
+              :maxSelectedLabels="4"
               id="games_label"
               v-model="selectedGameIds"
               :options="availableGames"
@@ -410,6 +411,7 @@
             <h3>Available Attachments</h3>
             <div class="attachments-selector">
               <MultiSelect
+                :maxSelectedLabels="4"
                 v-model="selectedAttachments"
                 :options="userStore.attachmentsCreated"
                 optionLabel="fileName"

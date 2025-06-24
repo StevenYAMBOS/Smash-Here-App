@@ -13,24 +13,20 @@ export function requireAuth(
 ) {
   const userStore = useUserStore()
 
-  // Vérifier si l'utilisateur est connecté
-  if (!userStore.isAuthenticated) {
-    // Stocker la route de destination pour rediriger après connexion
-    sessionStorage.setItem('redirectAfterLogin', to.fullPath)
+  // Vérifier d'abord le token dans le localStorage directement
+  // car le store pourrait ne pas être encore initialisé lors du rafraîchissement
+  const tokenInStorage = localStorage.getItem('token')
 
-    // Rediriger vers la page de connexion
-    next({
-      name: 'login',
-      query: {
-        redirect: to.fullPath,
-        message: 'Please log in to access this page',
-      },
-    })
-    return
+  if (tokenInStorage && tokenInStorage.trim() !== '') {
+    // S'assurer que le store a le token
+    if (!userStore.token) {
+      userStore.setToken(tokenInStorage)
+    }
+    next()
+  } else {
+    // Pas de token valide, rediriger vers login
+    next('/auth/login')
   }
-
-  // L'utilisateur est connecté, autoriser l'accès
-  next()
 }
 
 /**
@@ -41,24 +37,15 @@ export function redirectIfAuthenticated(
   from: RouteLocationNormalized,
   next: NavigationGuardNext,
 ) {
-  const userStore = useUserStore()
 
-  if (userStore.isAuthenticated) {
-    // Vérifier s'il y a une redirection stockée
-    const redirectPath = sessionStorage.getItem('redirectAfterLogin')
-    if (redirectPath) {
-      sessionStorage.removeItem('redirectAfterLogin')
-      next(redirectPath)
-      return
-    }
+  // Vérifier le token dans le localStorage directement
+  const tokenInStorage = localStorage.getItem('token')
 
-    // Sinon rediriger vers le dashboard
-    next({ name: 'dashboard' })
-    return
+  if (tokenInStorage && tokenInStorage.trim() !== '') {
+    next('/')
+  } else {
+    next()
   }
-
-  // L'utilisateur n'est pas connecté, continuer vers la page d'auth
-  next()
 }
 
 /**

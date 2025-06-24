@@ -241,6 +241,28 @@ const emit = defineEmits<{
   font-weight: bold;
   margin-bottom: var(--spacing-md);
 }
+.field input,
+.field textarea {
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-medium-gray);
+  border-radius: var(--radius-md);
+  background: var(--color-dark-gray);
+  font-size: var(--font-size-base);
+  font-family: var(--font-secondary);
+  color: var(--color-cream);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
 .field input[type='text'],
 .field input[type='url'],
 .field textarea,

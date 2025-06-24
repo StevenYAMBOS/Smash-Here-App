@@ -68,7 +68,7 @@
             @bookmarkChanged="handleBookmarkChange"
           />
         </div>
-        <p v-else class="status">Vous n'avez créé aucune roadmap.</p>
+        <p v-else class="status">No roadmaps.</p>
       </template>
 
       <template v-if="selectedTab === 'bookmarks'">
@@ -112,6 +112,26 @@
           />
         </div>
         <p v-else class="status">No guides.</p>
+      </template>
+
+      <template v-if="selectedTab === 'attachments'">
+        <div class="roadmaps-list-container" v-if="userStore.attachmentsCreated?.length">
+          <SearchBar placeholder="Search for your attachments" v-model="searchText" />
+          <br />
+          <UserAttachmentCard
+            v-for="attachment in filteredAttachments"
+            :key="attachment.id"
+            :attachment="attachment"
+            :showView="false"
+            :showEdit="false"
+            :showDelete="false"
+            :show-premium="false"
+            :show-published="false"
+            :show-author="true"
+            :author="state.authors.get(attachment.CreatedBy)"
+          />
+        </div>
+        <p v-else class="status">No attachments.</p>
       </template>
     </section>
 
@@ -221,6 +241,7 @@ import UpdateProfileForm from '@/components/ui/UpdateProfileForm.vue'
 import SubmitButton from '@/components/ui/SubmitButton.vue'
 import SearchBar from '@/components/ui/SearchBar.vue'
 import type { User } from '@/types/collections'
+import UserAttachmentCard from '@/components/ui/UserAttachmentCard.vue'
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -365,6 +386,12 @@ const filteredGuides = computed(() => {
   const list = userStore.guidesCreated || []
   if (!searchText.value.trim()) return list
   return list.filter((guide) => guide.title.toLowerCase().includes(searchText.value.toLowerCase()))
+})
+
+const filteredAttachments = computed(() => {
+  const list = userStore.attachmentsCreated || []
+  if (!searchText.value.trim()) return list
+  return list.filter((attachment) => attachment.fileName.toLowerCase().includes(searchText.value.toLowerCase()))
 })
 
 const handleBookmarkChange = async (roadmapId: string, isBookmarked: boolean) => {

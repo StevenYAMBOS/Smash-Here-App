@@ -15,8 +15,9 @@
         <option value="" disabled>Select a type</option>
         <option value="video">Video</option>
         <option value="article">Article</option>
-        <option value="page">Page (X, Reddit etc...)</option>
+        <option value="page">Page (X, Reddit, website...)</option>
         <option value="roadmap">Roadmap</option>
+        <option value="roadmap">Guide (Smash Here)</option>
       </select>
     </div>
 
@@ -57,25 +58,27 @@ async function submit() {
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${userStore.token}` },
-
         body: JSON.stringify(payload),
       },
     )
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     await res.json()
 
-    // userStore.contentsCreated.unshift(newContent)
+    await userStore.fetchProfile()
     toast.success('Content created successfully!', { position: 'top-right' })
-    // Réinitialisation du formulaire
+
+    // Réinitialisation du formulaire avant la navigation
     title.value = ''
     type.value = ''
     link.value = ''
-    await userStore.fetchProfile()
+
+    // Navigation vers la liste des contenus
     emit('navigate', 'list-contents')
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
+  } catch (err) {
     console.error(err)
-    toast.error(err.message || 'Failed to create content', { position: 'top-right' })
+    toast.error('Failed to create content', { position: 'top-right' })
+  } finally {
+    loading.value = false
   }
 }
 

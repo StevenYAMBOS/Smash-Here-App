@@ -18,10 +18,10 @@
           <i class="pi pi-check-circle"></i>
           {{ roadmap.published ? 'Published' : 'Draft' }}
         </span>
-        <span v-if="props.showPremium">
+        <!-- <span v-if="props.showPremium">
           <i class="pi pi-star"></i>
           {{ roadmap.premium ? 'Premium' : 'Free' }}
-        </span>
+        </span> -->
         <!-- Afficher l'auteur uniquement si showAuthor est true -->
         <span v-if="props.showAuthor" class="roadmap-author">
           <i class="pi pi-user"></i>

@@ -11,6 +11,10 @@
       <span>{{ (profile.RoadmapsCreated ?? []).length }}</span>
     </div>
     <div class="detail-item">
+      <label>Guides created</label>
+      <span>{{ (profile.GuidesCreated ?? []).length }}</span>
+    </div>
+    <div class="detail-item">
       <label>Bookmarks</label>
       <span>{{ (profile.Bookmarks ?? []).length }}</span>
     </div>

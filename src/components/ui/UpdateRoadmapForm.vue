@@ -82,6 +82,7 @@
               optionValue="id"
               display="chip"
               placeholder="Select games"
+              :maxSelectedLabels="4"
               :showClear="true"
               class="p-multiselect-field"
             >
@@ -196,6 +197,7 @@
           <div class="field">
             <label>Available Steps</label>
             <MultiSelect
+              :maxSelectedLabels="4"
               v-model="selectedStepIds"
               :options="availableSteps"
               optionLabel="title"
@@ -683,7 +685,7 @@ async function onConnect(params: { source: string; target: string }) {
   if (params.source === params.target) return
 
   const exists = edges.value.some(
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (e: any) => e.source === params.source && e.target === params.target,
   )
   if (exists) return
@@ -832,7 +834,7 @@ async function submitStructure() {
 
     const formData = new FormData()
 
-    // 🔧 CORRECTION : Gérer le cas où il n'y a pas d'étapes
+    // Gérer le cas où il n'y a pas d'étapes
     if (stepIds.length > 0) {
       formData.append('Steps', stepIds.join(','))
     } else {
@@ -858,6 +860,7 @@ async function submitStructure() {
     toast.success('Roadmap updated with success !')
     await userStore.fetchUserSteps()
     await userStore.fetchUserRoadmaps()
+    emit('navigate', 'list-roadmaps')
   } catch (err) {
     console.error('Erreur mise à jour Steps :', err)
     toast.error('Unable to update structure.')

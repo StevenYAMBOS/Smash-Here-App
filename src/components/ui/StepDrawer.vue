@@ -76,7 +76,7 @@ defineEmits<{
   box-shadow: -8px 0 16px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
-  z-index: 101;
+  z-index: 9999;
   overflow-y: auto;
   transition: transform 0.3s ease-in;
 }

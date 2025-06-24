@@ -21,6 +21,7 @@
     <div class="field">
       <label>Associate with roadmaps</label>
       <MultiSelect
+        :maxSelectedLabels="4"
         id="over_label_roadmaps"
         class="p-multiselect-field"
         v-model="selectedRoadmaps"
@@ -48,6 +49,7 @@
       <label>Associate with contents</label>
       <MultiSelect
         id="over_label_content"
+        :maxSelectedLabels="4"
         class="p-multiselect-field"
         v-model="selectedContents"
         :options="availableContents"

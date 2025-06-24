@@ -13,8 +13,9 @@
         <option value="" disabled>Select a type</option>
         <option value="video">Video</option>
         <option value="article">Article</option>
-        <option value="page">Page</option>
+        <option value="page">Page (X, Reddit, website...)</option>
         <option value="roadmap">Roadmap</option>
+        <option value="roadmap">Guide (Smash Here)</option>
       </select>
     </div>
     <div class="field">
@@ -24,6 +25,7 @@
     <div class="field">
       <label>Associate with steps</label>
       <MultiSelect
+        :maxSelectedLabels="4"
         id="over_label"
         class="p-multiselect-field"
         v-model="selectedSteps"

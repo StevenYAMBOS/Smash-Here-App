@@ -35,7 +35,10 @@
         <CreateRoadmapForm />
       </template>
       <template v-else-if="selectedTab === 'list-roadmaps'">
-        <div class="cards-grid">
+        <div v-if="filteredRoadmaps.length === 0" class="no-items-message">
+          <p class="status">No roadmaps</p>
+        </div>
+        <div v-else class="cards-grid">
           <UserRoadmapCard
             v-for="rm in filteredRoadmaps"
             :key="rm.id"
@@ -57,7 +60,10 @@
 
       <!-- ***************** ÉTAPES ***************** -->
       <template v-if="selectedTab === 'list-steps'">
-        <div class="cards-grid">
+        <div v-if="filteredSteps.length === 0" class="no-items-message">
+          <p class="status">No steps</p>
+        </div>
+        <div v-else class="cards-grid">
           <UserStepCard
             v-for="st in filteredSteps"
             :key="st.id"
@@ -80,7 +86,10 @@
 
       <!-- ***************** CONTENUS ***************** -->
       <template v-if="selectedTab === 'list-contents'">
-        <div class="cards-grid">
+        <div v-if="filteredContents.length === 0" class="no-items-message">
+          <p class="status">No contents</p>
+        </div>
+        <div v-else class="cards-grid">
           <UserContentCard
             v-for="c in filteredContents"
             :key="c.id"
@@ -103,7 +112,10 @@
 
       <!-- ***************** GUIDES ***************** -->
       <template v-if="selectedTab === 'list-guides'">
-        <div class="cards-grid">
+        <div v-if="filteredGuides.length === 0" class="no-items-message">
+          <p class="status">No guides</p>
+        </div>
+        <div v-else class="cards-grid">
           <UserGuideCard
             v-for="g in filteredGuides"
             :key="g.id"
@@ -130,7 +142,10 @@
 
       <!-- ***************** ATTACHMENT ***************** -->
       <template v-if="selectedTab === 'list-attachments'">
-        <div class="cards-grid">
+        <div v-if="filteredAttachments.length === 0" class="no-items-message">
+          <p class="status">No attachments</p>
+        </div>
+        <div v-else class="cards-grid">
           <UserAttachmentCard
             v-for="a in filteredAttachments"
             :key="a.id"
