@@ -38,7 +38,7 @@ const props = defineProps({
   /** Pleine largeur */
   fullWidth: { type: Boolean, default: false },
   /** Variante de style ('primary' ou 'secondary') */
-  variant: { type: String as () => 'primary' | 'secondary', default: 'primary' },
+  variant: { type: String as () => 'primary' | 'secondary' | 'danger', default: 'primary' },
   /** Tooltip (title) */
   tooltip: { type: String, default: '' },
   /** aria-label pour accessibilité */

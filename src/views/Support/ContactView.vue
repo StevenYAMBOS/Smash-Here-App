@@ -48,15 +48,15 @@
           <!-- Alternative Contact Methods -->
           <div class="info-card">
             <h3>
-              <i class="pi pi-phone"></i>
-              Other Ways to Reach Us
+              <i class="pi pi-globe"></i>
+              Other ways to reach us
             </h3>
 
             <div class="contact-methods">
-              <a href="#" class="contact-method discord">
-                <i class="pi pi-discord"></i>
+              <a href="https://x.com/SmashHere" target="_blank" class="contact-method twitter">
+                <i class="pi pi-twitter"></i>
                 <div class="method-info">
-                  <h4>Discord Community</h4>
+                  <h4>X Community</h4>
                   <p>Join our active community for real-time support</p>
                   <span class="method-status online">Online now</span>
                 </div>
@@ -65,16 +65,16 @@
               <a href="mailto:smashhere@contact.com" class="contact-method email">
                 <i class="pi pi-envelope"></i>
                 <div class="method-info">
-                  <h4>Direct Email</h4>
+                  <h4>Direct email</h4>
                   <p>smashhere@contact.com</p>
                   <span class="method-status">24h response</span>
                 </div>
               </a>
 
-              <a href="/support/faq" class="contact-method faq">
+              <a href="/faq" class="contact-method faq">
                 <i class="pi pi-question-circle"></i>
                 <div class="method-info">
-                  <h4>FAQ & Knowledge Base</h4>
+                  <h4>FAQ</h4>
                   <p>Find instant answers to common questions</p>
                   <span class="method-status">Instant</span>
                 </div>

@@ -28,10 +28,20 @@ function goTo(page: 'account' | 'content-builder') {
   else router.push('/content-builder')
 }
 
-function logout() {
-  emit('close')
-  userStore.clear()
-  router.push('/auth/login')
+async function logout() {
+  try {
+    emit('close')
+
+    // Nettoyer le store (sans redirection)
+    userStore.clear()
+
+    // Redirection vers la page de login
+    await router.push('/auth/login')
+
+  } catch (error) {
+    console.error('Erreur lors de la déconnexion:', error)
+    router.push('/auth/login')
+  }
 }
 </script>
 

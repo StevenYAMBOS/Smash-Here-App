@@ -39,7 +39,7 @@
 
         <div v-if="guide.estimatedReadTime" class="meta-item">
           <i class="pi pi-clock meta-icon"></i>
-          <span>{{ guide.estimatedReadTime }} min read</span>
+          <span>{{ guide.estimatedReadTime }} mins read</span>
         </div>
 
         <div v-if="guide.language" class="meta-item">
@@ -153,18 +153,18 @@ const formatDate = (dateString: string): string => {
   })
 }
 
-const formatNumber = (num: number): string => {
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + 'M'
-  } else if (num >= 1000) {
-    return (num / 1000).toFixed(0) + 'K'
-  }
-  return num.toString()
-}
+// const formatNumber = (num: number): string => {
+//   if (num >= 1000000) {
+//     return (num / 1000000).toFixed(1) + 'M'
+//   } else if (num >= 1000) {
+//     return (num / 1000).toFixed(0) + 'K'
+//   }
+//   return num.toString()
+// }
 
 // Actions
-const likeGuide = () => emit('like')
-const bookmarkGuide = () => emit('bookmark')
+// const likeGuide = () => emit('like')
+// const bookmarkGuide = () => emit('bookmark')
 const shareGuide = () => emit('share')
 
 const scrollToContent = () => {

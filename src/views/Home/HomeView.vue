@@ -4,6 +4,7 @@
 import HeaderMenu from '@/components/layout/HeaderMenu.vue'
 // import NumbersCard from '@/components/layout/NumbersCard.vue'
 import GamesSlider from '@/components/ui/GamesSlider.vue'
+import GuidesSlider from '@/components/ui/GuidesSlider.vue'
 import RoadmapsSlider from '@/components/ui/RoadmapsSlider.vue'
 import { usePageTitle } from '@/composables/usePageTitle'
 import { onMounted, onUnmounted } from 'vue'
@@ -44,6 +45,14 @@ onUnmounted(() => {
       <div class="roadmaps-section-container">
         <!-- <h2>Roadmaps</h2> -->
         <RoadmapsSlider />
+      </div>
+    </section>
+
+    <!-- Section "GUIDES" -->
+    <section id="guides-section" class="guides-section">
+      <div class="guides-section-container">
+        <!-- <h2>Roadmaps</h2> -->
+        <GuidesSlider />
       </div>
     </section>
   </main>

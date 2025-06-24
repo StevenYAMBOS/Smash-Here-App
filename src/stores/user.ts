@@ -1,7 +1,6 @@
 // src/stores/user.ts
 
 import { defineStore } from 'pinia'
-import { useRouter } from 'vue-router'
 import type { User, Roadmap, Content, Step, Game, Guide, Attachment } from '@/types/collections'
 
 export const useUserStore = defineStore('user', {
@@ -63,10 +62,6 @@ export const useUserStore = defineStore('user', {
       this.attachmentsCreated = []
       this.games = []
       localStorage.removeItem('token')
-
-      // Redirection vers la page d'accueil
-      const router = useRouter()
-      router.push('/')
     },
     clear() {
       this.logout()

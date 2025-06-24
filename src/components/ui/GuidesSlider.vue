@@ -1,16 +1,16 @@
-<!-- src/components/ui/RoadmapsSlider.vue -->
+<!-- src/components/ui/GuidesSlider.vue -->
 
 <template>
-  <div class="roadmaps-slider-container">
+  <div class="guides-slider-container">
     <!-- Header avec titre et navigation -->
     <div class="slider-header">
-      <h2 class="slider-title">Roadmaps</h2>
+      <h2 class="slider-title">Guides</h2>
     </div>
 
     <!-- Indicateur de chargement -->
     <div v-if="state.loading" class="loading-container">
       <i class="pi pi-spinner loading-spinner"></i>
-      <span>Loading roadmaps...</span>
+      <span>Loading guides...</span>
     </div>
 
     <!-- Message d'erreur -->
@@ -23,8 +23,8 @@
       </button>
     </div>
 
-    <!-- Carrousel des jeux -->
-    <div v-else-if="state.roadmaps.length > 0" class="carousel-wrapper">
+    <!-- Carrousel des guides -->
+    <div v-else-if="state.guides.length > 0" class="carousel-wrapper">
       <Carousel
         ref="carousel"
         v-model="currentSlide"
@@ -36,23 +36,23 @@
         :touchDrag="true"
         :snapAlign="'start'"
       >
-        <Slide v-for="(roadmap, index) in state.roadmaps" :key="roadmap.id">
+        <Slide v-for="(guide, index) in state.guides" :key="guide.id">
           <div class="slide-content">
-            <RoadmapCardForSlider
-              :roadmap="roadmap"
+            <GuideCardForSlider
+              :guide="guide"
               :isActive="index === currentSlide"
-              @click="handleRoadmapClick(roadmap)"
-              :author="state.authors.get(roadmap.CreatedBy)"
+              @click="handleGuideClick(guide)"
+              :author="state.authors.get(guide.CreatedBy)"
             />
           </div>
         </Slide>
       </Carousel>
     </div>
 
-    <!-- Message si aucun jeu -->
+    <!-- Message si aucun guide -->
     <div v-else class="empty-state">
       <i class="pi pi-gamepad2"></i>
-      <span>No roadmaps available</span>
+      <span>No guides available</span>
     </div>
   </div>
 </template>
@@ -61,12 +61,12 @@
 import { reactive, onMounted, ref, onUnmounted } from 'vue'
 import { Carousel, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
-import RoadmapCardForSlider from './RoadmapCardForSlider.vue'
-import type { Roadmap, User } from '@/types/collections'
+import type { Guide, User } from '@/types/collections'
 import { useRouter } from 'vue-router'
+import GuideCardForSlider from './GuideCardForSlider.vue'
 
 const state = reactive({
-  roadmaps: [] as Roadmap[],
+  guides: [] as Guide[],
   authors: new Map<string, User>(),
   loading: true,
   error: '',
@@ -89,25 +89,25 @@ const updateResponsiveSettings = () => {
   }
 }
 
-const handleRoadmapClick = (roadmap: Roadmap) => {
-  const id = roadmap.id
-  router.push(`/roadmap/${id}`)
+const handleGuideClick = (guide: Guide) => {
+  const id = guide.id
+  router.push(`/guide/${id}`)
 }
 
-const loadRoadmaps = async () => {
+const loadGuides = async () => {
   state.loading = true
   state.error = ''
 
   try {
-    // Récupérer les roadmaps
+    // Récupérer les guides
     const res = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmaps`,
+      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/guides`,
     )
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    state.roadmaps = await res.json()
+    state.guides = await res.json()
 
     // Récupérer les auteurs uniques
-    const authorIds = [...new Set(state.roadmaps.map((rm) => rm.CreatedBy))]
+    const authorIds = [...new Set(state.guides.map((g) => g.CreatedBy))]
 
     // Faire les appels API pour chaque auteur
     const authorPromises = authorIds.map(async (authorId) => {
@@ -147,19 +147,19 @@ const loadRoadmaps = async () => {
     // Attendre que tous les auteurs soient chargés
     await Promise.all(authorPromises)
   } catch (err) {
-    state.error = 'Erreur lors du chargement des roadmaps'
-    console.error('Error loading roadmaps:', err)
+    state.error = 'Erreur lors du chargement des guides'
+    console.error('Error loading guides:', err)
   } finally {
     state.loading = false
   }
 }
 
 const retryLoading = () => {
-  loadRoadmaps()
+  loadGuides()
 }
 
 onMounted(() => {
-  loadRoadmaps()
+  loadGuides()
   updateResponsiveSettings()
   window.addEventListener('resize', updateResponsiveSettings)
 })
@@ -170,7 +170,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.roadmaps-slider-container {
+.guides-slider-container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -343,7 +343,7 @@ onUnmounted(() => {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .roadmaps-slider-container {
+  .guides-slider-container {
     padding: var(--spacing-md);
   }
 
@@ -369,7 +369,7 @@ onUnmounted(() => {
 }
 
 @media (max-width: 480px) {
-  .roadmaps-slider-container {
+  .guides-slider-container {
     padding: var(--spacing-sm);
   }
 

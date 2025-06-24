@@ -140,8 +140,10 @@
           Contact Support
         </button>
         <button class="contact-btn secondary">
-          <i class="pi pi-discord"></i>
-          Join Discord
+          <a href="https://x.com/SmashHere" target="_blank">
+          <i class="pi pi-twitter"></i>
+          Join X
+          </a>
         </button>
       </div>
     </div>
@@ -187,7 +189,7 @@ const faqData = ref({
         'Roadmaps are step-by-step guides to achieve specific goals',
         'Each roadmap contains multiple interconnected steps',
         'Steps can have prerequisites (previous steps must be completed)',
-        'You can track your progress with status indicators: pending, in progress, done, skipped',
+        // 'You can track your progress with status indicators: pending, in progress, done, skipped',
         'Visual flowchart shows the learning path clearly',
       ],
     },
@@ -202,17 +204,17 @@ const faqData = ref({
         'Anyone interested in improving their fighting game skills',
       ],
     },
-    {
-      id: 'gs-4',
-      question: 'Is Smash Here free to use?',
-      answer: [
-        'Basic features are available for free users',
-        'Premium roadmaps may require subscription',
-        'Coaches can monetize their content',
-        'Free users can access public roadmaps',
-        'Premium features unlock advanced tracking and exclusive content',
-      ],
-    },
+    // {
+    //   id: 'gs-4',
+    //   question: 'Is Smash Here free to use?',
+    //   answer: [
+    //     'Basic features are available for free users',
+    //     'Premium roadmaps may require subscription',
+    //     'Coaches can monetize their content',
+    //     'Free users can access public roadmaps',
+    //     'Premium features unlock advanced tracking and exclusive content',
+    //   ],
+    // },
   ],
   roadmaps: [
     {
@@ -223,7 +225,7 @@ const faqData = ref({
         'Click on a roadmap to view its structure',
         'Add it to your bookmarks for easy access',
         'Start with the first step (usually marked with a flag icon)',
-        'Mark steps as completed, in progress, or skipped as you advance',
+        // 'Mark steps as completed, in progress, or skipped as you advance',
       ],
     },
     {
@@ -245,7 +247,7 @@ const faqData = ref({
         'Written articles and guides',
         'External links (YouTube, Twitter, Reddit, Discord)',
         'References to other roadmaps',
-        'Interactive quizzes and exercises',
+        // 'Interactive quizzes and exercises',
       ],
     },
     {
@@ -302,7 +304,7 @@ const faqData = ref({
         'All steps should have meaningful titles and descriptions',
         'Content should be appropriate and valuable',
         'Set proper tags and game associations',
-        'Choose between public or premium visibility',
+        // 'Choose between public or premium visibility',
       ],
     },
   ],
@@ -313,35 +315,35 @@ const faqData = ref({
       answer: [
         'Click the "Register" button on the homepage',
         'Provide username, email, and secure password',
-        'Alternatively, sign up using Twitter/X integration',
-        'Verify your email address if required',
-        'Complete your profile with optional information',
+        // 'Alternatively, sign up using Twitter/X integration',
+        // 'Verify your email address if required',
+        // 'Complete your profile with optional information',
       ],
     },
+    // {
+    //   id: 'acc-2',
+    //   question: 'What are the different user types?',
+    //   answer: [
+    //     'User: Basic account with access to public roadmaps',
+    //     'Coach: Can create and publish roadmaps',
+    //     'Super Admin: Platform administration privileges',
+    //     'Each type has different permissions and capabilities',
+    //     'Contact support to upgrade your account type',
+    //   ],
+    // },
+    // {
+    //   id: 'acc-2',
+    //   question: 'How do I track my progress?',
+    //   answer: [
+    //     'Progress is automatically saved as you complete steps',
+    //     'View your dashboard to see all followed roadmaps',
+    //     'Status indicators show: pending, in progress, done, skipped',
+    //     'Progress percentages display overall completion',
+    //     'Export your learning history if needed',
+    //   ],
+    // },
     {
       id: 'acc-2',
-      question: 'What are the different user types?',
-      answer: [
-        'User: Basic account with access to public roadmaps',
-        'Coach: Can create and publish roadmaps',
-        'Super Admin: Platform administration privileges',
-        'Each type has different permissions and capabilities',
-        'Contact support to upgrade your account type',
-      ],
-    },
-    {
-      id: 'acc-3',
-      question: 'How do I track my progress?',
-      answer: [
-        'Progress is automatically saved as you complete steps',
-        'View your dashboard to see all followed roadmaps',
-        'Status indicators show: pending, in progress, done, skipped',
-        'Progress percentages display overall completion',
-        'Export your learning history if needed',
-      ],
-    },
-    {
-      id: 'acc-4',
       question: 'Can I delete my account and data?',
       answer: [
         'Yes, account deletion is available in profile settings',
@@ -364,19 +366,19 @@ const faqData = ref({
         'Optimized for Chrome, Firefox, Safari, and Edge',
       ],
     },
+    // {
+    //   id: 'tech-2',
+    //   question: 'Why is my progress not saving?',
+    //   answer: [
+    //     'Check your internet connection stability',
+    //     'Ensure you are logged into your account',
+    //     'Clear browser cache and cookies',
+    //     'Disable browser extensions that might interfere',
+    //     'Contact support if the issue persists',
+    //   ],
+    // },
     {
       id: 'tech-2',
-      question: 'Why is my progress not saving?',
-      answer: [
-        'Check your internet connection stability',
-        'Ensure you are logged into your account',
-        'Clear browser cache and cookies',
-        'Disable browser extensions that might interfere',
-        'Contact support if the issue persists',
-      ],
-    },
-    {
-      id: 'tech-3',
       question: 'How is my data protected?',
       answer: [
         'All data is encrypted using AES-256 encryption',
@@ -387,7 +389,7 @@ const faqData = ref({
       ],
     },
     {
-      id: 'tech-4',
+      id: 'tech-3',
       question: 'What should I do if I encounter a bug?',
       answer: [
         'Try refreshing the page or clearing browser cache',
@@ -405,10 +407,13 @@ const filteredFAQ = computed(() => {
   if (!searchQuery.value) return faqData.value
 
   const query = searchQuery.value.toLowerCase()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const filtered: any = {}
 
   Object.keys(faqData.value).forEach((category) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
     filtered[category] = (faqData.value as any)[category].filter(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (faq: any) =>
         faq.question.toLowerCase().includes(query) ||
         faq.answer.some((answer: string) => answer.toLowerCase().includes(query)),
