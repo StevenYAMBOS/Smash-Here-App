@@ -190,18 +190,15 @@ async function handleLogin() {
   error.value = ''
 
   try {
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/auth/login`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: email.value,
-          password: password.value,
-          rememberMe: rememberMe.value,
-        }),
-      },
-    )
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+        rememberMe: rememberMe.value,
+      }),
+    })
 
     if (!res.ok) {
       const msg = await res.text()
@@ -216,9 +213,9 @@ async function handleLogin() {
     toast.success('Welcome back, champion!')
     router.push('/')
   } catch (err) {
-  const errorMessage = getErrorMessage(err) || 'Login failed. Please try again.'
-  toast.error(errorMessage)
-  error.value = errorMessage
+    const errorMessage = getErrorMessage(err) || 'Login failed. Please try again.'
+    toast.error(errorMessage)
+    error.value = errorMessage
   } finally {
     loading.value = false
   }

@@ -31,8 +31,8 @@
             </h3>
             <p class="danger-description">
               Once you delete your account, there is no going back. This action will permanently
-              delete your account and all associated data including roadmaps, guides, and
-              remove your content from other users' bookmarks.
+              delete your account and all associated data including roadmaps, guides, and remove
+              your content from other users' bookmarks.
             </p>
             <SubmitButton
               label="Delete Account"
@@ -284,16 +284,13 @@ const confirmDelete = async () => {
   isDeleting.value = true
 
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user`,
-      {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${userStore.token}`,
-          'Content-Type': 'application/json',
-        },
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/user`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${userStore.token}`,
+        'Content-Type': 'application/json',
       },
-    )
+    })
 
     if (response.ok) {
       toast.success('Account deleted successfully')
@@ -331,9 +328,7 @@ const fetchBookmarkAuthors = async () => {
     const authorIds = [...new Set(userStore.bookmarks.map((rm) => rm.CreatedBy))]
     const authorPromises = authorIds.map(async (authorId) => {
       try {
-        const userRes = await fetch(
-          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/${authorId}`,
-        )
+        const userRes = await fetch(`${import.meta.env.VITE_API_URL}/user/${authorId}`)
         if (userRes.ok) {
           const user = await userRes.json()
           state.authors.set(authorId, user)
@@ -391,7 +386,9 @@ const filteredGuides = computed(() => {
 const filteredAttachments = computed(() => {
   const list = userStore.attachmentsCreated || []
   if (!searchText.value.trim()) return list
-  return list.filter((attachment) => attachment.fileName.toLowerCase().includes(searchText.value.toLowerCase()))
+  return list.filter((attachment) =>
+    attachment.fileName.toLowerCase().includes(searchText.value.toLowerCase()),
+  )
 })
 
 const handleBookmarkChange = async (roadmapId: string, isBookmarked: boolean) => {

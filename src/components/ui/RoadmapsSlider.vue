@@ -100,9 +100,7 @@ const loadRoadmaps = async () => {
 
   try {
     // Récupérer les roadmaps
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmaps`,
-    )
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/roadmaps`)
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     state.roadmaps = await res.json()
 
@@ -112,9 +110,7 @@ const loadRoadmaps = async () => {
     // Faire les appels API pour chaque auteur
     const authorPromises = authorIds.map(async (authorId) => {
       try {
-        const userRes = await fetch(
-          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/${authorId}`,
-        )
+        const userRes = await fetch(`${import.meta.env.VITE_API_URL}/user/${authorId}`)
         if (userRes.ok) {
           const user = await userRes.json()
           state.authors.set(authorId, user)
@@ -139,7 +135,7 @@ const loadRoadmaps = async () => {
           ContentsCreated: [],
           Comments: [],
           GuidesCreated: [],
-          AttachmentsCreated: []
+          AttachmentsCreated: [],
         })
       }
     })

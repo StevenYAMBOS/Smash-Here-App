@@ -100,9 +100,7 @@ const loadGuides = async () => {
 
   try {
     // Récupérer les guides
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/guides`,
-    )
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/guides`)
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     state.guides = await res.json()
 
@@ -112,9 +110,7 @@ const loadGuides = async () => {
     // Faire les appels API pour chaque auteur
     const authorPromises = authorIds.map(async (authorId) => {
       try {
-        const userRes = await fetch(
-          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/${authorId}`,
-        )
+        const userRes = await fetch(`${import.meta.env.VITE_API_URL}/user/${authorId}`)
         if (userRes.ok) {
           const user = await userRes.json()
           state.authors.set(authorId, user)
@@ -139,7 +135,7 @@ const loadGuides = async () => {
           ContentsCreated: [],
           Comments: [],
           GuidesCreated: [],
-          AttachmentsCreated: []
+          AttachmentsCreated: [],
         })
       }
     })

@@ -92,7 +92,7 @@ const toggleBookmark = async () => {
     const method = isBookmarked.value ? 'DELETE' : 'PUT'
 
     let requestBody = {}
-    const url = `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/bookmarks`
+    const url = `${import.meta.env.VITE_API_URL}/user/bookmarks`
 
     // Pour DELETE, certaines APIs attendent le roadmapId dans le body
     // Pour PUT, on envoie toujours le roadmapId dans le body

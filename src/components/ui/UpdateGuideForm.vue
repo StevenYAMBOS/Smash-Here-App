@@ -855,7 +855,7 @@ async function submitInfo() {
     }
 
     const infoResponse = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/guide/${props.guide.id}/info`,
+      `${import.meta.env.VITE_API_URL}/guide/${props.guide.id}/info`,
       {
         method: 'PUT',
         headers: {
@@ -871,7 +871,7 @@ async function submitInfo() {
 
     // Mettre à jour les jeux avec un call API séparé
     const gamesResponse = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/guide/${props.guide.id}/games`,
+      `${import.meta.env.VITE_API_URL}/guide/${props.guide.id}/games`,
       {
         method: 'PUT',
         headers: {
@@ -1059,7 +1059,7 @@ async function submitContent() {
     const content = editor.value.getHTML()
 
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/guide/${props.guide.id}/content`,
+      `${import.meta.env.VITE_API_URL}/guide/${props.guide.id}/content`,
       {
         method: 'PUT',
         headers: {

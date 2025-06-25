@@ -215,14 +215,10 @@ watch(() => state.steps, buildFlowFromSteps, { immediate: true })
 // Récupération initiale
 onMounted(async () => {
   try {
-    const resR = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${roadmapId}`,
-    )
+    const resR = await fetch(`${import.meta.env.VITE_API_URL}/roadmap/${roadmapId}`)
     state.roadmap = await resR.json()
 
-    const resS = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${roadmapId}/steps`,
-    )
+    const resS = await fetch(`${import.meta.env.VITE_API_URL}/roadmap/${roadmapId}/steps`)
     state.steps = await resS.json()
   } catch (err) {
     state.error = 'Erreur lors du chargement de la roadmap.'
@@ -244,10 +240,8 @@ async function openStep(stepId: string) {
   stepContents.value = []
 
   try {
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${stepId}/contents`,
-    )
-    
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/step/${stepId}/contents`)
+
     if (!res.ok) {
       console.error('Fetch failed', res.status)
       // Garder le tableau vide plutôt que de le définir à null
@@ -256,7 +250,7 @@ async function openStep(stepId: string) {
     }
 
     const data = await res.json()
-    
+
     // Vérifier que la réponse est bien un tableau
     if (Array.isArray(data)) {
       stepContents.value = data
@@ -264,7 +258,6 @@ async function openStep(stepId: string) {
       console.warn('API response is not an array:', data)
       stepContents.value = []
     }
-    
   } catch (error) {
     console.error('Error fetching step contents:', error)
     // En cas d'erreur, toujours utiliser un tableau vide
@@ -308,7 +301,9 @@ async function openStep(stepId: string) {
               </div>
               <small v-if="data.subTitle">{{ data.subTitle }}</small>
               <div class="contents-badge">
-                <i class="pi pi-link"></i> {{ data.contents }} content{{ data.contents > 1 ? 's' : '' }}
+                <i class="pi pi-link"></i> {{ data.contents }} content{{
+                  data.contents > 1 ? 's' : ''
+                }}
               </div>
             </div>
           </template>
@@ -367,7 +362,7 @@ async function openStep(stepId: string) {
   justify-content: center;
   align-items: center;
   margin: var(--spacing-3xl) 0;
- padding: 0 var(--spacing-lg);
+  padding: 0 var(--spacing-lg);
 }
 
 .flow-container {
@@ -489,11 +484,11 @@ async function openStep(stepId: string) {
     padding: 0 var(--spacing-xl);
     margin: var(--spacing-2xl) 0;
   }
-  
+
   .flow-container {
     max-width: 100%;
   }
-  
+
   .roadmap-vueflow {
     height: 600px; /* Réduire la hauteur sur tablette */
   }
@@ -504,25 +499,25 @@ async function openStep(stepId: string) {
     padding: 0 var(--spacing-xl);
     margin: var(--spacing-xl) 0;
   }
-  
+
   .roadmap-vueflow {
     height: 500px; /* Hauteur adaptée mobile */
     border-radius: var(--radius-sm);
   }
-  
+
   .flow-container {
     border-radius: var(--radius-sm);
   }
-  
+
   /* Adapter la taille des noeuds pour mobile */
   .rf-node {
     padding: var(--spacing-sm);
   }
-  
+
   .rf-node h4 {
     font-size: var(--font-size-sm);
   }
-  
+
   .contents-badge {
     font-size: var(--font-size-xs);
     padding: 0.2rem 0.4rem;
@@ -533,21 +528,21 @@ async function openStep(stepId: string) {
   .flow-wrapper {
     padding: 0 var(--spacing-xl);
   }
-  
+
   .roadmap-vueflow {
     height: 400px; /* Hauteur réduite pour petits écrans */
   }
-  
+
   /* Réduire encore la taille des éléments */
   .rf-node {
     padding: var(--spacing-xs);
   }
-  
+
   .rf-node .node-header {
     gap: var(--spacing-xs);
     margin-bottom: var(--spacing-xs);
   }
-  
+
   .rf-node small {
     font-size: var(--font-size-xs);
     margin-bottom: var(--spacing-xs);

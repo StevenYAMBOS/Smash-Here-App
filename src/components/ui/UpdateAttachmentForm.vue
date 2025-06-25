@@ -198,33 +198,27 @@ async function submit() {
       formData.append('caption', caption.value)
       formData.append('url', coverFile.value)
 
-      await fetch(
-        `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/attachment/${props.attachment.id}`,
-        {
-          method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${userStore.token}`,
-          },
-          body: formData,
+      await fetch(`${import.meta.env.VITE_API_URL}/attachment/${props.attachment.id}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${userStore.token}`,
         },
-      )
+        body: formData,
+      })
     } else {
       // Mise à jour des champs texte seulement
-      await fetch(
-        `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/attachment/${props.attachment.id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${userStore.token}`,
-          },
-          body: JSON.stringify({
-            fileName: fileName.value,
-            alt: alt.value,
-            caption: caption.value,
-          }),
+      await fetch(`${import.meta.env.VITE_API_URL}/attachment/${props.attachment.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userStore.token}`,
         },
-      )
+        body: JSON.stringify({
+          fileName: fileName.value,
+          alt: alt.value,
+          caption: caption.value,
+        }),
+      })
     }
 
     // Mettre à jour le store local

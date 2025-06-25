@@ -132,47 +132,38 @@ async function submit() {
   loading.value = true
   try {
     // 1) Mettre à jour les champs du step
-    await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${props.step.id}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userStore.token}`,
-        },
-        body: JSON.stringify({
-          Title: title.value,
-          Subtitle: subTitle.value,
-          Description: description.value,
-        }),
+    await fetch(`${import.meta.env.VITE_API_URL}/step/${props.step.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userStore.token}`,
       },
-    )
+      body: JSON.stringify({
+        Title: title.value,
+        Subtitle: subTitle.value,
+        Description: description.value,
+      }),
+    })
 
     // 2) Mettre à jour l'association roadmaps
-    await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/steps/${props.step.id}/roadmaps`,
-      {
+    await fetch(`${import.meta.env.VITE_API_URL}/steps/${props.step.id}/roadmaps`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userStore.token}`,
+      },
+      body: JSON.stringify({ Roadmaps: selectedRoadmaps.value }),
+    })
+    // On doit appeler l’endpoint “PUT /contents/{contentId}/steps” pour chaque contentId
+    for (const cId of selectedContents.value) {
+      await fetch(`${import.meta.env.VITE_API_URL}/contents/${cId}/steps`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${userStore.token}`,
         },
-        body: JSON.stringify({ Roadmaps: selectedRoadmaps.value }),
-      },
-    )
-    // On doit appeler l’endpoint “PUT /contents/{contentId}/steps” pour chaque contentId
-    for (const cId of selectedContents.value) {
-      await fetch(
-        `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/contents/${cId}/steps`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${userStore.token}`,
-          },
-          body: JSON.stringify({ Steps: [props.step.id] }),
-        },
-      )
+        body: JSON.stringify({ Steps: [props.step.id] }),
+      })
     }
 
     // 3) Mettre à jour le store

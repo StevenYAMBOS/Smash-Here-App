@@ -53,14 +53,11 @@ async function submit() {
     link: link.value,
   }
   try {
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/content`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${userStore.token}` },
-        body: JSON.stringify(payload),
-      },
-    )
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/content`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${userStore.token}` },
+      body: JSON.stringify(payload),
+    })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     await res.json()
 

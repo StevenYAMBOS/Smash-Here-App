@@ -101,9 +101,7 @@ const loadGames = async () => {
   state.error = ''
 
   try {
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/games`,
-    )
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/games`)
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     state.games = await res.json()
   } catch (err) {

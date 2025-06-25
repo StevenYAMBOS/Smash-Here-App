@@ -173,17 +173,14 @@ async function submit() {
   // }
 
   try {
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${userStore.token || localStorage.getItem('token')}`,
-          // NE PAS définir Content-Type, le navigateur le fait automatiquement
-        },
-        body: formData,
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/roadmap`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${userStore.token || localStorage.getItem('token')}`,
+        // NE PAS définir Content-Type, le navigateur le fait automatiquement
       },
-    )
+      body: formData,
+    })
 
     if (!res.ok) {
       const errorText = await res.text()

@@ -404,7 +404,7 @@ async function submitInfo() {
     }
 
     const infoResponse = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${props.roadmap.id}/info`,
+      `${import.meta.env.VITE_API_URL}/roadmap/${props.roadmap.id}/info`,
       {
         method: 'PUT',
         headers: {
@@ -420,7 +420,7 @@ async function submitInfo() {
 
     // Mettre à jour les jeux avec un call API séparé
     const gamesResponse = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${props.roadmap.id}/games`,
+      `${import.meta.env.VITE_API_URL}/roadmap/${props.roadmap.id}/games`,
       {
         method: 'PUT',
         headers: {
@@ -616,7 +616,7 @@ async function removeStepNode(nodeId: string) {
   try {
     // Appel API pour retirer l'étape de la roadmap
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${props.roadmap.id}/step/${nodeId}`,
+      `${import.meta.env.VITE_API_URL}/roadmap/${props.roadmap.id}/step/${nodeId}`,
       {
         method: 'DELETE',
         headers: {
@@ -733,17 +733,14 @@ async function onConnect(params: { source: string; target: string }) {
         NextSteps: step.NextSteps || [],
       }
 
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${step.id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${userStore.token}`,
-          },
-          body: JSON.stringify(payload),
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/step/${step.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userStore.token}`,
         },
-      )
+        body: JSON.stringify(payload),
+      })
 
       if (!response.ok) {
         throw new Error(`Erreur mise à jour étape ${step.title}`)
@@ -783,36 +780,30 @@ async function onEdgesChange(changes: any[]) {
 
       // API : mettre à jour sourceStep
       try {
-        await fetch(
-          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${sourceStep.id}`,
-          {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${userStore.token}`,
-            },
-            body: JSON.stringify({
-              NextSteps: sourceStep.NextSteps,
-              PreviousSteps: sourceStep.PreviousSteps || [],
-            }),
+        await fetch(`${import.meta.env.VITE_API_URL}/step/${sourceStep.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userStore.token}`,
           },
-        )
+          body: JSON.stringify({
+            NextSteps: sourceStep.NextSteps,
+            PreviousSteps: sourceStep.PreviousSteps || [],
+          }),
+        })
 
         // API : mettre à jour targetStep
-        await fetch(
-          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${targetStep.id}`,
-          {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${userStore.token}`,
-            },
-            body: JSON.stringify({
-              NextSteps: targetStep.NextSteps || [],
-              PreviousSteps: targetStep.PreviousSteps,
-            }),
+        await fetch(`${import.meta.env.VITE_API_URL}/step/${targetStep.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userStore.token}`,
           },
-        )
+          body: JSON.stringify({
+            NextSteps: targetStep.NextSteps || [],
+            PreviousSteps: targetStep.PreviousSteps,
+          }),
+        })
         await userStore.fetchUserSteps()
       } catch (err) {
         console.error('Erreur suppression lien step :', err)
@@ -843,7 +834,7 @@ async function submitStructure() {
     }
 
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${props.roadmap.id}/steps`,
+      `${import.meta.env.VITE_API_URL}/roadmap/${props.roadmap.id}/steps`,
       {
         method: 'PUT',
         headers: {

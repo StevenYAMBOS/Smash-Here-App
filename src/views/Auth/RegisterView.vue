@@ -530,10 +530,10 @@ async function handleRegister() {
   }
 
   try {
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/auth/register`,
-      { method: 'POST', body: form },
-    )
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/register`, {
+      method: 'POST',
+      body: form,
+    })
 
     if (!res.ok) {
       const msg = await res.text()
@@ -543,9 +543,9 @@ async function handleRegister() {
     toast.success('🎉 Welcome to Smash Here! Please sign in to continue.')
     router.push('/auth/login')
   } catch (err) {
-  const errorMessage = getErrorMessage(err) || 'Login failed. Please try again.'
-  toast.error(errorMessage)
-  error.value = errorMessage
+    const errorMessage = getErrorMessage(err) || 'Login failed. Please try again.'
+    toast.error(errorMessage)
+    error.value = errorMessage
   } finally {
     loading.value = false
   }

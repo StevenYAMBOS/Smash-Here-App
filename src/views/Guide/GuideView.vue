@@ -136,187 +136,183 @@ const authorInfo = ref<{ username: string; profilePicture?: string } | null>(nul
 
 // Fonction utilitaire pour créer un utilisateur par défaut en cas d'erreur
 const createDefaultAuthor = (authorId: string) => {
- authorInfo.value = {
-   username: `User ${authorId.slice(-6)}`, // Affiche les 6 derniers caractères de l'ID
-   profilePicture: undefined
- }
+  authorInfo.value = {
+    username: `User ${authorId.slice(-6)}`, // Affiche les 6 derniers caractères de l'ID
+    profilePicture: undefined,
+  }
 }
 
 // Fonction pour récupérer les informations de l'auteur du guide
 const fetchAuthorInfo = async (authorId: string) => {
- try {
-   // Appel API pour récupérer les informations de l'utilisateur via son ID
-   const response = await fetch(
-     `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/${authorId}`
-   )
+  try {
+    // Appel API pour récupérer les informations de l'utilisateur via son ID
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/user/${authorId}`)
 
-   if (response.ok) {
-     // Conversion de la réponse en JSON pour récupérer les données utilisateur
-     const userData = await response.json()
+    if (response.ok) {
+      // Conversion de la réponse en JSON pour récupérer les données utilisateur
+      const userData = await response.json()
 
-     // Stockage des informations nécessaires de l'auteur
-     authorInfo.value = {
-       username: userData.username || 'Anonymous',
-       profilePicture: userData.profilePicture,
-     }
-   } else if (response.status === 404) {
-     // Utilisateur non trouvé, créer un utilisateur par défaut
-     console.warn('Auteur non trouvé, affichage d\'un nom par défaut')
-     createDefaultAuthor(authorId)
-   } else {
-     // Autre erreur serveur
-     console.warn(`Erreur serveur lors de la récupération de l'auteur: ${response.status}`)
-     createDefaultAuthor(authorId)
-   }
- } catch (err) {
-   console.error('Erreur réseau lors de la récupération des informations de l\'auteur:', err)
-   // En cas d'erreur réseau, créer un utilisateur par défaut
-   createDefaultAuthor(authorId)
- }
+      // Stockage des informations nécessaires de l'auteur
+      authorInfo.value = {
+        username: userData.username || 'Anonymous',
+        profilePicture: userData.profilePicture,
+      }
+    } else if (response.status === 404) {
+      // Utilisateur non trouvé, créer un utilisateur par défaut
+      console.warn("Auteur non trouvé, affichage d'un nom par défaut")
+      createDefaultAuthor(authorId)
+    } else {
+      // Autre erreur serveur
+      console.warn(`Erreur serveur lors de la récupération de l'auteur: ${response.status}`)
+      createDefaultAuthor(authorId)
+    }
+  } catch (err) {
+    console.error("Erreur réseau lors de la récupération des informations de l'auteur:", err)
+    // En cas d'erreur réseau, créer un utilisateur par défaut
+    createDefaultAuthor(authorId)
+  }
 }
 
 // Computed pour afficher le nom de l'auteur avec fallback
 const authorName = computed(() => {
- if (authorInfo.value?.username) {
-   return authorInfo.value.username
- }
- return 'Anonymous Author'
+  if (authorInfo.value?.username) {
+    return authorInfo.value.username
+  }
+  return 'Anonymous Author'
 })
 
 // Computed pour traiter le contenu HTML du guide
 const formattedContent = computed(() => {
- if (!guide.value?.content) return ''
+  if (!guide.value?.content) return ''
 
- // Traiter le contenu HTML
- let content = guide.value.content
+  // Traiter le contenu HTML
+  let content = guide.value.content
 
- // Ajouter des IDs aux headers pour la table des matières
- content = content.replace(/<h([1-6])>(.*?)<\/h[1-6]>/g, (match, level, text) => {
-   const id = text
-     .toLowerCase()
-     .replace(/\s+/g, '-')
-     .replace(/[^\w-]/g, '')
-   return `<h${level} id="${id}">${text}</h${level}>`
- })
+  // Ajouter des IDs aux headers pour la table des matières
+  content = content.replace(/<h([1-6])>(.*?)<\/h[1-6]>/g, (match, level, text) => {
+    const id = text
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]/g, '')
+    return `<h${level} id="${id}">${text}</h${level}>`
+  })
 
- return content
+  return content
 })
 
 // Fonction principale pour récupérer le guide
 const fetchGuide = async (guideId: string) => {
- try {
-   loading.value = true
-   error.value = null
+  try {
+    loading.value = true
+    error.value = null
 
-   // Appel direct à l'API pour récupérer le guide par son ID
-   const response = await fetch(
-     `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/guide/${guideId}`
-   )
+    // Appel direct à l'API pour récupérer le guide par son ID
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/guide/${guideId}`)
 
-   if (!response.ok) {
-     if (response.status === 404) {
-       throw new Error('Guide not found')
-     } else {
-       throw new Error(`Failed to load guide: ${response.status}`)
-     }
-   }
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error('Guide not found')
+      } else {
+        throw new Error(`Failed to load guide: ${response.status}`)
+      }
+    }
 
-   // Récupérer les données du guide depuis la réponse
-   const guideData = await response.json()
-   guide.value = guideData
+    // Récupérer les données du guide depuis la réponse
+    const guideData = await response.json()
+    guide.value = guideData
 
-   // Récupérer les informations de l'auteur si l'ID est disponible
-   if (guide.value?.CreatedBy) {
-     // Appel en parallèle pour récupérer les informations de l'auteur
-     // Pas d'await ici pour ne pas bloquer l'affichage du guide si l'auteur n'est pas trouvé
-     fetchAuthorInfo(guide.value.CreatedBy).catch(() => {
-       // En cas d'erreur, on garde le nom par défaut (Anonymous Author)
-       console.warn('Impossible de récupérer les informations de l\'auteur')
-     })
-   }
+    // Récupérer les informations de l'auteur si l'ID est disponible
+    if (guide.value?.CreatedBy) {
+      // Appel en parallèle pour récupérer les informations de l'auteur
+      // Pas d'await ici pour ne pas bloquer l'affichage du guide si l'auteur n'est pas trouvé
+      fetchAuthorInfo(guide.value.CreatedBy).catch(() => {
+        // En cas d'erreur, on garde le nom par défaut (Anonymous Author)
+        console.warn("Impossible de récupérer les informations de l'auteur")
+      })
+    }
 
-   console.log('Guide chargé:', guide.value)
+    console.log('Guide chargé:', guide.value)
 
-   // Générer la table des matières après chargement du contenu
-   await nextTick()
-   generateTableOfContents()
- } catch (err) {
-   error.value = err instanceof Error ? err.message : 'An error occurred'
-   console.error('Error fetching guide:', err)
- } finally {
-   loading.value = false
- }
+    // Générer la table des matières après chargement du contenu
+    await nextTick()
+    generateTableOfContents()
+  } catch (err) {
+    error.value = err instanceof Error ? err.message : 'An error occurred'
+    console.error('Error fetching guide:', err)
+  } finally {
+    loading.value = false
+  }
 }
 
 // Fonction pour générer la table des matières
 const generateTableOfContents = () => {
- const content = document.querySelector('.guide-text-content')
- if (!content) return
+  const content = document.querySelector('.guide-text-content')
+  if (!content) return
 
- const headers = content.querySelectorAll('h1, h2, h3, h4, h5, h6')
- tableOfContents.value = Array.from(headers).map((header) => ({
-   id: header.id || '',
-   text: header.textContent || '',
-   level: parseInt(header.tagName.charAt(1)),
- }))
+  const headers = content.querySelectorAll('h1, h2, h3, h4, h5, h6')
+  tableOfContents.value = Array.from(headers).map((header) => ({
+    id: header.id || '',
+    text: header.textContent || '',
+    level: parseInt(header.tagName.charAt(1)),
+  }))
 }
 
 // Gestion du like (pour l'instant local)
 const handleLike = async () => {
- try {
-   // Pour l'instant, juste un toggle local
-   isLiked.value = !isLiked.value
-   if (guide.value) {
-     guide.value.likesCount = (guide.value.likesCount || 0) + (isLiked.value ? 1 : -1)
-   }
-   toast.success(isLiked.value ? 'Guide liked!' : 'Like removed')
- } catch (err) {
-   toast.error('Failed to like guide')
-   console.error('Error liking guide:', err)
- }
+  try {
+    // Pour l'instant, juste un toggle local
+    isLiked.value = !isLiked.value
+    if (guide.value) {
+      guide.value.likesCount = (guide.value.likesCount || 0) + (isLiked.value ? 1 : -1)
+    }
+    toast.success(isLiked.value ? 'Guide liked!' : 'Like removed')
+  } catch (err) {
+    toast.error('Failed to like guide')
+    console.error('Error liking guide:', err)
+  }
 }
 
 // Gestion du bookmark (pour l'instant local)
 const handleBookmark = async () => {
- try {
-   // Pour l'instant, juste un toggle local
-   isBookmarked.value = !isBookmarked.value
-   toast.success(isBookmarked.value ? 'Guide bookmarked!' : 'Bookmark removed')
- } catch (err) {
-   toast.error('Failed to bookmark guide')
-   console.error('Error bookmarking guide:', err)
- }
+  try {
+    // Pour l'instant, juste un toggle local
+    isBookmarked.value = !isBookmarked.value
+    toast.success(isBookmarked.value ? 'Guide bookmarked!' : 'Bookmark removed')
+  } catch (err) {
+    toast.error('Failed to bookmark guide')
+    console.error('Error bookmarking guide:', err)
+  }
 }
 
 // Gestion du partage
 const handleShare = async () => {
- try {
-   if (navigator.share) {
-     // Utiliser l'API native de partage si disponible
-     await navigator.share({
-       title: guide.value?.title,
-       text: guide.value?.description,
-       url: window.location.href,
-     })
-   } else {
-     // Fallback: copier l'URL dans le presse-papier
-     await navigator.clipboard.writeText(window.location.href)
-     toast.success('Link copied to clipboard!')
-   }
- } catch (err) {
-   console.error('Error sharing:', err)
- }
+  try {
+    if (navigator.share) {
+      // Utiliser l'API native de partage si disponible
+      await navigator.share({
+        title: guide.value?.title,
+        text: guide.value?.description,
+        url: window.location.href,
+      })
+    } else {
+      // Fallback: copier l'URL dans le presse-papier
+      await navigator.clipboard.writeText(window.location.href)
+      toast.success('Link copied to clipboard!')
+    }
+  } catch (err) {
+    console.error('Error sharing:', err)
+  }
 }
 
 // Lifecycle hook - Chargement initial du guide
 onMounted(() => {
- const guideId = route.params.id as string
- if (guideId) {
-   fetchGuide(guideId)
- } else {
-   error.value = 'Invalid guide ID'
-   loading.value = false
- }
+  const guideId = route.params.id as string
+  if (guideId) {
+    fetchGuide(guideId)
+  } else {
+    error.value = 'Invalid guide ID'
+    loading.value = false
+  }
 })
 </script>
 

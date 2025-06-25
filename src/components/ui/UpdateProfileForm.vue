@@ -6,28 +6,30 @@
     <div class="form-section">
       <div class="field">
         <label for="username">Username</label>
-        <input 
-          id="username" 
-          v-model="username" 
-          type="text" 
+        <input
+          id="username"
+          v-model="username"
+          type="text"
           :placeholder="userStore.profile?.username"
           maxlength="30"
         />
-        <p class="field-hint">Maximum 30 caractères, doit contenir au moins une lettre (optionnel)</p>
+        <p class="field-hint">
+          Maximum 30 caractères, doit contenir au moins une lettre (optionnel)
+        </p>
       </div>
 
       <div class="field">
         <label for="password">New Password</label>
         <div class="password-input-wrapper">
-          <input 
-            id="password" 
-            v-model="password" 
+          <input
+            id="password"
+            v-model="password"
             :type="showPassword ? 'text' : 'password'"
             placeholder="Nouveau mot de passe (optionnel)"
             minlength="6"
           />
-          <button 
-            type="button" 
+          <button
+            type="button"
             class="password-toggle-btn"
             @click="showPassword = !showPassword"
             :title="showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
@@ -112,15 +114,16 @@ const showPassword = ref(false) // Nouvel état pour afficher/masquer le mot de 
 // Validation du formulaire - maintenant plus flexible
 const isFormValid = computed(() => {
   // Au moins un champ doit être modifié pour valider
-  const hasUsernameChange = username.value.trim() !== '' && username.value !== userStore.profile?.username
+  const hasUsernameChange =
+    username.value.trim() !== '' && username.value !== userStore.profile?.username
   const hasPasswordChange = password.value.trim() !== ''
   const hasImageChange = profileFile.value !== null
-  
+
   // Si rien n'a changé, le formulaire est invalide
   if (!hasUsernameChange && !hasPasswordChange && !hasImageChange) {
     return false
   }
-  
+
   // Si le username est modifié, il doit être valide
   if (hasUsernameChange) {
     const hasLetter = /[A-Za-z]/.test(username.value)
@@ -128,12 +131,12 @@ const isFormValid = computed(() => {
       return false
     }
   }
-  
+
   // Si le password est modifié, il doit être valide
   if (hasPasswordChange && password.value.length < 6) {
     return false
   }
-  
+
   return true
 })
 
@@ -153,13 +156,13 @@ function handleFileChange(event: Event) {
 
   // Validation taille et type
   if (file.size > 10 * 1024 * 1024) {
-    toast.error('La taille de l\'image doit être inférieure à 10 MB.')
+    toast.error("La taille de l'image doit être inférieure à 10 MB.")
     return
   }
-  
+
   const validTypes = ['image/webp', 'image/png', 'image/jpeg', 'image/jpg']
   if (!validTypes.includes(file.type)) {
-    toast.error('Format d\'image invalide (WEBP, PNG, JPEG uniquement).')
+    toast.error("Format d'image invalide (WEBP, PNG, JPEG uniquement).")
     return
   }
 
@@ -179,30 +182,31 @@ function triggerFileInput() {
 // Soumission du formulaire
 async function submitProfile() {
   if (loading.value || !isFormValid.value) return
-  
+
   loading.value = true
 
   try {
     // Créer le FormData uniquement avec les champs modifiés
     const formData = new FormData()
-    
+
     // Ajouter le username seulement s'il a été modifié
-    const hasUsernameChange = username.value.trim() !== '' && username.value !== userStore.profile?.username
+    const hasUsernameChange =
+      username.value.trim() !== '' && username.value !== userStore.profile?.username
     if (hasUsernameChange) {
       formData.append('username', username.value.trim())
     }
-    
+
     // Ajouter le password seulement s'il a été modifié
     const hasPasswordChange = password.value.trim() !== ''
     if (hasPasswordChange) {
       formData.append('password', password.value)
     }
-    
+
     // Ajouter l'image seulement si elle a été sélectionnée
     if (profileFile.value) {
       formData.append('profilePicture', profileFile.value)
     }
-    
+
     // Vérifier qu'au moins un champ a été modifié
     if (!hasUsernameChange && !hasPasswordChange && !profileFile.value) {
       toast.error('Aucune modification détectée.')
@@ -210,33 +214,30 @@ async function submitProfile() {
       return
     }
 
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/profile`,
-      {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${userStore.token}`,
-          // Ne pas définir Content-Type pour multipart/form-data
-        },
-        body: formData,
-      }
-    )
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/user/profile`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${userStore.token}`,
+        // Ne pas définir Content-Type pour multipart/form-data
+      },
+      body: formData,
+    })
 
     if (response.ok) {
       toast.success('Profil mis à jour avec succès!')
-      
+
       // Recharger le profil utilisateur pour obtenir les dernières données
       await userStore.fetchProfile()
-      
+
       // Émettre l'événement de succès
       emit('success')
-      
+
       // Réinitialiser le formulaire
       resetForm()
     } else {
       const errorData = await response.text()
       let errorMessage = 'Erreur lors de la mise à jour du profil'
-      
+
       try {
         const errorJson = JSON.parse(errorData)
         errorMessage = errorJson.error || errorMessage
@@ -244,7 +245,7 @@ async function submitProfile() {
         // Si ce n'est pas du JSON, utiliser le texte brut
         errorMessage = errorData || errorMessage
       }
-      
+
       toast.error(errorMessage)
     }
   } catch (error) {
@@ -262,7 +263,7 @@ function resetForm() {
   password.value = ''
   profileFile.value = null
   showPassword.value = false // Remettre le mot de passe masqué
-  
+
   // Remettre la photo de profil actuelle
   if (userStore.profile) {
     profilePreview.value = userStore.profile.profilePicture || null
@@ -309,8 +310,8 @@ function resetForm() {
   font-weight: bold;
 }
 
-.field input[type="text"],
-.field input[type="password"] {
+.field input[type='text'],
+.field input[type='password'] {
   padding: var(--spacing-md);
   border: 1px solid var(--color-medium-gray);
   border-radius: var(--radius-md);
@@ -318,7 +319,9 @@ function resetForm() {
   font-size: var(--font-size-base);
   font-family: var(--font-secondary);
   color: var(--color-cream);
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
   width: 100%;
   box-sizing: border-box;
 }
@@ -432,8 +435,8 @@ function resetForm() {
     font-size: var(--font-size-xl);
   }
 
-  .field input[type="text"],
-  .field input[type="password"] {
+  .field input[type='text'],
+  .field input[type='password'] {
     padding: var(--spacing-sm);
   }
 

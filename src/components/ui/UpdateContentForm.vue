@@ -106,30 +106,24 @@ async function submit() {
   loading.value = true
   try {
     // 1) Mettre à jour les champs du content
-    await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/content/${props.content.id}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userStore.token}`,
-        },
-        body: JSON.stringify({ title: title.value, type: type.value, link: link.value }),
+    await fetch(`${import.meta.env.VITE_API_URL}/content/${props.content.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userStore.token}`,
       },
-    )
+      body: JSON.stringify({ title: title.value, type: type.value, link: link.value }),
+    })
 
     // 2) Mettre à jour l'association steps
-    await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/contents/${props.content.id}/steps`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userStore.token}`,
-        },
-        body: JSON.stringify({ Steps: selectedSteps.value }),
+    await fetch(`${import.meta.env.VITE_API_URL}/contents/${props.content.id}/steps`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userStore.token}`,
       },
-    )
+      body: JSON.stringify({ Steps: selectedSteps.value }),
+    })
 
     // 3) Mettre à jour le store
     const idx = userStore.contentsCreated.findIndex((c) => c.id === props.content.id)

@@ -95,10 +95,9 @@ export const useUserStore = defineStore('user', {
     async fetchProfile() {
       if (!this.token) return
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/profile`,
-          { headers: { Authorization: `Bearer ${this.token}` } },
-        )
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/user/profile`, {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
         if (res.ok) {
           this.profile = await res.json()
         } else {
@@ -120,9 +119,7 @@ export const useUserStore = defineStore('user', {
     // Récupère tous les jeux (GET /games)
     async fetchAllGames() {
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/games`,
-        )
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/games`)
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         this.games = (await res.json()) as Game[]
       } catch {
@@ -139,9 +136,9 @@ export const useUserStore = defineStore('user', {
         return
       }
       const promises = this.profile.RoadmapsCreated.map((id) =>
-        fetch(
-          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${id}`,
-        ).then((res) => (res.ok ? (res.json() as Promise<Roadmap>) : Promise.reject())),
+        fetch(`${import.meta.env.VITE_API_URL}/roadmap/${id}`).then((res) =>
+          res.ok ? (res.json() as Promise<Roadmap>) : Promise.reject(),
+        ),
       )
       try {
         this.roadmapsCreated = await Promise.all(promises)
@@ -155,13 +152,10 @@ export const useUserStore = defineStore('user', {
      * - Met à jour le state pour retirer l’id et l’objet correspondant
      */
     async deleteRoadmap(id: string) {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${id}`,
-        {
-          method: 'DELETE',
-          headers: { Authorization: `Bearer ${this.token}` },
-        },
-      )
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/roadmap/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${this.token}` },
+      })
       if (!res.ok) {
         throw new Error(`Suppression échouée (${res.status})`)
       }
@@ -182,9 +176,9 @@ export const useUserStore = defineStore('user', {
         return
       }
       const promises = this.profile.Bookmarks.map((id) =>
-        fetch(
-          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/roadmap/${id}`,
-        ).then((res) => (res.ok ? (res.json() as Promise<Roadmap>) : Promise.reject())),
+        fetch(`${import.meta.env.VITE_API_URL}/roadmap/${id}`).then((res) =>
+          res.ok ? (res.json() as Promise<Roadmap>) : Promise.reject(),
+        ),
       )
       try {
         this.bookmarks = await Promise.all(promises)
@@ -219,17 +213,14 @@ export const useUserStore = defineStore('user', {
       const method = isCurrentlyBookmarked ? 'DELETE' : 'PUT'
 
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/bookmarks`,
-          {
-            method,
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${this.token}`,
-            },
-            body: JSON.stringify({ roadmapId: roadmap.id }),
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/user/bookmarks`, {
+          method,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${this.token}`,
           },
-        )
+          body: JSON.stringify({ roadmapId: roadmap.id }),
+        })
 
         if (response.ok) {
           // Mettre à jour le store localement selon l'action
@@ -264,8 +255,8 @@ export const useUserStore = defineStore('user', {
         return
       }
       const promises = this.profile.StepsCreated.map((id) =>
-        fetch(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${id}`).then(
-          (res) => (res.ok ? (res.json() as Promise<Step>) : Promise.reject()),
+        fetch(`${import.meta.env.VITE_API_URL}/step/${id}`).then((res) =>
+          res.ok ? (res.json() as Promise<Step>) : Promise.reject(),
         ),
       )
       try {
@@ -276,13 +267,10 @@ export const useUserStore = defineStore('user', {
     },
     async deleteStep(id: string) {
       // 1) Appel à l’API pour supprimer le contenu
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/step/${id}`,
-        {
-          method: 'DELETE',
-          headers: { Authorization: `Bearer ${this.token}` },
-        },
-      )
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/step/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${this.token}` },
+      })
       if (!res.ok) {
         throw new Error(`Suppression échouée (${res.status})`)
       }
@@ -305,9 +293,9 @@ export const useUserStore = defineStore('user', {
         return
       }
       const promises = this.profile.ContentsCreated.map((id) =>
-        fetch(
-          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/content/${id}`,
-        ).then((res) => (res.ok ? (res.json() as Promise<Content>) : Promise.reject())),
+        fetch(`${import.meta.env.VITE_API_URL}/content/${id}`).then((res) =>
+          res.ok ? (res.json() as Promise<Content>) : Promise.reject(),
+        ),
       )
       try {
         this.contentsCreated = await Promise.all(promises)
@@ -322,13 +310,10 @@ export const useUserStore = defineStore('user', {
      */
     async deleteContent(id: string) {
       // 1) Appel à l’API pour supprimer le contenu
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/content/${id}`,
-        {
-          method: 'DELETE',
-          headers: { Authorization: `Bearer ${this.token}` },
-        },
-      )
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/content/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${this.token}` },
+      })
       if (!res.ok) {
         throw new Error(`Suppression échouée (${res.status})`)
       }
@@ -347,8 +332,8 @@ export const useUserStore = defineStore('user', {
         return
       }
       const promises = this.profile.GuidesCreated.map((id) =>
-        fetch(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/guide/${id}`).then(
-          (res) => (res.ok ? (res.json() as Promise<Guide>) : Promise.reject()),
+        fetch(`${import.meta.env.VITE_API_URL}/guide/${id}`).then((res) =>
+          res.ok ? (res.json() as Promise<Guide>) : Promise.reject(),
         ),
       )
       try {
@@ -358,13 +343,10 @@ export const useUserStore = defineStore('user', {
       }
     },
     async deleteGuide(id: string) {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/guide/${id}`,
-        {
-          method: 'DELETE',
-          headers: { Authorization: `Bearer ${this.token}` },
-        },
-      )
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/guide/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${this.token}` },
+      })
       if (!res.ok) {
         throw new Error(`Suppression échouée (${res.status})`)
       }
@@ -383,9 +365,9 @@ export const useUserStore = defineStore('user', {
         return
       }
       const promises = this.profile.AttachmentsCreated.map((id) =>
-        fetch(
-          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/attachment/${id}`,
-        ).then((res) => (res.ok ? (res.json() as Promise<Attachment>) : Promise.reject())),
+        fetch(`${import.meta.env.VITE_API_URL}/attachment/${id}`).then((res) =>
+          res.ok ? (res.json() as Promise<Attachment>) : Promise.reject(),
+        ),
       )
       try {
         this.attachmentsCreated = await Promise.all(promises)
@@ -394,13 +376,10 @@ export const useUserStore = defineStore('user', {
       }
     },
     async deleteAttachment(id: string) {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/attachment/${id}`,
-        {
-          method: 'DELETE',
-          headers: { Authorization: `Bearer ${this.token}` },
-        },
-      )
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/attachment/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${this.token}` },
+      })
       if (!res.ok) {
         throw new Error(`Suppression échouée (${res.status})`)
       }

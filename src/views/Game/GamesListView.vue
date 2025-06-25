@@ -14,7 +14,7 @@ const state = reactive({
 })
 
 onMounted(async () => {
-  const apiUrl = `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/games`
+  const apiUrl = `${import.meta.env.VITE_API_URL}/games`
 
   try {
     const response = await fetch(apiUrl)

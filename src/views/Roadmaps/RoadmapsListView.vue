@@ -5,7 +5,7 @@ Composant qui affiche la liste des roadmaps d'un jeu
 -->
 
 <script setup lang="ts">
-import { onMounted, onUnmounted ,reactive, computed, provide } from 'vue'
+import { onMounted, onUnmounted, reactive, computed, provide } from 'vue'
 import { useRoute } from 'vue-router'
 import HeaderGame from '@/components/layout/HeaderGame.vue'
 import RoadmapCard from '@/components/ui/RoadmapCard.vue'
@@ -30,9 +30,7 @@ const state = reactive({
 
 const fetchGameAndRoadmaps = async () => {
   try {
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/games`,
-    )
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/games`)
     const games = await res.json()
 
     // Retrouver le jeu depuis le slug
@@ -55,14 +53,11 @@ const fetchGameAndRoadmaps = async () => {
     updateTitle(`${game.title} Roadmaps`)
 
     // Appel à l’API pour récupérer les roadmaps du jeu
-    const resRoadmaps = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/game/${game.id}/roadmaps`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-        },
+    const resRoadmaps = await fetch(`${import.meta.env.VITE_API_URL}/game/${game.id}/roadmaps`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
       },
-    )
+    })
     const roadmaps = await resRoadmaps.json()
     state.roadmaps = roadmaps
 
@@ -88,9 +83,7 @@ const fetchRoadmapAuthors = async () => {
     // Faire les appels API pour chaque auteur
     const authorPromises = authorIds.map(async (authorId) => {
       try {
-        const userRes = await fetch(
-          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/${authorId}`,
-        )
+        const userRes = await fetch(`${import.meta.env.VITE_API_URL}/user/${authorId}`)
         if (userRes.ok) {
           const user = await userRes.json()
           state.authors.set(authorId, user)
@@ -115,7 +108,7 @@ const fetchRoadmapAuthors = async () => {
           ContentsCreated: [],
           Comments: [],
           GuidesCreated: [],
-          AttachmentsCreated: []
+          AttachmentsCreated: [],
         })
       }
     })
@@ -129,14 +122,11 @@ const fetchRoadmapAuthors = async () => {
 
 const fetchUserBookmarks = async () => {
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/bookmarks`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-        },
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/user/bookmarks`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
       },
-    )
+    })
 
     if (response.ok) {
       const bookmarks = await response.json()
