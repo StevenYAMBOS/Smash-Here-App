@@ -191,14 +191,13 @@ async function handleLogin() {
 
   try {
     const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/auth/login`,
+      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/auth/login`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: email.value,
           password: password.value,
-          // rememberMe: rememberMe.value,
         }),
       },
     )
@@ -209,13 +208,27 @@ async function handleLogin() {
     }
 
     const { token } = await res.json()
+
+    // Stocker le token AVANT de récupérer le profil
     localStorage.setItem('token', token)
     userStore.setToken(token)
+
+    // ATTENDRE que toutes les données utilisateur soient récupérées
     await userStore.fetchProfile()
 
+    // Vérifier que le profil a bien été chargé avant de rediriger
+    if (!userStore.profile) {
+      throw new Error('Failed to load user profile')
+    }
+
     toast.success('Welcome back, champion!')
+    // Redirection seulement APRÈS avoir récupéré toutes les données
     router.push('/')
   } catch (err) {
+    // En cas d'erreur, nettoyer le token
+    localStorage.removeItem('token')
+    userStore.clear()
+
     const errorMessage = getErrorMessage(err) || 'Login failed. Please try again.'
     toast.error(errorMessage)
     error.value = errorMessage

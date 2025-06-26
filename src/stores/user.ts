@@ -14,6 +14,7 @@ export const useUserStore = defineStore('user', {
     stepsCreated: [] as Step[],
     guidesCreated: [] as Guide[],
     attachmentsCreated: [] as Attachment[],
+    isLoadingProfile: false,
   }),
   getters: {
     // Vérifie si l'utilisateur est connecté
@@ -92,29 +93,41 @@ export const useUserStore = defineStore('user', {
       // Charger les données utilisateur
       await this.fetchProfile()
     },
+    // Modifier la fonction fetchProfile pour une meilleure gestion d'erreur
     async fetchProfile() {
-      if (!this.token) return
-      try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/user/profile`, {
-          headers: { Authorization: `Bearer ${this.token}` },
-        })
-        if (res.ok) {
-          this.profile = await res.json()
-        } else {
-          // token invalide, on efface
-          this.logout()
-        }
-      } catch {
-        this.logout()
+      if (!this.token) {
+        throw new Error('No token available')
       }
-      // après avoir chargé le profile, charger les élément créés
-      await this.fetchUserRoadmaps()
-      await this.fetchUserBookmarks()
-      await this.fetchUserSteps()
-      await this.fetchUserContents()
-      await this.fetchUserGuides()
-      await this.fetchUserAttachments()
-      await this.fetchAllGames()
+
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/profile`,
+          { headers: { Authorization: `Bearer ${this.token}` } },
+        )
+
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}: Failed to fetch profile`)
+        }
+
+        this.profile = await res.json()
+
+        // Attendre que TOUTES les données utilisateur soient chargées
+        await Promise.all([
+          this.fetchUserRoadmaps(),
+          this.fetchUserBookmarks(),
+          this.fetchUserSteps(),
+          this.fetchUserContents(),
+          this.fetchUserGuides(),
+          this.fetchUserAttachments(),
+          this.fetchAllGames(),
+        ])
+      } catch (error) {
+        // En cas d'erreur, nettoyer complètement l'état
+        this.logout()
+        throw error // Propager l'erreur pour que le composant puisse la gérer
+      } finally {
+        this.isLoadingProfile = false
+      }
     },
     // Récupère tous les jeux (GET /games)
     async fetchAllGames() {
