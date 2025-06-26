@@ -68,11 +68,11 @@
 
         <!-- Remember Me & Forgot Password -->
         <div class="form-options">
-          <label class="remember-me">
+          <!-- <label class="remember-me">
             <input type="checkbox" v-model="rememberMe" />
             <span class="checkmark"></span>
             Remember me
-          </label>
+          </label> -->
           <!-- <a href="#" class="forgot-password">Forgot password?</a> -->
         </div>
 
@@ -135,7 +135,7 @@ const userStore = useUserStore()
 // Form data
 const email = ref('')
 const password = ref('')
-const rememberMe = ref(false)
+// const rememberMe = ref(false)
 const loading = ref(false)
 const error = ref('')
 const showPassword = ref(false)
@@ -198,7 +198,7 @@ async function handleLogin() {
         body: JSON.stringify({
           email: email.value,
           password: password.value,
-          rememberMe: rememberMe.value,
+          // rememberMe: rememberMe.value,
         }),
       },
     )
