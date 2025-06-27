@@ -1,0 +1,70 @@
+# Robots.txt pour Smash Here
+# https://smashhere.fr/robots.txt
+
+# Configuration pour tous les robots
+User-agent: *
+
+# Pages autorisées à l'indexation
+Allow: /
+Allow: /games
+Allow: /game/
+Allow: /contact
+Allow: /faq
+Allow: /privacy-policy
+Allow: /terms-and-conditions
+Allow: /cookies-policy
+Allow: /general-terms-of-use
+
+# Pages interdites à l'indexation (authentification requise)
+Disallow: /auth/
+Disallow: /profile
+Disallow: /content-builder
+
+# Pages dynamiques privées interdites
+Disallow: /roadmap/*/edit
+Disallow: /guide/*/edit
+Disallow: /user/
+
+# Ressources système interdits
+Disallow: /api/
+Disallow: /_nuxt/
+Disallow: /assets/
+Disallow: /.well-known/
+
+# Fichiers et extensions interdits
+Disallow: /*.json$
+Disallow: /*.xml$ 
+Disallow: /*.txt$
+Allow: /sitemap.xml
+
+# Restrictions pour des bots spécifiques
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+# Bots malveillants connus
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Limitations de fréquence pour éviter la surcharge
+# Crawl-delay: 1
+
+# Localisation du sitemap
+Sitemap: https://smashhere.fr/sitemap.xml
