@@ -100,10 +100,9 @@ export const useUserStore = defineStore('user', {
       }
 
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/profile`,
-          { headers: { Authorization: `Bearer ${this.token}` } },
-        )
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/user/profile`, {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
 
         if (!res.ok) {
           throw new Error(`HTTP ${res.status}: Failed to fetch profile`)

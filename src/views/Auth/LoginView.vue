@@ -190,17 +190,14 @@ async function handleLogin() {
   error.value = ''
 
   try {
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/auth/login`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: email.value,
-          password: password.value,
-        }),
-      },
-    )
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+      }),
+    })
 
     if (!res.ok) {
       const msg = await res.text()
