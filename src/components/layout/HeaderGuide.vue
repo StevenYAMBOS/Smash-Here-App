@@ -1,5 +1,3 @@
-<!-- src/components/layout/HeaderGuide.vue -->
-
 <template>
   <header class="guide-header">
     <!-- Background avec effet dégradé -->
@@ -39,7 +37,7 @@
 
         <div v-if="guide.estimatedReadTime" class="meta-item">
           <i class="pi pi-clock meta-icon"></i>
-          <span>{{ guide.estimatedReadTime }} mins read</span>
+          <span>{{ guide.estimatedReadTime }} min read</span>
         </div>
 
         <div v-if="guide.language" class="meta-item">
@@ -54,7 +52,7 @@
       </div>
 
       <!-- Statistiques -->
-      <!-- <div class="guide-stats">
+      <div class="guide-stats">
         <div class="stat-item">
           <i class="pi pi-eye stat-icon"></i>
           <span>{{ formatNumber(guide.viewsCount || 0) }} views</span>
@@ -69,11 +67,11 @@
           <i class="pi pi-comment stat-icon"></i>
           <span>{{ formatNumber(guide.commentsCount || 0) }} comments</span>
         </div>
-      </div> -->
+      </div>
 
       <!-- Actions -->
       <div class="guide-actions">
-        <!-- <button class="action-btn action-btn--primary" @click="likeGuide">
+        <button class="action-btn action-btn--primary" @click="likeGuide">
           <i class="pi pi-heart"></i>
           <span>Like</span>
         </button>
@@ -81,7 +79,7 @@
         <button class="action-btn action-btn--secondary" @click="bookmarkGuide">
           <i class="pi pi-bookmark"></i>
           <span>Bookmark</span>
-        </button> -->
+        </button>
 
         <button class="action-btn action-btn--secondary" @click="shareGuide">
           <i class="pi pi-share-alt"></i>
@@ -153,18 +151,18 @@ const formatDate = (dateString: string): string => {
   })
 }
 
-// const formatNumber = (num: number): string => {
-//   if (num >= 1000000) {
-//     return (num / 1000000).toFixed(1) + 'M'
-//   } else if (num >= 1000) {
-//     return (num / 1000).toFixed(0) + 'K'
-//   }
-//   return num.toString()
-// }
+const formatNumber = (num: number): string => {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1) + 'M'
+  } else if (num >= 1000) {
+    return (num / 1000).toFixed(0) + 'K'
+  }
+  return num.toString()
+}
 
 // Actions
-// const likeGuide = () => emit('like')
-// const bookmarkGuide = () => emit('bookmark')
+const likeGuide = () => emit('like')
+const bookmarkGuide = () => emit('bookmark')
 const shareGuide = () => emit('share')
 
 const scrollToContent = () => {
